@@ -1,0 +1,23 @@
+{
+  "name": "yilmaz",
+  "version": "1.0.0",
+  "description": "Komplett-Plan für ein TikTok-Business ohne Gesicht, das nur über das **TikTok Creator Rewards Program** und den **TikTok Shop (Affiliate)** Geld verdient.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yilokara542-ui/Yilmaz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yilokara542-ui/Yilmaz/issues"
+  },
+  "homepage": "https://github.com/yilokara542-ui/Yilmaz#readme",
+  "devDependencies": {
+    "hyperframes": "0.9.52"
+  }
+}
