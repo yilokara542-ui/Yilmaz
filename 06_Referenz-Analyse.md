@@ -91,3 +91,21 @@ Die Referenzen sind Survival/Mystery-Szenarien, keine Technik-Erklärungen. Was 
 | Twist + Frage am Ende | „Und jetzt rate: Wo geht die meiste Energie verloren? Schreib's in die Kommentare.“ |
 
 Alle Regeln sind im Skill gespeichert: [`.claude/skills/tiktok-video-regeln/SKILL.md`](.claude/skills/tiktok-video-regeln/SKILL.md)
+
+---
+
+# Nachtrag: Referenz 4 – „NEBEL · Teil 1“ (Format B „Regel-Serie“)
+
+| | Wert |
+|---|---|
+| Länge | 85,7 s, 576×1024, 30 fps, −14 LUFS |
+| Format | POV-Nacht-Szenario in 2. Person, Mehrteiler („Teil 1“) |
+| Animation | 3D, knallblaue Strichfigur mit Kugelkopf, Nacht-Palette Blau/Violett |
+| Untertitel | 1–3 Wörter, weiß, Großbuchstaben, Mitte; Schlüsselwort neon-gelbgrün |
+| Ende | 2 Optionen („HANDY AUS“ / „TÜRSPION“) + Titelkarte „TEIL 2 – heute Nacht 2:47 Uhr – Folge für Teil 2“ |
+
+**Ablauf mit Zeiten:** 0 s „Stell dir vor, dein Handy schreit um 2:47 Uhr“ (schlafende Figur) → 4,7 s Vollbild-Sperrbildschirm „⚠ EXTREME GEFAHR – Schalten Sie alle Lichter aus. Sofort.“ → 9 s „Bestimmt nur ein Probealarm“, Figur geht zum Fenster → 14 s Nebel, alle Häuser dunkel bis auf eins, Herr Wagner winkt, Licht flackert, Fenster leer → 32 s zweite Warnung „Hören Sie genau zu. Drei Regeln.“ → 38 s Regel-Karten: #1 Kein Licht (Glühbirne mit ✕), #2 Wenn es klingelt, mach nicht auf – auch nicht für Familie (Tür + Sprechblase mit ✕), #3 Der Nebel geht um 6:00 Uhr, keine Minute früher (Sonnenaufgang, 5:59 durchgestrichen) → 51 s 3:04 Uhr, Ding-Dong → 56 s „Hey… ich bin's, Papa. Mach auf, hier draußen ist es eiskalt.“ → 61 s Handy vibriert: Papa schreibt „bin noch auf der arbeit, schicht bis 6, BLEIB DRIN!!“ → 67 s Stille, dann: „Schatz… ich sehe dein Handy leuchten.“ → 73 s Wahl: Handy aus oder durch den Türspion schauen? → 77 s Teil-2-Karte.
+
+**Was es stark macht:** Uhrzeit oben links als Dauer-Anker, Regeln werden sofort getestet, Gegenbeweis über das Handy, der letzte Satz dreht Regel 1 (kein Licht) gegen dich, Serien-Cliffhanger zwingt zum Folgen.
+
+Regeln im Skill: Abschnitt 11a „Format B – Regel-Serie“.

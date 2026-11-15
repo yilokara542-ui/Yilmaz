@@ -1,6 +1,6 @@
 ---
 name: tiktok-video-regeln
-description: Verbindliche Regeln für die faceless TikTok-Videos des Users (Alltagstechnik einfach und animiert erklärt). Nutzen, sobald ein Video-Skript, Hook, Storyboard, Bild-/Animations-Prompt, Untertitel, Caption oder eine Video-Idee für den Account geschrieben, geprüft oder überarbeitet wird. Ebenfalls nutzen, wenn der User Feedback zu einem Video/Skript gibt: dann dieses Regelwerk erweitern.
+description: Verbindliche Regeln für die faceless TikTok-Videos des Users (Alltagstechnik einfach und animiert erklärt). Nutzen, sobald ein Video-Skript, Hook, Storyboard, Bild-/Animations-Prompt, Untertitel, Caption oder eine Video-Idee für den Account geschrieben, geprüft oder überarbeitet wird. Ebenfalls nutzen, wenn der User Feedback zu einem Video/Skript gibt: dann dieses Regelwerk erweitern. Enthält zwei Formate: A „Erklär-Story“ (Standard) und B „Regel-Serie“ (Notfall-/Nacht-Szenario mit 3 Regeln, mehrteilig).
 ---
 
 # TikTok-Video-Regeln – „Alltagstechnik einfach erklärt“
@@ -108,6 +108,58 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 
 ---
 
+## 11a. Format B – „Regel-Serie“ (Referenz: Video „NEBEL · Teil 1“, 85,7 s)
+
+Zweites Videoformat neben dem Standard (Format A = Erklär-Story, Abschnitte 1–11).
+**Wann nutzen:** wenn der User „Format B“, „Regel-Video“, „Serie“ oder „wie das Nebel-Video“ verlangt, oder für Notfall-/Warnthemen. Alle Regeln aus Abschnitt 5–9 (Tempo, Bildsprache, 6a, Untertitel, Ton, Fakten) gelten weiter; Abweichungen stehen hier.
+
+**Kern-Idee:** Du wirst nachts von einer Warnung geweckt, bekommst **3 Regeln**, und die Geschichte testet sofort, ob du sie einhältst. Ende offen → Teil 2.
+
+### Länge & Aufbau (Zeitanteile wie im Original)
+| Phase | Zeit | Inhalt |
+|---|---|---|
+| 1. Hook | 0–5 s | „Stell dir vor, dein Handy schreit um 2:47 Uhr.“ Schlafende Figur, Uhrzeit groß im Bild |
+| 2. Warnung | 5–10 s | Vollbild-Sperrbildschirm mit Warnmeldung („⚠ EXTREME GEFAHR – Schalten Sie alle Lichter aus. Sofort.“), Text wird vorgelesen |
+| 3. Zweifel + Erkunden | 10–32 s | „Bestimmt nur ein Probealarm.“ → Figur geht zum Fenster → unheimliche Beobachtung (Nachbar winkt, Licht flackert, Fenster plötzlich leer) |
+| 4. Die 3 Regeln | 32–51 s | Zweite Warnung „Hören Sie genau zu. Drei Regeln.“ → je Regel eine eigene **Regel-Karte** (ca. 4–5 s) |
+| 5. Test der Regeln | 51–73 s | Genau eine Regel wird sofort auf die Probe gestellt (Klingeln, vertraute Stimme). Gegenbeweis per Handy-Nachricht („bin noch auf der Arbeit“) |
+| 6. Eskalation + Wahl | 73–77 s | Letzter Schock-Satz der Stimme, dann zwei Optionen als Labels („HANDY AUS“ / „TÜRSPION“) |
+| 7. Teil-2-Karte | 77–86 s | Titelkarte „TEIL 2 – heute Nacht · 2:47 Uhr – Folge für Teil 2“ |
+
+Länge: **80–90 s**. Jede Regel muss später in der Story **benutzt** werden (Setup → Payoff), mindestens eine Regel wird mit einem emotionalen Haken getestet (Familie, Freund, Hilferuf).
+
+### Bildsprache Format B
+- **Serien-Branding oben links, durchgehend:** kleiner Titel „● SERIENNAME · TEIL X“, darunter **große rote Digitaluhr** (z. B. 2:47 UHR) und **Ortsangabe** in Mini-Schrift (DEIN ZIMMER, GEGENÜBER, FLUR, VOR DER TÜR). Uhrzeit springt mit der Story weiter (2:47 → 2:48 → 2:52 → 3:04 → 3:05).
+- **Nacht-Palette:** tiefes Blau/Violett, Mondlicht, ein Neon-Akzent. Figur kräftig gefärbt (im Original knallblau) – bei uns: Standard-Figur mit Kleidung aus Abschnitt 6.
+- **Handy-Sperrbildschirm als Vollbild-Szene** (Datum, große Uhrzeit, rote Warn-Benachrichtigungen, neue Meldungen stapeln sich oben drauf). Ebenso **Chat-Ansicht** für Nachrichten (alte Nachricht „Gestern 21:40“ + neue Nachricht „Heute 3:05“).
+- **Regel-Karten:** dunkler Hintergrund mit weichem Glow, oben roter Badge „REGEL #1“, Überschrift in Weiß + Zusatz in Akzentfarbe, in der Mitte **ein einfaches Flat-Icon** (Glühbirne, Tür mit Sprechblase, Sonnenaufgang), das bei der Regel animiert wird (rotes ✕ über Glühbirne, ✕ über Sprechblase „Ich bin's, Papa ♥“, Uhr 5:59 durchgestrichen).
+- **Dialog-Zitate** der fremden Stimme oben im Bild, rot/kursiv, mit Label „– VOR DER TÜR –“, Satz für Satz ergänzt.
+- **Lautmalerei** groß ins Bild (DING. DONG.) in Rot.
+- **Wahl am Ende:** zwei Pillen-Labels nebeneinander (rot = riskant, blau = Alternative).
+- **Teil-2-Karte:** Nebel-/Rauch-Hintergrund, Serienname klein, „TEIL 2“ riesig in leuchtendem Rot, Termin + Button „FOLGE FÜR TEIL 2“.
+
+### Untertitel Format B
+- Wie Abschnitt 7 (Poppins, ≤ 64 px, dezent), aber **Akzentfarbe Neon-Gelbgrün (#c8f031)** für Schlüsselwörter statt Rot; Rot bleibt für Warnungen/Gefahr in den Grafiken.
+- Zitate der Stimme in Anführungszeichen „…“.
+
+### Spannung Format B
+- **Echte Uhrzeit als Countdown** (wann ist es vorbei? „Der Nebel geht um 6:00 Uhr. Keine Minute früher.“).
+- **Regel wird angekündigt, dann sofort gebrochen-in-Versuchung** (Regel 2: „Mach nicht auf – auch nicht für Familie“ → 10 s später: „Hey… ich bin's, Papa.“).
+- **Gegenbeweis über Technik** (Handy-Nachricht, Kamera, Anzeige) statt Erzähler-Erklärung.
+- **Letzter Satz der Bedrohung kehrt eine Regel um** („Ich sehe dein Handy leuchten.“ → Regel 1 „Kein Licht“ wird zur Falle).
+- **Ende = Wahl zwischen 2 Aktionen + Teil 2**.
+
+### Brücke zu unserer Nische (Alltagstechnik)
+Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Rolle spielt und korrekt erklärt wird – z. B. Warn-Apps/Cell Broadcast (warum das Handy auch lautlos schreit), Türspion vs. Video-Klingel, Sicherungskasten/Stromausfall, Rauchmelder, Notstrom/Powerbank, Funkempfang ohne Netz. Die Regeln sind dann **sinnvolle echte Verhaltensregeln** oder klar als Fiktion markierte Story-Regeln; echte Warnmeldungen (z. B. NINA, Cell Broadcast) nie täuschend echt nachbauen, sondern erkennbar fiktiven Absender verwenden.
+
+### Checkliste Format B
+- [ ] Hook mit Uhrzeit in 0–3 s, Warnung bis Sekunde 10
+- [ ] Serien-Branding + rote Uhr + Ort oben links durchgehend, Uhrzeit springt mit
+- [ ] 3 Regel-Karten mit Badge + Icon-Animation
+- [ ] Jede Regel kommt später in der Story vor, eine wird emotional getestet
+- [ ] Gegenbeweis über Handy/Technik, Schlusssatz dreht eine Regel um
+- [ ] Ende: 2 Optionen + Teil-2-Karte, Länge 80–90 s
+
 ## 12. Feedback-Log (wird laufend erweitert)
 
 **Pflege-Anweisung für Claude:** Wenn der User Feedback zu einem Video, Skript, Hook oder Stil gibt:
@@ -122,3 +174,4 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 | 2026-11-15 | Erstanlage aus 3 Referenz-Videos | Abschnitte 1–11 |
 | 2026-11-15 | Video 08: „spannender und nicht so leer, Kleinigkeiten für mehr Ästhetik“ | Neuer Abschnitt 6a (3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub, Filmkorn, Mikro-Bewegung, Spannungs-Akzente, Übergänge) + 2 Checklisten-Punkte |
 | 2026-11-15 | Video 08: „Person Kleidung geben, Schrift ändern und kleiner, Video sanfter/flüssiger“ | Abschnitt 6 (Kleidung), 5 (60 fps, Überblendungen, weiche Bewegungen), 7 (Poppins, ≤ 64 px, Groß-/Kleinschreibung) + Checkliste |
+| 2026-11-15 | Neues Referenzvideo „NEBEL · Teil 1“ (85,7 s): „Füge diese Art von Video zu meinem Skill hinzu“ | Neues Format B „Regel-Serie“ (Abschnitt 11a) mit Aufbau, Bildsprache, Untertiteln, Spannung, Brücke zur Nische, eigener Checkliste |
