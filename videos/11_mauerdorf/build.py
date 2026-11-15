@@ -373,9 +373,50 @@ def giant_head(gid, cx, cy, s=1.0, name="@dein.name", glow=True):
             f'<path d="M {cx-110} {cy+250} Q {cx} {cy+230} {cx+110} {cy+250}" stroke="#14100c" stroke-width="12" fill="none"/>'
             f'<path d="M {cx-60} {cy+246} l 0 18 M {cx-20} {cy+240} l 0 18 M {cx+20} {cy+240} l 0 18 M {cx+60} {cy+246} l 0 18" stroke="#14100c" stroke-width="6"/>'
             f'<path d="{face}" fill="url(#underlight)"/>'
-            f'<g id="{gid}-tag"><rect x="{cx-200}" y="{cy-330}" width="400" height="76" rx="14" fill="#1a120a" fill-opacity=".85" stroke="{RED}" stroke-width="6"/>'
-            f'<text id="{gid}-name" x="{cx}" y="{cy-278}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#fff">{name}</text></g>'
-            f'</g></g>')
+            + (f'<g id="{gid}-tag"><rect x="{cx-200}" y="{cy-330}" width="400" height="76" rx="14" fill="#1a120a" fill-opacity=".85" stroke="{RED}" stroke-width="6"/>'
+               f'<text id="{gid}-name" x="{cx}" y="{cy-278}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#fff">{name}</text></g>' if name is not None and name != "" else f'<g id="{gid}-tag"></g><text id="{gid}-name"></text>')
+            + '</g></g>')
+
+
+def giant_body(gid, cx, top, s=1.0, name=None, steam=True):
+    """Eigener Ganzkörper-Riese: massiger Oberkörper aus dunklem Basalt, glühende Magma-Linien
+    zwischen den Muskelplatten, hageres Steingesicht, Dampf um die Hüfte. Eigenes Design."""
+    MAG = "#ff5a1f"; BAS = "#34302d"; PL = "#48423d"; PL2 = "#3e3935"
+    t = top
+    plates = ""
+    for sx in (-1, 1):
+        plates += (f'<path d="M {cx+sx*20} {t+500} Q {cx+sx*190} {t+470} {cx+sx*250} {t+560} Q {cx+sx*240} {t+690} {cx+sx*40} {t+700} Z" fill="{PL}"/>'
+                   f'<path d="M {cx+sx*60} {t+380} Q {cx+sx*230} {t+400} {cx+sx*330} {t+470} Q {cx+sx*260} {t+520} {cx+sx*120} {t+480} Z" fill="{PL2}"/>')
+        for k in range(3):
+            y = t + 730 + k * 125
+            plates += f'<rect x="{cx+(10 if sx>0 else -130)}" y="{y}" width="120" height="110" rx="34" fill="{PL if k%2==0 else PL2}"/>'
+        plates += f'<path d="M {cx+sx*250} {t+560} Q {cx+sx*270} {t+800} {cx+sx*170} {t+1120} L {cx+sx*150} {t+720} Z" fill="{PL2}"/>'
+    arms = "".join(
+        f'<path d="M {cx+sx*300} {t+440} Q {cx+sx*450} {t+520} {cx+sx*440} {t+800} Q {cx+sx*450} {t+1020} {cx+sx*410} {t+1180} '
+        f'L {cx+sx*330} {t+1180} Q {cx+sx*350} {t+960} {cx+sx*320} {t+800} Q {cx+sx*300} {t+620} {cx+sx*250} {t+560} Z" fill="{BAS}"/>'
+        f'<path d="M {cx+sx*330} {t+520} Q {cx+sx*420} {t+600} {cx+sx*400} {t+780}" stroke="{PL}" stroke-width="40" fill="none" stroke-linecap="round"/>'
+        for sx in (-1, 1))
+    magma = "".join(f'<path d="{d}" stroke="{MAG}" stroke-width="6" fill="none" opacity=".95" filter="url(#emberglow)"/>' for d in (
+        f'M {cx} {t+400} L {cx} {t+1120}',
+        f'M {cx-240} {t+700} Q {cx-120} {t+715} {cx} {t+705} Q {cx+120} {t+715} {cx+240} {t+700}',
+        f'M {cx-140} {t+850} L {cx+140} {t+850}', f'M {cx-140} {t+975} L {cx+140} {t+975}',
+        f'M {cx-300} {t+470} Q {cx-330} {t+620} {cx-420} {t+700}', f'M {cx+300} {t+470} Q {cx+330} {t+620} {cx+420} {t+700}',
+        f'M {cx-200} {t+560} l -30 90 l 20 60', f'M {cx+210} {t+580} l 25 80 l -15 70'))
+    torso = (f'<path d="M {cx-70} {t+360} Q {cx-200} {t+390} {cx-320} {t+460} Q {cx-300} {t+800} {cx-200} {t+1150} L {cx-150} {t+1320} '
+             f'L {cx+150} {t+1320} L {cx+200} {t+1150} Q {cx+300} {t+800} {cx+320} {t+460} Q {cx+200} {t+390} {cx+70} {t+360} Z" fill="{BAS}"/>')
+    neck = f'<rect x="{cx-80}" y="{t+300}" width="160" height="120" rx="30" fill="{PL2}"/><path d="M {cx-60} {t+310} L {cx-120} {t+420} M {cx+60} {t+310} L {cx+120} {t+420}" stroke="{BAS}" stroke-width="22"/>'
+    head = giant_head(f"{gid}-h", cx, t + 190, 0.5, name="")
+    tag = ""
+    if name:
+        tag = (f'<g id="{gid}-tag"><rect x="{cx-220}" y="{t+780}" width="440" height="90" rx="16" fill="#120c08" fill-opacity=".9" stroke="{RED}" stroke-width="6"/>'
+               f'<text x="{cx}" y="{t+842}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="50" fill="#fff">{name}</text></g>')
+    st = ""
+    if steam:
+        st = "".join(f'<ellipse id="{gid}-st{i}" cx="{cx+dx}" cy="{t+dy}" rx="{rx}" ry="{ry}" fill="#e9e6f2" opacity="{op}" filter="url(#steamblur)"/>'
+                     for i, (dx, dy, rx, ry, op) in enumerate(((-260, 1180, 260, 120, .55), (220, 1220, 300, 130, .5), (0, 1300, 420, 140, .6),
+                                                               (-420, 520, 120, 60, .25), (430, 600, 140, 70, .25), (0, 120, 160, 70, .18))))
+    return (f'<g id="{gid}"><g transform="translate({cx},{top}) scale({s}) translate({-cx},{-top})">'
+            f'{arms}{torso}{plates}{magma}{neck}<rect x="{cx-340}" y="{t+380}" width="680" height="960" fill="url(#bodyshade)"/>{head}{tag}{st}</g></g>')
 
 
 def hunter(hid, x, y, s=1.0, name=None, eyes="f"):
@@ -394,7 +435,8 @@ def hunter(hid, x, y, s=1.0, name=None, eyes="f"):
 # ================= SZENEN =================
 # S1 Hook: Aufwachen auf dem Hügel, Dorf hinter der Mauer
 S0, S1 = 0.0, t_vor
-scene("s1", S0, S1, sky_dawn() + wall(820, 420, gid="s1-wall")
+scene("s1", S0, S1, sky_dawn() + f'<g opacity=".55">' + giant_body("s1-gb1", 200, 420, 0.42) + giant_body("s1-gb2", 880, 380, 0.48) + '</g>'
+      + f'<rect x="0" y="560" width="1080" height="300" fill="#e9b7a0" opacity=".25" filter="url(#steamblur)"/>' + wall(820, 420, gid="s1-wall")
       + f'<g opacity=".95">{village_row(1180, seed=1)}</g>'
       + f'<path d="M -50 1500 Q 300 1340 700 1420 T 1130 1380 L 1130 1920 L -50 1920 Z" fill="{GRASS}"/>'
       + "".join(f'<path d="M {x} 1600 l 6 -30 l 6 30" stroke="#3f7a3a" stroke-width="5" fill="none"/>' for x in range(0, 1080, 40))
@@ -524,13 +566,13 @@ for i in range(5):
 # S8 Kopf über der Mauer – leuchtende Augen – ein Riese
 S0, S1 = t_langsam, t_stirn
 scene("s8", S0, S1, f'<rect width="1080" height="1920" fill="url(#dusk)"/>'
-      + giant_head("s8-g", 540, 820, 1.0, name="")
+      + giant_body("s8-g", 540, 150, 1.0)
       + wall(980, 940, gid="s8-wall")
       + hunter("s8-h1", 200, 980, 0.32) + hunter("s8-h2", 860, 980, 0.32))
-tw(f'tl.fromTo("#s8-g",{{y:700}},{{y:0,duration:{t_ein_r-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
-tw(f'tl.set("#s8-g-tag",{{opacity:0}},{S0:.3f});')
-tw(f'tl.fromTo("#s8-g-eyes",{{opacity:.15}},{{opacity:1,duration:.3,ease:"power2.out"}},{t_augen:.3f});')
-for gsel in ("#s9-g-eyes", "#s11-g-eyes"):
+tw(f'tl.fromTo("#s8-g",{{y:900}},{{y:0,duration:{t_ein_r-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+
+tw(f'tl.fromTo("#s8-g-h-eyes",{{opacity:.15}},{{opacity:1,duration:.3,ease:"power2.out"}},{t_augen:.3f});')
+for gsel in ("#s9-g-eyes", "#s11-g-h-eyes"):
     tw(f'tl.to("{gsel}",{{opacity:.55,duration:.6,yoyo:true,repeat:6,ease:"sine.inOut"}},{t_stirn:.3f});')
 shake("#s8-cam", t_ein_r, 6, 10)
 
@@ -577,7 +619,8 @@ bubble_ic = '<rect x="322" y="440" width="58" height="42" rx="12" fill="#120e14"
 
 # R1 Riesen – Folgen
 S0, S1 = t_erst, t_zweit
-giants = "".join(f'<g transform="translate({x},{y}) scale({s}) translate(-540,-860)">{giant_head(f"r1-g{i}", 540, 860, 1.0, name=NAMES[i])}</g>' for i, (x, y, s) in enumerate(((220, 950, .5), (540, 860, .62), (860, 970, .5))))
+giants = (giant_body("r1-g0", 200, 620, 0.5, name=NAMES[0]) + giant_body("r1-g2", 880, 640, 0.5, name=NAMES[2])
+          + giant_body("r1-g1", 540, 560, 0.62, name=NAMES[1]))
 scene("r1", S0, S1, role_card("r1", 1, "RIESE", "FOLGEN", plus_ic, GLOW) + giants + wall(1150, 770, gid="r1-wall")
       + label("r1-big", 540, 1560, "DEIN NAME. GROSS. UNÜBERSEHBAR.", GLOW, 36))
 pop("#r1-badge", S0); pop("#r1-head", S0 + 0.3); pop("#r1-sub", t_folgst)
@@ -614,7 +657,7 @@ hand = (f'<g id="s11-hand"><ellipse cx="820" cy="900" rx="170" ry="210" fill="#8
         + f'<path d="M 760 860 l 40 60 l -20 60 M 860 900 l -20 70" stroke="#ff5a1f" stroke-width="6" fill="none" filter="url(#emberglow)"/></g>')
 lines = "".join(f'<path id="s11-l{i}" d="M {200+i*220} 1080 Q {300+i*220} 760 {700+i*60} 700" stroke="#c9ccd8" stroke-width="5" fill="none" stroke-dasharray="800" stroke-dashoffset="800"/>' for i in range(3))
 scene("s11", S0, S1, f'<rect width="1080" height="1920" fill="url(#dusk)"/>' + hand
-      + giant_head("s11-g", 540, 700, 0.8, name=NAMES[1]) + wall(1080, 840, gid="s11-wall") + lines
+      + giant_body("s11-g", 470, 220, 0.85, name=NAMES[1]) + wall(1080, 840, gid="s11-wall") + lines
       + hunter("s11-h1", 200, 1080, 0.35) + hunter("s11-h2", 420, 1080, 0.35) + hunter("s11-h3", 640, 1080, 0.35)
       + f'<g id="s11-doors" opacity="0">' + "".join(f'<g transform="translate({x},1560)"><rect x="-90" y="-200" width="180" height="200" fill="{PLASTER}"/><rect id="s11-d{i}" x="-40" y="-120" width="80" height="120" fill="#6e4a3a"/><rect x="-46" y="-70" width="92" height="12" fill="#3a2a1a"/></g>' for i, x in enumerate((180, 540, 900))) + '</g>'
       + f'<rect x="0" y="1560" width="1080" height="360" fill="{COBBLE}"/>')
@@ -635,6 +678,10 @@ scene("s12", S0, S1, f'<rect width="1080" height="1920" fill="#120e14"/><polygon
                 for i, (a, c, t) in enumerate(((3.6, GLOW, "+"), (4.7, "#5aa0ff", "♥"), (5.8, "#9bc53d", "💬")))))
 for i in range(3):
     pop(f"#s12-o{i}", S0 + 0.2 + i * 0.2, 0.35, 0.5)
+
+for g in ("s1-gb1", "s1-gb2", "s8-g", "r1-g0", "r1-g1", "r1-g2", "s11-g"):
+    for k in range(6):
+        tw(f'tl.to("#{g}-st{k}",{{x:{(-1)**k * 40},duration:4,yoyo:true,repeat:10,ease:"sine.inOut"}},0);')
 
 # S13 Ende: Wer bist du?
 S0, S1 = t_also, TOTAL
@@ -728,6 +775,8 @@ DEFS = f"""<svg width="0" height="0" style="position:absolute" aria-hidden="true
 <radialGradient id="giantshade" cx=".5" cy=".75" r=".8"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient>
 <linearGradient id="underlight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#ff5a1f" stop-opacity=".18"/></linearGradient>
 <filter id="emberglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="bodyshade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".7" stop-color="#000" stop-opacity=".15"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>
+<filter id="steamblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
 <radialGradient id="redvig" cx=".5" cy=".5" r=".72"><stop offset=".5" stop-color="{RED}" stop-opacity="0"/><stop offset="1" stop-color="{RED}" stop-opacity=".7"/></radialGradient>
 <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <filter id="glowsoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
