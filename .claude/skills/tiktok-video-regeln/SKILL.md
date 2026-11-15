@@ -55,6 +55,14 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Markierungen:** gestrichelter Kreis um das wichtige Detail, Callout-Labels mit Linie („1 EINSCHALTEN“).
 - **Wiederkehrender Anker** (gleiches Gerät, gleiche Uhr) zur Orientierung.
 
+### 6a. Keine leeren Bilder – Detailreichtum (aus Feedback 15.11.)
+- **Jede Szene hat 3 Ebenen:** Hintergrund (Wand, Textur, Umgebung), Mittelgrund (Handlung), Vordergrund (Partikel, Licht, Rahmen). Nie eine Figur oder ein Objekt allein auf flacher Farbe.
+- **Umgebungsdetails:** Schrauben, Kabel, Paneele, Schilder, Etagennummern, Lampen, Warnstreifen, Bodenfliesen – kleine Dinge, die die Welt glaubwürdig machen.
+- **Licht statt Flachfarbe:** Lichtkegel, Glühen um Lampen, weiche Schatten unter Figuren und Objekten, Verläufe im Hintergrund, Vignette an den Rändern.
+- **Dauerhafte Mikro-Bewegung:** schwebender Staub, leichtes Lampenflackern, Atmen der Figur, sanfte Kamerafahrt – auch wenn gerade „nichts passiert“.
+- **Filmkorn** leicht über dem ganzen Video; Rückblenden zusätzlich mit Archiv-Look (Filmrand, Kratzer, Sepia).
+- **Spannungs-Akzente:** in Gefahrenmomenten rot pulsierende Vignette, Warnsymbole, schnellere Kamera; jeder Szenenwechsel mit kurzem Blitz/Ruck statt hartem Schnitt.
+
 ## 7. Untertitel
 - Eingebrannt, **immer an**, Großbuchstaben, fette serifenlose Schrift, Weiß mit leichtem Schatten.
 - **1–4 Wörter pro Einblendung**, Wechsel im Sprechrhythmus.
@@ -90,6 +98,8 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Jedes genannte Objekt erscheint im Bild
 - [ ] Fakten geprüft
 - [ ] Ende = Frage oder Teil 2
+- [ ] Keine leere Szene: 3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub/Korn, Mikro-Bewegung
+- [ ] Gefahrenmomente visuell verstärkt (rote Vignette, Warnsymbole), Szenenwechsel mit Übergang
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
@@ -106,3 +116,4 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 | Datum | Feedback des Users | Daraus abgeleitete Regel |
 |---|---|---|
 | 2026-11-15 | Erstanlage aus 3 Referenz-Videos | Abschnitte 1–11 |
+| 2026-11-15 | Video 08: „spannender und nicht so leer, Kleinigkeiten für mehr Ästhetik“ | Neuer Abschnitt 6a (3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub, Filmkorn, Mikro-Bewegung, Spannungs-Akzente, Übergänge) + 2 Checklisten-Punkte |

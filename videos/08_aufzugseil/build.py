@@ -54,6 +54,9 @@ def drift(sel, t0, t1, s0=1.0, s1=1.07):
 
 
 # ---------- SVG-Bausteine ----------
+FIGS = []
+import random as _r
+RNG = _r.Random(42)  # fester Seed → deterministisch
 def figure(fid, x, y, s=1.0, sep=False, cap=False, eyes="n"):
     """Gesichtslose Gliederpuppe (Skill: Emotion nur über Augen/Brauen). Füße bei (x,y)."""
     F = SEP_FIG if sep else FIG
@@ -62,11 +65,13 @@ def figure(fid, x, y, s=1.0, sep=False, cap=False, eyes="n"):
     if cap:
         capsvg = (f'<rect x="-58" y="-392" width="116" height="36" rx="8" fill="#5a4630"/>'
                   f'<rect x="-70" y="-362" width="140" height="12" rx="6" fill="#4a3826"/>')
+    FIGS.append(fid)
     o_n = 1 if eyes == "n" else 0
     o_w = 1 if eyes == "w" else 0
     o_c = 1 if eyes == "c" else 0
     return f'''
 <g id="{fid}"><g transform="translate({x},{y}) scale({s})">
+  <ellipse cx="0" cy="4" rx="78" ry="15" fill="#000" opacity=".38"/>
   <g id="{fid}-body">
   <rect x="-34" y="-125" width="26" height="125" rx="13" fill="{F}"/>
   <rect x="8" y="-125" width="26" height="125" rx="13" fill="{F}"/>
@@ -104,9 +109,16 @@ def cabin(cid, cx, cy, w=440, h=580, sep=False, fig=None, lamp_id=None):
     lid = f' id="{lamp_id}"' if lamp_id else ""
     return f'''
 <g id="{cid}"><g transform="translate({cx},{cy})">
+  <rect x="{-w/2+18}" y="{-h/2+26}" width="{w}" height="{h}" rx="18" fill="#000" opacity=".35"/>
   <rect x="{-w/2}" y="{-h/2}" width="{w}" height="{h}" rx="18" fill="{C}" stroke="{L}" stroke-width="8"/>
   <rect x="{-w/2+24}" y="{-h/2+24}" width="{w-48}" height="{h-48}" rx="8" fill="{'#2d241a' if sep else '#222a35'}"/>
+  <rect x="{-w/2+24}" y="{-h/2+24}" width="{w-48}" height="{h-48}" rx="8" fill="url(#cabshade)"/>
+  {"".join(f'<rect x="{-w/2+40+i*((w-80)/6):.0f}" y="{-h/2+70}" width="3" height="{h-150}" fill="#000" opacity=".18"/>' for i in range(7))}
+  <ellipse cx="0" cy="{-h/2+60}" rx="{w*0.42:.0f}" ry="{h*0.38:.0f}" fill="url({'#lampglowS' if sep else '#lampglow'})"/>
   <rect{lid} x="-90" y="{-h/2+30}" width="180" height="16" rx="8" fill="{lamp}"/>
+  <rect x="{w/2-74}" y="{-h/2+140}" width="34" height="110" rx="8" fill="{'#4a3a28' if sep else '#3a4555'}"/>
+  <circle cx="{w/2-57}" cy="{-h/2+165}" r="8" fill="{RED}"/><circle cx="{w/2-57}" cy="{-h/2+195}" r="8" fill="{'#2a2016' if sep else '#1a2029'}"/><circle cx="{w/2-57}" cy="{-h/2+225}" r="8" fill="{'#2a2016' if sep else '#1a2029'}"/>
+  <rect x="{-w/2+30}" y="{h/2-200}" width="{w-60}" height="10" rx="5" fill="{L}" opacity=".85"/>
   <line x1="0" y1="{-h/2+60}" x2="0" y2="{h/2-24}" stroke="{L}" stroke-width="4" opacity=".55"/>
   <rect x="{-w/2+24}" y="{h/2-60}" width="{w-48}" height="8" rx="4" fill="{L}" opacity=".7"/>
   <circle cx="0" cy="{-h/2-6}" r="16" fill="{L}"/>
@@ -125,11 +137,53 @@ def shaft_bg(sep=False):
     bg = SEP_BG if sep else BG
     sh = "#2a2118" if sep else SHAFT
     rl = SEP_LINE if sep else RAIL
+    pan = "#2a2118" if sep else "#171c24"
+    seam = "#3a2d1f" if sep else "#252d39"
+    bolt = "#5a4630" if sep else "#3a4452"
+    walls = ""
+    for x0, w in ((0, 250), (830, 250)):
+        for y in range(0, 1920, 320):
+            walls += (f'<rect x="{x0+8}" y="{y+8}" width="{w-16}" height="304" rx="6" fill="{pan}" stroke="{seam}" stroke-width="4"/>'
+                      + "".join(f'<circle cx="{x0+cx}" cy="{y+cy}" r="6" fill="{bolt}"/>' for cx in (26, w-26) for cy in (26, 290)))
+    # Etagenschilder an der Schachtwand
+    plates = "".join(f'<g opacity=".55" data-layout-ignore="true"><rect x="36" y="{y}" width="150" height="70" rx="10" fill="{seam}"/>'
+                     f'<text x="111" y="{y+52}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="800" font-size="46" fill="{"#8a6f4e" if sep else "#5d6b7d"}">{n}</text></g>'
+                     for y, n in ((260, "33"), (900, "32"), (1540, "31")))
+    # Kabel mit Halterungen
+    cables = (f'<path d="M 920 0 C 940 400 900 800 930 1200 S 910 1700 925 1920" stroke="#0b0e12" stroke-width="14" fill="none" opacity=".9"/>'
+              f'<path d="M 960 0 C 975 500 945 900 968 1300 S 950 1750 962 1920" stroke="{RED if not sep else "#7a3a1e"}" stroke-width="7" fill="none" opacity=".55"/>'
+              + "".join(f'<rect x="900" y="{y}" width="80" height="14" rx="4" fill="{bolt}"/>' for y in range(150, 1920, 420)))
+    # Schachttür-Rahmen + Warnstreifen
+    door = (f'<rect x="842" y="700" width="60" height="420" fill="{bg}" stroke="{seam}" stroke-width="6"/>'
+            + "".join(f'<rect x="842" y="{700+i*42}" width="60" height="20" fill="{RED if not sep else "#7a3a1e"}" opacity=".35" transform="skewY(-30)" style="transform-origin:842px {700+i*42}px"/>' for i in range(10)))
+    beam = f'<polygon points="470,0 610,0 760,1920 320,1920" fill="url(#beam{"S" if sep else ""})" opacity=".55"/>'
     return f'''
 <rect width="1080" height="1920" fill="{bg}"/>
+{walls}{plates}{cables}{door}
 <rect x="250" y="0" width="580" height="1920" fill="{sh}"/>
+{"".join(f'<rect x="{x}" y="0" width="2" height="1920" fill="#000" opacity=".25"/>' for x in range(330, 760, 70))}
+{beam}
 <rect x="286" y="0" width="16" height="1920" fill="{rl}"/>
-<rect x="778" y="0" width="16" height="1920" fill="{rl}"/>'''
+<rect x="778" y="0" width="16" height="1920" fill="{rl}"/>
+{"".join(f'<rect x="280" y="{y}" width="28" height="10" fill="{bolt}"/><rect x="772" y="{y}" width="28" height="10" fill="{bolt}"/>' for y in range(60, 1920, 240))}
+<rect x="250" y="0" width="580" height="1920" fill="url(#shaftshade)"/>'''
+
+
+def machine_bg():
+    """Maschinenraum: Wandpaneele, Rohre, Motor, Warnstreifen."""
+    pan = "".join(f'<rect x="{x+8}" y="{y+8}" width="344" height="464" rx="8" fill="#151a21" stroke="#232b36" stroke-width="4"/>'
+                  + "".join(f'<circle cx="{x+cx}" cy="{y+cy}" r="7" fill="#3a4452"/>' for cx in (30, 330) for cy in (30, 450))
+                  for x in (0, 360, 720) for y in (0, 480, 960, 1440))
+    pipes = ('<rect x="0" y="1060" width="1080" height="34" fill="#2b3442"/><rect x="0" y="1112" width="1080" height="20" fill="#232b36"/>'
+             + "".join(f'<rect x="{x}" y="1050" width="20" height="54" rx="4" fill="#4a5563"/>' for x in range(60, 1080, 200)))
+    stripes = '<g opacity=".8">' + "".join(f'<polygon points="{x},1840 {x+60},1840 {x+20},1920 {x-40},1920" fill="{RED}"/>' for x in range(-40, 1120, 120)) + '</g>'
+    motor = ('<rect x="340" y="1500" width="400" height="260" rx="22" fill="#232b36" stroke="#3a4452" stroke-width="8"/>'
+             + "".join(f'<rect x="380" y="{y}" width="320" height="10" rx="5" fill="#151a21"/>' for y in range(1540, 1720, 30))
+             + f'<circle id="led-{len(FIGS)}-{RNG.randint(0,9999)}" class="blink" cx="710" cy="1530" r="10" fill="{RED}"/>'
+             + '<rect x="380" y="1470" width="320" height="30" rx="8" fill="#151a21"/>'
+             '<text x="540" y="1494" text-anchor="middle" font-family="Inter" font-weight="800" font-size="22" fill="#7d8896" letter-spacing="5">MASCHINENRAUM</text>')
+    return (f'<rect width="1080" height="1920" fill="{BG}"/>{pan}'
+            f'<rect width="1080" height="1920" fill="url(#roomshade)"/>{pipes}{motor}<rect x="0" y="1840" width="1080" height="80" fill="#0b0e12"/>{stripes}')
 
 
 def rail_marks(mid, sep=False, span=9000):
@@ -280,7 +334,7 @@ D0, D1 = t_dein, t_doch
 arrow = lambda aid, x, txt: (f'<g id="{aid}" opacity="0"><rect x="{x-14}" y="1120" width="28" height="330" fill="{RED}"/>'
                              f'<polygon points="{x-50},1440 {x+50},1440 {x},1530" fill="{RED}"/>'
                              f'<text x="{x}" y="1600" text-anchor="middle" font-family="Inter" font-weight="900" font-size="46" fill="{WHITE}">{txt}</text></g>')
-scene("sd", D0, D1, cam("sd", f'<rect width="1080" height="1920" fill="{BG}"/>'
+scene("sd", D0, D1, cam("sd", shaft_bg()
       + cabin("d-cab", 540, 1450, 600, 760, fig=figure("d-fig", 0, 360, 1.25, eyes="w"))
       + f'<g id="d-think" opacity="0" style="transform-origin:760px 520px">'
         f'<circle cx="640" cy="760" r="18" fill="{FIG}"/><circle cx="690" cy="680" r="28" fill="{FIG}"/>'
@@ -303,7 +357,11 @@ tw(f'tl.to("#d-cab",{{y:"+=60",duration:{D1-t_faellst:.3f},ease:"power1.in"}},{t
 # --- E: „Doch jetzt wird's verrückt“ – Uhr dreht zurück ---
 E0, E1 = t_doch, t_genau
 ticks = "".join(f'<rect x="535" y="700" width="10" height="40" fill="{SEP_LIGHT}" transform="rotate({i*30} 540 960)"/>' for i in range(12))
+YEARS = ["2026", "2003", "1987", "1971", "1958", "19??"]
 scene("se", E0, E1, cam("se", f'<rect width="1080" height="1920" fill="#000"/>'
+      + "".join(f'<rect x="537" y="300" width="6" height="200" fill="{SEP_LIGHT}" opacity=".18" transform="rotate({a} 540 960)"/>' for a in range(0, 360, 15))
+      + f'<circle id="e-ring" cx="540" cy="960" r="360" fill="none" stroke="{RED}" stroke-width="6" stroke-dasharray="30 22" opacity=".7"/>'
+      + "".join(f'<text id="e-y{i}" x="540" y="1440" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="800" font-size="110" fill="{SEP_FIG if i < 5 else RED}" opacity="0">{y}</text>' for i, y in enumerate(YEARS))
       + f'<rect id="e-flash" width="1080" height="1920" fill="{RED}" opacity="0"/>'
       + f'<g id="e-clock" opacity="0" style="transform-origin:540px 960px"><circle cx="540" cy="960" r="280" fill="#1a140e" stroke="{SEP_LIGHT}" stroke-width="14"/>{ticks}'
         f'<rect id="e-h1" x="532" y="800" width="16" height="170" rx="8" fill="{SEP_FIG}" style="transform-origin:540px 960px"/>'
@@ -311,6 +369,10 @@ scene("se", E0, E1, cam("se", f'<rect width="1080" height="1920" fill="#000"/>'
 tw(f'tl.fromTo("#e-flash",{{opacity:0}},{{opacity:.85,duration:0.001,immediateRender:false}},{E0:.3f});'); tw(f'tl.fromTo("#e-flash",{{immediateRender:false}},{{opacity:0,duration:.35}},{E0:.3f});')
 pop("#e-clock", E0 + 0.15, .3, .5)
 tw(f'tl.to("#e-h2",{{rotation:-1440,svgOrigin:"540 960",duration:{E1-E0:.3f},ease:"power2.in"}},{E0:.3f});')
+tw(f'tl.to("#e-ring",{{rotation:-180,svgOrigin:"540 960",duration:{E1-E0:.3f},ease:"power1.in"}},{E0:.3f});')
+for i in range(len(YEARS)):
+    a = E0 + (E1 - E0) * i / len(YEARS)
+    toggle(f"#e-y{i}", a, E0 + (E1 - E0) * (i + 1) / len(YEARS) if i < len(YEARS) - 1 else None)
 tw(f'tl.to("#e-h1",{{rotation:-360,svgOrigin:"540 960",duration:{E1-E0:.3f},ease:"power2.in"}},{E0:.3f});')
 
 # --- F/G/H: Sepia-Skyline, 1945, Bomber + Einschlag (Genau – durchtrennt) ---
@@ -330,13 +392,17 @@ boom = "".join(f'<circle cx="{540+dx}" cy="{900+dy}" r="{r}" fill="{c}"/>' for d
                [(0, 0, 200, "#ff8a3b"), (-90, 50, 130, "#ffb35c"), (100, -40, 140, "#ff6a2b"), (0, 0, 90, "#fff2c4")])
 scene("sf", F0, F1, cam("sf", f'<rect width="1080" height="1920" fill="{SEP_BG}"/>'
       + f'<radialGradient id="gf" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#4a3926"/><stop offset="1" stop-color="{SEP_BG}"/></radialGradient>'
-      + f'<rect width="1080" height="1920" fill="url(#gf)"/>' + tower + city + fog + plane
+      + f'<rect width="1080" height="1920" fill="url(#gf)"/>' + f'<polygon id="f-sl1" points="200,1920 230,1920 -200,200 -60,160" fill="{SEP_LIGHT}" opacity=".12"/>'
+      + f'<polygon id="f-sl2" points="880,1920 910,1920 1300,260 1140,200" fill="{SEP_LIGHT}" opacity=".12"/>'
+      + tower + city + fog + plane
       + f'<g id="f-boom" opacity="0" style="transform-origin:540px 900px">{boom}</g>'
       + f'<rect id="f-white" width="1080" height="1920" fill="#fff4dc" opacity="0"/>')
       + f'<g id="f-stamp" opacity="0" style="transform-origin:540px 560px">'
         f'<rect x="210" y="440" width="660" height="230" rx="20" fill="#120d08" fill-opacity=".8" stroke="{RED}" stroke-width="10" transform="rotate(-6 540 555)"/>'
         f'<text x="540" y="535" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="44" fill="{SEP_FIG}" transform="rotate(-6 540 555)" letter-spacing="6">28. JULI</text>'
         f'<text x="540" y="640" text-anchor="middle" font-family="Inter" font-weight="900" font-size="120" fill="{RED}" transform="rotate(-6 540 555)">1945</text></g>')
+tw(f'tl.fromTo("#f-sl1",{{rotation:-8}},{{rotation:10,svgOrigin:"215 1920",duration:{F1-F0:.3f},ease:"sine.inOut"}},{F0:.3f});')
+tw(f'tl.fromTo("#f-sl2",{{rotation:9}},{{rotation:-12,svgOrigin:"895 1920",duration:{F1-F0:.3f},ease:"sine.inOut"}},{F0:.3f});')
 for i in range(4):
     tw(f'tl.fromTo("#f-fog{i}",{{x:{-150 if i%2 else 150}}},{{x:{150 if i%2 else -150},duration:{F1-F0:.3f},ease:"none"}},{F0:.3f});')
 tw(f'tl.fromTo("#f-stamp",{{opacity:0,scale:2.4,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:.22,ease:"power4.in"}},{t_1945:.3f});')
@@ -365,11 +431,17 @@ tw(f'tl.to("#i-cab",{{y:"+=40",duration:{I1-t_seile1:.3f},ease:"power2.in"}},{t_
 # --- J: Betty Lou Oliver in der Kabine (In der Kabine – Sie stürzt) ---
 J0, J1 = t_inder, t_sie
 scene("sj", J0, J1, cam("sj", f'<rect width="1080" height="1920" fill="{SEP_BG}"/>'
+      + "".join(f'<rect x="{x}" y="0" width="6" height="1920" fill="{SEP_LINE}" opacity=".25"/>' for x in range(30, 1080, 70))
+      + "".join(f'<polygon points="{x},520 {x+35},470 {x+70},520" fill="none" stroke="{SEP_LINE}" stroke-width="4" opacity=".4"/>' for x in range(0, 1080, 70))
+      + f'<g><path d="M 400 760 A 140 140 0 0 1 680 760" fill="#1a140e" stroke="{SEP_LIGHT}" stroke-width="10"/>'
+      + "".join(f'<rect x="537" y="630" width="6" height="22" fill="{SEP_LIGHT}" transform="rotate({a} 540 760)"/>' for a in range(-80, 81, 20))
+      + f'<rect id="j-needle" x="536" y="650" width="8" height="112" rx="4" fill="{RED}" transform="rotate(62 540 760)"/><circle cx="540" cy="760" r="14" fill="{SEP_LIGHT}"/></g>'
       + cabin("j-cab", 540, 1300, 620, 800, sep=True, fig=figure("j-fig", 0, 380, 1.3, sep=True, cap=True)))
       + label("j-l1", 540, 300, "LIFTFÜHRERIN", SEP_FIG, 46)
       + label("j-l2", 540, 420, "BETTY LOU OLIVER", RED, 60))
 pop("#j-cab", J0, .3, .85)
 pop("#j-l1", t_lift)
+tw(f'tl.fromTo("#j-needle",{{rotation:0}},{{rotation:-6,svgOrigin:"540 760",duration:.15,yoyo:true,repeat:{int((J1-J0)/0.15)},ease:"sine.inOut"}},{J0:.3f});')
 pop("#j-l2", t_betty)
 
 # --- K: Sturz 75 Stockwerke (Sie stürzt – Und sie überlebt) ---
@@ -394,6 +466,7 @@ for k in range(int((K1 - K0) / 0.12)):
 # --- L: „Und sie überlebt.“ ---
 L0, L1 = t_und_ueb, t_wie
 scene("sl", L0, L1, cam("sl", f'<rect width="1080" height="1920" fill="#000"/>'
+      + f'<polygon points="470,0 610,0 900,1100 180,1100" fill="url(#beamS)" opacity=".8"/><ellipse cx="540" cy="1010" rx="260" ry="40" fill="{SEP_LIGHT}" opacity=".18"/>'
       + figure("l-fig", 540, 1000, 1.6, sep=True, eyes="c")
       + f'<path id="l-ecg" d="M 60 1350 L 330 1350 L 380 1250 L 440 1470 L 500 1350 L 620 1350 L 660 1280 L 700 1420 L 740 1350 L 1020 1350" '
         f'fill="none" stroke="{RED}" stroke-width="12" stroke-linejoin="round" style="transform-origin:60px 1350px"/>'))
@@ -486,7 +559,7 @@ big_wheel = (f'<g id="r-wheel" style="transform-origin:540px 620px"><circle cx="
              + "".join(f'<rect x="530" y="370" width="20" height="500" rx="10" fill="{ROPE}" transform="rotate({a} 540 620)"/>' for a in (0, 45, 90, 135))
              + "".join(f'<circle id="r-fw{i}" cx="{540+150*__import__("math").cos(i*3.1416)}" cy="620" r="34" fill="{LAMP}"/>' for i in range(2))
              + '</g>')
-scene("sr", R0, R1, cam("sr", f'<rect width="1080" height="1920" fill="{BG}"/>' + big_wheel
+scene("sr", R0, R1, cam("sr", machine_bg() + big_wheel
       + f'<line id="r-rope" x1="810" y1="620" x2="810" y2="1920" stroke="{RED}" stroke-width="16" stroke-dasharray="60 26"/>'
       + f'<line x1="270" y1="620" x2="270" y2="1920" stroke="{ROPE}" stroke-width="16"/>')
       + label("r-l1", 540, 1260, "DAS DÜNNE SEIL", RED, 50)
@@ -501,7 +574,7 @@ pop("#r-l2", t_gesch)
 S0, S1 = t_wird, t_krallt
 wedge = lambda wid, x, flip: (f'<polygon id="{wid}" points="{x},1180 {x+flip*90},1220 {x+flip*90},1420 {x},1460" fill="{RED}"/>')
 sparks2 = "".join(f'<rect id="s-spk{i}" x="{300 if i<6 else 770}" y="1320" width="30" height="6" rx="3" fill="{LAMP}" opacity="0"/>' for i in range(12))
-scene("ss", S0, S1, cam("ss", f'<rect width="1080" height="1920" fill="{BG}"/>'
+scene("ss", S0, S1, cam("ss", machine_bg()
       + f'<g id="s-top"><g id="s-wheel" style="transform-origin:540px 420px"><circle cx="540" cy="420" r="220" fill="#2b3442" stroke="{ROPE}" stroke-width="20"/>'
         + "".join(f'<rect x="531" y="215" width="18" height="410" rx="9" fill="{ROPE}" transform="rotate({a} 540 420)"/>' for a in (0, 45, 90, 135))
         + f'</g><g id="s-lock" opacity="0" style="transform-origin:540px 420px"><circle cx="540" cy="420" r="250" fill="none" stroke="{RED}" stroke-width="16"/>'
@@ -567,6 +640,11 @@ pop("#u-l2", t_feder)
 V0, V1 = t_also, TOTAL
 stairs = "".join(f'<rect x="{640+i*55}" y="{1500-i*60}" width="{440-i*55}" height="60" fill="#3a4452"/>' for i in range(8))
 scene("sv", V0, V1, cam("sv", f'<rect width="1080" height="1920" fill="{BG}"/>'
+      + "".join(f'<rect x="{x}" y="{y}" width="116" height="116" rx="6" fill="#151a21" stroke="#1d232c" stroke-width="4"/>' for x in range(0, 1080, 120) for y in range(0, 1620, 120))
+      + f'<polygon points="500,0 580,0 860,1620 220,1620" fill="url(#beam)" opacity=".5"/><rect x="470" y="0" width="140" height="26" rx="10" fill="{LAMP}"/>'
+      + f'<rect x="510" y="1260" width="44" height="80" rx="10" fill="#0b0e12" stroke="#3a4452" stroke-width="4"/><circle id="v-btn" cx="532" cy="1300" r="12" fill="{RED}"/>'
+      + "".join(f'<rect x="{x}" y="1620" width="236" height="300" fill="{"#1a2029" if (x//240)%2 else "#161b22"}"/>' for x in range(0, 1080, 240))
+      + f'<rect x="100" y="1630" width="380" height="120" fill="#566173" opacity=".08"/>'
       + f'<rect x="80" y="1080" width="420" height="540" rx="12" fill="#2b3442" stroke="{CAB_LINE}" stroke-width="8"/>'
       + f'<g id="v-doorL"><rect x="100" y="1100" width="188" height="500" fill="#566173"/></g>'
       + f'<g id="v-doorR"><rect x="292" y="1100" width="188" height="500" fill="#566173"/></g>'
@@ -636,6 +714,104 @@ for k, c in enumerate(chunks):
                 f'style="font-size:{fs}px">{" ".join(parts)}</div>')
     tw(f'tl.fromTo("#{sid}",{{scale:.82,opacity:0}},{{scale:1,opacity:1,duration:.09,ease:"power2.out"}},{s:.3f});')
 
+
+# ================= GLOBALE EBENEN (Skill 6a) =================
+import zlib, struct, base64
+
+
+def noise_png(n=256, seed=3):
+    rr = _r.Random(seed)
+    raw = b"".join(b"\x00" + bytes(v for _ in range(n) for v in (lambda g: (g, g, g, rr.randint(0, 38)))(rr.randint(0, 255))) for _ in range(n))
+    def chunk(t, d):
+        return struct.pack(">I", len(d)) + t + d + struct.pack(">I", zlib.crc32(t + d) & 0xffffffff)
+    png = b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", n, n, 8, 6, 0, 0, 0)) + chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b"")
+    return base64.b64encode(png).decode()
+
+
+DEFS = f"""<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<radialGradient id="lampglow" cx=".5" cy="0" r="1"><stop offset="0" stop-color="{LAMP}" stop-opacity=".45"/><stop offset="1" stop-color="{LAMP}" stop-opacity="0"/></radialGradient>
+<radialGradient id="lampglowS" cx=".5" cy="0" r="1"><stop offset="0" stop-color="{SEP_LIGHT}" stop-opacity=".45"/><stop offset="1" stop-color="{SEP_LIGHT}" stop-opacity="0"/></radialGradient>
+<linearGradient id="cabshade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{LAMP}" stop-opacity=".22"/><stop offset="1" stop-color="{LAMP}" stop-opacity="0"/></linearGradient>
+<linearGradient id="beamS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{SEP_LIGHT}" stop-opacity=".3"/><stop offset="1" stop-color="{SEP_LIGHT}" stop-opacity="0"/></linearGradient>
+<linearGradient id="shaftshade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".3" stop-color="#000" stop-opacity="0"/><stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>
+<radialGradient id="roomshade" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="#2b3442" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient>
+<radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient>
+<radialGradient id="redvig" cx=".5" cy=".5" r=".72"><stop offset=".5" stop-color="{RED}" stop-opacity="0"/><stop offset="1" stop-color="{RED}" stop-opacity=".75"/></radialGradient>
+<radialGradient id="sepvig" cx=".5" cy=".5" r=".75"><stop offset=".45" stop-color="#2a1a08" stop-opacity="0"/><stop offset="1" stop-color="#1a0f04" stop-opacity=".85"/></radialGradient>
+</defs></svg>"""
+
+OVER = []  # zusätzliche Clip-Ebenen über den Szenen (unter den Untertiteln)
+
+# Staub + Vignette über dem ganzen Video
+dust = []
+for i in range(46):
+    x = RNG.randint(0, 1080); y = RNG.randint(0, 1920); r = RNG.choice([2, 3, 3, 4, 5, 7])
+    op = RNG.uniform(.15, .45)
+    dust.append(f'<circle id="dust{i}" cx="{x}" cy="{y}" r="{r}" fill="#fff4dc" opacity="{op:.2f}"/>')
+    dur = RNG.uniform(6, 14); dx = RNG.randint(-80, 80)
+    tw(f'tl.fromTo("#dust{i}",{{x:0,y:0}},{{x:{dx},y:{-RNG.randint(250, 600)},duration:{dur:.2f},ease:"none",repeat:{int(TOTAL/dur)+1},yoyo:true}},0);')
+OVER.append(f'<div id="ov-dust" class="clip ov" data-start="0" data-duration="{TOTAL}" data-track-index="5" style="z-index:5">'
+            f'<svg viewBox="0 0 1080 1920" width="1080" height="1920">{"".join(dust)}<rect width="1080" height="1920" fill="url(#vig)"/></svg></div>')
+
+# Filmkorn (gekachelte Rauschtextur, ruckelt alle 0,1 s)
+OVER.append(f'<div id="ov-grain" class="clip ov" data-start="0" data-duration="{TOTAL}" data-track-index="6" '
+            f'style="z-index:6;left:-128px;top:-128px;width:1336px;height:2176px;opacity:.5;mix-blend-mode:overlay;'
+            f'background-image:url(data:image/png;base64,{noise_png()});background-size:256px 256px"></div>')
+k = 0
+t = 0.0
+while t < TOTAL:
+    tw(f'tl.set("#ov-grain",{{x:{RNG.randint(-120, 120)},y:{RNG.randint(-120, 120)}}},{t:.2f});')
+    t += 0.1; k += 1
+
+# Archiv-Look für die Rückblenden (Filmrand, Kratzer, Sepia-Vignette, Flackern)
+def archive(aid, t0, t1):
+    perf = "".join(f'<rect x="14" y="{y}" width="34" height="46" rx="8" fill="#0d0905"/><rect x="1032" y="{y}" width="34" height="46" rx="8" fill="#0d0905"/>' for y in range(10, 1920, 90))
+    scr = "".join(f'<rect id="{aid}-sc{i}" x="0" y="0" width="3" height="1920" fill="#f3e2c0" opacity="0"/>' for i in range(3))
+    OVER.append(f'<div id="{aid}" class="clip ov" data-start="{t0:.3f}" data-duration="{t1-t0:.3f}" data-track-index="7" style="z-index:7">'
+                f'<svg viewBox="0 0 1080 1920" width="1080" height="1920"><rect width="1080" height="1920" fill="url(#sepvig)"/>'
+                f'<rect x="0" y="0" width="62" height="1920" fill="#1a120a" opacity=".9"/><rect x="1018" y="0" width="62" height="1920" fill="#1a120a" opacity=".9"/>{perf}{scr}'
+                f'<rect id="{aid}-fl" width="1080" height="1920" fill="#fff1d0" opacity="0"/>'
+                f'<g opacity=".85"><circle cx="110" cy="1820" r="10" fill="{RED}"/><text x="132" y="1832" font-family="JetBrains Mono, monospace" font-weight="800" font-size="32" fill="{SEP_FIG}">ARCHIV · 1945</text></g></svg></div>')
+    tt = t0; j = 0
+    while tt < t1:
+        for i in range(3):
+            on = RNG.random() < 0.55
+            tw(f'tl.set("#{aid}-sc{i}",{{opacity:{RNG.uniform(.15,.4) if on else 0:.2f},x:{RNG.randint(80, 1000)}}},{tt:.2f});')
+        tw(f'tl.set("#{aid}-fl",{{opacity:{RNG.choice([0, 0, .03, .06]):.2f}}},{tt:.2f});')
+        tt += 0.12; j += 1
+
+archive("ov-arch1", t_genau, t_wie)
+archive("ov-arch2", t_bei, t_also)
+
+# Gefahr: rot pulsierende Vignette + Warnsymbole
+def danger(did, t0, t1):
+    tri = lambda x: (f'<g transform="translate({x},560)"><polygon points="0,-60 62,48 -62,48" fill="{RED}"/>'
+                     f'<rect x="-7" y="-28" width="14" height="46" rx="6" fill="#fff"/><circle cx="0" cy="32" r="8" fill="#fff"/></g>')
+    OVER.append(f'<div id="{did}" class="clip ov" data-start="{t0:.3f}" data-duration="{t1-t0:.3f}" data-track-index="8" style="z-index:8">'
+                f'<svg viewBox="0 0 1080 1920" width="1080" height="1920"><rect id="{did}-v" width="1080" height="1920" fill="url(#redvig)" opacity=".3"/>'
+                f'<g id="{did}-w">{tri(110)}{tri(970)}</g></svg></div>')
+    tw(f'tl.fromTo("#{did}-v",{{opacity:.25}},{{opacity:.85,duration:.32,yoyo:true,repeat:{int((t1-t0)/0.32)},ease:"sine.inOut"}},{t0:.3f});')
+    tw(f'tl.fromTo("#{did}-w",{{opacity:1}},{{opacity:.15,duration:.32,yoyo:true,repeat:{int((t1-t0)/0.32)},ease:"steps(1)"}},{t0:.3f});')
+
+danger("ov-d1", t_sie, t_und_ueb)
+danger("ov-d2", t_reissen, t_und_g)
+danger("ov-d3", t_knall, t_dein)
+
+# Blitz-Übergang bei jedem Szenenwechsel
+OVER.append(f'<div id="ov-cut" class="clip ov" data-start="0" data-duration="{TOTAL}" data-track-index="9" style="z-index:9;background:#fff;opacity:0"></div>')
+for sid, t0, t1, *_ in SCENES[1:]:
+    tw(f'tl.fromTo("#ov-cut",{{opacity:0}},{{opacity:.28,duration:0.001,immediateRender:false}},{t0:.3f});')
+    tw(f'tl.fromTo("#ov-cut",{{immediateRender:false}},{{opacity:0,duration:.22,ease:"power2.out"}},{t0+0.001:.3f});')
+
+# Figuren atmen, LEDs blinken, Kamera wiegt leicht
+for fid in FIGS:
+    tw(f'tl.fromTo("#{fid}-body",{{scaleY:1}},{{scaleY:1.022,transformOrigin:"50% 100%",duration:1.3,yoyo:true,repeat:{int(TOTAL/1.3)},ease:"sine.inOut"}},0);')
+tw(f'tl.fromTo(".blink",{{opacity:1}},{{opacity:.15,duration:.45,yoyo:true,repeat:{int(TOTAL/.45)},ease:"steps(1)"}},0);')
+tw(f'tl.fromTo("#v-btn",{{opacity:1}},{{opacity:.3,duration:.4,yoyo:true,repeat:10,ease:"sine.inOut"}},{t_also:.3f});')
+for sid, t0, t1, *_ in SCENES:
+    tw(f'tl.fromTo("#{sid}-cam",{{rotation:-0.6}},{{rotation:0.6,svgOrigin:"540 960",duration:{max(t1-t0,0.2):.3f},ease:"sine.inOut"}},{t0:.3f});')
+
 # ================= HTML =================
 scene_html = []
 for sid, t0, t1, svg_inner, extra in SCENES:
@@ -658,10 +834,11 @@ doc = f'''<!doctype html>
       .scene {{ position: absolute; inset: 0; }}
       .scene svg {{ display: block; }}
       .scene svg g, .scene svg rect, .scene svg circle, .scene svg path, .scene svg ellipse, .scene svg polygon, .scene svg line {{ transform-box: view-box; }}
+      .ov {{ position: absolute; inset: 0; pointer-events: none; }}
       .sub {{
         position: absolute; left: 40px; right: 40px; top: 960px; transform-origin: 50% 50%;
         margin-top: -0.6em; text-align: center; color: var(--ink); font-weight: 900; line-height: 1.1;
-        letter-spacing: -0.01em; white-space: nowrap; z-index: 10;
+        letter-spacing: -0.01em; white-space: nowrap; z-index: 20;
         -webkit-text-stroke: 14px #000; paint-order: stroke fill;
         text-shadow: 0 6px 0 #000, 0 0 30px rgba(0,0,0,.65);
       }}
@@ -672,7 +849,9 @@ doc = f'''<!doctype html>
     <div id="root" data-composition-id="main" data-start="0" data-duration="{TOTAL}" data-width="1080" data-height="1920">
       <audio id="vo" class="clip" data-start="0" data-duration="80.24" data-volume="1" src="assets/voiceover.mp3"></audio>
       <audio id="sfx" class="clip" data-start="0" data-duration="{TOTAL}" data-volume="0.45" src="assets/sfx_bed.wav"></audio>
+      {DEFS}
       {"".join(scene_html)}
+      {"".join(OVER)}
       {"".join(subs)}
     </div>
     <script>

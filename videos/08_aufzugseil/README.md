@@ -8,7 +8,7 @@ python3 build.py      # index.html aus assets/words.json (wortgenaue Voiceover-Z
 python3 make_sfx.py   # assets/sfx_bed.wav (Drone + Soundeffekte an den Cues)
 npx hyperframes check
 npx hyperframes render -o render.mp4
-ffmpeg -i render.mp4 -c:v copy -af loudnorm=I=-12.5:TP=-1.0:LRA=11 -c:a aac -b:a 192k ../08_Aufzugseil_final.mp4
+ffmpeg -i render.mp4 -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p -movflags +faststart -af loudnorm=I=-12.5:TP=-1.0:LRA=11 -c:a aac -b:a 192k ../08_Aufzugseil_final.mp4
 ```
 
 - `assets/voiceover.mp3` – ElevenLabs, Stimme „Mark - Natural Conversations“
