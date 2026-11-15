@@ -10,6 +10,7 @@ Komplett-Plan für ein TikTok-Business ohne Gesicht, das nur über das **TikTok 
 | [04_30-Tage-Posting-Plan.md](04_30-Tage-Posting-Plan.md) | Tag-für-Tag-Plan, Review-Kennzahlen, Workflow |
 | [05_Geldmodell-und-1000-Euro-Rechnung.md](05_Geldmodell-und-1000-Euro-Rechnung.md) | Einnahmequellen, Rechnung bis 1.000 €/Tag, Szenarien, Kosten, Recht |
 | [06_Referenz-Analyse.md](06_Referenz-Analyse.md) | Analyse der 3 Referenz-Videos (Einstieg, Tempo, Länge, Bildsprache, Spannung) |
+| [07_20-Themen.md](07_20-Themen.md) | 20 Themen-Fragen, nach Neugier sortiert, Top 5 markiert |
 | [.claude/skills/tiktok-video-regeln/SKILL.md](.claude/skills/tiktok-video-regeln/SKILL.md) | Skill mit allen Video-Regeln + Feedback-Log |
 
 **Empfehlung:** Nische „Clever Haushalt“ (Putz-, Küchen- und Ordnungs-Hacks + ehrliche Produkttests).
