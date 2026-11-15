@@ -38,15 +38,16 @@ def toggle(sel, t_on, t_off=None):
         tw(f'tl.set("{sel}",{{opacity:0}},{t_off:.3f});')
 
 
-def pop(sel, t, dur=0.18, frm=0.6):
-    tw(f'tl.fromTo("{sel}",{{opacity:0,scale:{frm},transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:{dur},ease:"back.out(2)"}},{t:.3f});')
+def pop(sel, t, dur=0.32, frm=0.88):
+    tw(f'tl.fromTo("{sel}",{{opacity:0,scale:{frm},transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:{dur},ease:"power3.out"}},{t:.3f});')
 
 
 def shake(sel, t, n=8, amp=18, step=0.035):
+    n = min(n, 6); amp = amp * 0.45; step = 0.06
     for i in range(n):
         x = amp * (1 if i % 2 == 0 else -1) * (1 - i / n)
-        tw(f'tl.to("{sel}",{{x:{x:.1f},y:{-x/2:.1f},duration:{step}}},{t + i*step:.3f});')
-    tw(f'tl.to("{sel}",{{x:0,y:0,duration:{step}}},{t + n*step:.3f});')
+        tw(f'tl.to("{sel}",{{x:{x:.1f},y:{-x/3:.1f},duration:{step},ease:"sine.inOut"}},{t + i*step:.3f});')
+    tw(f'tl.to("{sel}",{{x:0,y:0,duration:.12,ease:"sine.out"}},{t + n*step:.3f});')
 
 
 def drift(sel, t0, t1, s0=1.0, s1=1.07):
@@ -66,6 +67,18 @@ def figure(fid, x, y, s=1.0, sep=False, cap=False, eyes="n"):
         capsvg = (f'<rect x="-58" y="-392" width="116" height="36" rx="8" fill="#5a4630"/>'
                   f'<rect x="-70" y="-362" width="140" height="12" rx="6" fill="#4a3826"/>')
     FIGS.append(fid)
+    if cap:   # Liftführerin 1945: Uniformjacke, Messingknöpfe, dunkle Hose
+        H, H2, P, SH = ("#6e3b2a", "#57301f", "#2e241b", "#1d1610")
+        jacket = ('<rect x="-3" y="-250" width="6" height="128" fill="#57301f"/>'
+                  + "".join(f'<circle cx="0" cy="{y}" r="6" fill="#c9a24b"/>' for y in (-228, -198, -168, -138))
+                  + '<rect x="-62" y="-150" width="124" height="12" fill="#2a1d13"/><rect x="-10" y="-152" width="20" height="16" rx="3" fill="#c9a24b"/>')
+        collar = '<polygon points="-30,-262 0,-228 -8,-262" fill="#e6d2ad"/><polygon points="30,-262 0,-228 8,-262" fill="#e6d2ad"/>'
+    else:     # Standard-Outfit: Petrol-Hoodie, Jeans, helle Sneaker
+        H, H2, P, SH = (("#4f6a5c", "#3f5649", "#2f3a4a", "#d8ccb0") if sep else ("#2f6f73", "#265b5e", "#2c3a52", "#eef0f3"))
+        jacket = ('<ellipse cx="0" cy="-252" rx="46" ry="16" fill="#1f4b4e"/>'
+                  '<rect x="-12" y="-248" width="4" height="40" rx="2" fill="#e6e9ee"/><rect x="8" y="-248" width="4" height="40" rx="2" fill="#e6e9ee"/>'
+                  '<rect x="-40" y="-178" width="80" height="34" rx="12" fill="#265b5e"/>')
+        collar = ""
     o_n = 1 if eyes == "n" else 0
     o_w = 1 if eyes == "w" else 0
     o_c = 1 if eyes == "c" else 0
@@ -73,12 +86,20 @@ def figure(fid, x, y, s=1.0, sep=False, cap=False, eyes="n"):
 <g id="{fid}"><g transform="translate({x},{y}) scale({s})">
   <ellipse cx="0" cy="4" rx="78" ry="15" fill="#000" opacity=".38"/>
   <g id="{fid}-body">
-  <rect x="-34" y="-125" width="26" height="125" rx="13" fill="{F}"/>
-  <rect x="8" y="-125" width="26" height="125" rx="13" fill="{F}"/>
-  <rect x="-58" y="-255" width="116" height="145" rx="34" fill="{F}"/>
-  <rect x="-84" y="-245" width="24" height="120" rx="12" fill="{F}" id="{fid}-armL"/>
-  <rect x="60" y="-245" width="24" height="120" rx="12" fill="{F}" id="{fid}-armR"/>
-  <rect x="-12" y="-275" width="24" height="26" rx="8" fill="{F}"/>
+  <rect x="-34" y="-128" width="27" height="124" rx="12" fill="{P}"/>
+  <rect x="7" y="-128" width="27" height="124" rx="12" fill="{P}"/>
+  <rect x="-28" y="-60" width="4" height="50" rx="2" fill="#000" opacity=".18"/><rect x="24" y="-60" width="4" height="50" rx="2" fill="#000" opacity=".18"/>
+  <ellipse cx="-22" cy="-6" rx="25" ry="12" fill="{SH}"/><ellipse cx="22" cy="-6" rx="25" ry="12" fill="{SH}"/>
+  <rect x="-44" y="-12" width="44" height="6" rx="3" fill="#000" opacity=".25"/><rect x="0" y="-12" width="44" height="6" rx="3" fill="#000" opacity=".25"/>
+  <rect x="-62" y="-258" width="124" height="152" rx="36" fill="{H}"/>
+  <rect x="-62" y="-128" width="124" height="18" rx="9" fill="{H2}"/>
+  {jacket}
+  <rect x="-88" y="-248" width="28" height="112" rx="13" fill="{H}" id="{fid}-armL"/>
+  <rect x="60" y="-248" width="28" height="112" rx="13" fill="{H}" id="{fid}-armR"/>
+  <rect x="-88" y="-150" width="28" height="14" rx="6" fill="{H2}"/><rect x="60" y="-150" width="28" height="14" rx="6" fill="{H2}"/>
+  <circle cx="-74" cy="-126" r="13" fill="{F}"/><circle cx="74" cy="-126" r="13" fill="{F}"/>
+  <rect x="-12" y="-278" width="24" height="26" rx="8" fill="{F}"/>
+  {collar}
   <circle cx="0" cy="-320" r="64" fill="{F}"/>
   {capsvg}
   <g id="{fid}-eyes-n" opacity="{o_n}">
@@ -181,7 +202,7 @@ def machine_bg():
              + "".join(f'<rect x="380" y="{y}" width="320" height="10" rx="5" fill="#151a21"/>' for y in range(1540, 1720, 30))
              + f'<circle id="led-{len(FIGS)}-{RNG.randint(0,9999)}" class="blink" cx="710" cy="1530" r="10" fill="{RED}"/>'
              + '<rect x="380" y="1470" width="320" height="30" rx="8" fill="#151a21"/>'
-             '<text x="540" y="1494" text-anchor="middle" font-family="Inter" font-weight="800" font-size="22" fill="#7d8896" letter-spacing="5">MASCHINENRAUM</text>')
+             '<text x="540" y="1494" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="22" fill="#7d8896" letter-spacing="5">MASCHINENRAUM</text>')
     return (f'<rect width="1080" height="1920" fill="{BG}"/>{pan}'
             f'<rect width="1080" height="1920" fill="url(#roomshade)"/>{pipes}{motor}<rect x="0" y="1840" width="1080" height="80" fill="#0b0e12"/>{stripes}')
 
@@ -196,7 +217,7 @@ def rail_marks(mid, sep=False, span=9000):
 
 
 def label(lid, x, y, text, col=RED, size=40, anchor="middle", op=0, fill_bg=True):
-    tw_ = len(text) * size * 0.64 + 44
+    tw_ = len(text) * size * 0.68 + 48
     if anchor == "middle":
         rx = x - tw_/2
     elif anchor == "start":
@@ -206,16 +227,16 @@ def label(lid, x, y, text, col=RED, size=40, anchor="middle", op=0, fill_bg=True
     bg = (f'<rect x="{rx:.0f}" y="{y-size*0.95:.0f}" width="{tw_:.0f}" height="{size*1.4:.0f}" rx="{size*0.7:.0f}" '
           f'fill="#0b0e12" fill-opacity=".85" stroke="{col}" stroke-width="5"/>') if fill_bg else ""
     return (f'<g id="{lid}" opacity="{op}" style="transform-box:fill-box;transform-origin:center">{bg}'
-            f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-family="Inter, sans-serif" '
-            f'font-weight="800" font-size="{size}" fill="{col}">{html.escape(text)}</text></g>')
+            f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-family="Poppins, sans-serif" '
+            f'font-weight="700" font-size="{size}" fill="{col}">{html.escape(text)}</text></g>')
 
 
 def hud(hid, floor_vals, speed_vals):
     """Diegetische Anzeige oben: Etage + Geschwindigkeit. *_vals: [(t, text, color)]"""
     out = [f'<g id="{hid}" transform="translate(0,90)">',
            '<rect x="190" y="110" width="700" height="210" rx="34" fill="#0b0e12" stroke="#3a4452" stroke-width="6"/>',
-           '<text x="365" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="30" fill="#7d8896" letter-spacing="4">ETAGE</text>',
-           '<text x="715" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="30" fill="#7d8896" letter-spacing="4">TEMPO M/S</text>',
+           '<text x="365" y="165" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="30" fill="#7d8896" letter-spacing="4">ETAGE</text>',
+           '<text x="715" y="165" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="30" fill="#7d8896" letter-spacing="4">TEMPO M/S</text>',
            '<line x1="540" y1="140" x2="540" y2="290" stroke="#3a4452" stroke-width="4"/>']
     for i, (t, txt, col) in enumerate(floor_vals):
         out.append(f'<text id="{hid}-f{i}" x="365" y="282" text-anchor="middle" font-family="JetBrains Mono, monospace" '
@@ -235,6 +256,7 @@ def hud_anim(hid, floor_vals, speed_vals, t_end):
 
 
 SCENES = []
+XF = 0.3  # Überblendung zwischen Szenen (s)
 
 
 def scene(sid, t0, t1, svg_inner, extra_html=""):
@@ -316,7 +338,7 @@ burst = "".join(f'<polygon points="540,40 {540+int(170*__import__("math").cos(a)
 scene("sc", C0, C1, cam("sc", shaft_bg() + ropes("c-r", rope_xs, 0, 1060)
       + cabin("c-cab", 540, 1350, fig=figure("c-fig", 0, 270, 0.95), lamp_id="c-lamp")
       + f'<g id="c-burst" opacity="0" style="transform-origin:540px 40px">{burst}'
-        f'<text x="540" y="560" text-anchor="middle" font-family="Inter" font-weight="900" font-size="120" fill="{RED}">KNALL!</text></g>'
+        f'<text x="540" y="560" text-anchor="middle" font-family="Poppins" font-weight="900" font-size="120" fill="{RED}">KNALL!</text></g>'
       + f'<rect id="c-dark" width="1080" height="1920" fill="#000" opacity="0"/>')
       + hud("hc", [(C0, "32", WHITE)], [(C0, "0,0", WHITE)]))
 hud_anim("hc", [(C0, "32", WHITE)], [(C0, "0,0", WHITE)], C1)
@@ -333,14 +355,14 @@ for i, d in enumerate(fl):
 D0, D1 = t_dein, t_doch
 arrow = lambda aid, x, txt: (f'<g id="{aid}" opacity="0"><rect x="{x-14}" y="1120" width="28" height="330" fill="{RED}"/>'
                              f'<polygon points="{x-50},1440 {x+50},1440 {x},1530" fill="{RED}"/>'
-                             f'<text x="{x}" y="1600" text-anchor="middle" font-family="Inter" font-weight="900" font-size="46" fill="{WHITE}">{txt}</text></g>')
+                             f'<text x="{x}" y="1600" text-anchor="middle" font-family="Poppins" font-weight="900" font-size="46" fill="{WHITE}">{txt}</text></g>')
 scene("sd", D0, D1, cam("sd", shaft_bg()
       + cabin("d-cab", 540, 1450, 600, 760, fig=figure("d-fig", 0, 360, 1.25, eyes="w"))
       + f'<g id="d-think" opacity="0" style="transform-origin:760px 520px">'
         f'<circle cx="640" cy="760" r="18" fill="{FIG}"/><circle cx="690" cy="680" r="28" fill="{FIG}"/>'
         f'<ellipse cx="800" cy="520" rx="210" ry="130" fill="{FIG}"/>'
-        f'<text x="800" y="505" text-anchor="middle" font-family="Inter" font-weight="900" font-size="54" fill="{INK}">HOCH-</text>'
-        f'<text x="800" y="565" text-anchor="middle" font-family="Inter" font-weight="900" font-size="54" fill="{INK}">SPRINGEN?</text></g>'
+        f'<text x="800" y="505" text-anchor="middle" font-family="Poppins" font-weight="900" font-size="54" fill="{INK}">HOCH-</text>'
+        f'<text x="800" y="565" text-anchor="middle" font-family="Poppins" font-weight="900" font-size="54" fill="{INK}">SPRINGEN?</text></g>'
       + f'<g id="d-x" opacity="0" style="transform-origin:540px 1250px"><rect x="490" y="900" width="100" height="700" rx="40" fill="{RED}" transform="rotate(45 540 1250)"/>'
         f'<rect x="490" y="900" width="100" height="700" rx="40" fill="{RED}" transform="rotate(-45 540 1250)"/></g>'
       + arrow("d-a1", 120, "KABINE") + arrow("d-a2", 960, "DU")))
@@ -399,8 +421,8 @@ scene("sf", F0, F1, cam("sf", f'<rect width="1080" height="1920" fill="{SEP_BG}"
       + f'<rect id="f-white" width="1080" height="1920" fill="#fff4dc" opacity="0"/>')
       + f'<g id="f-stamp" opacity="0" style="transform-origin:540px 560px">'
         f'<rect x="210" y="440" width="660" height="230" rx="20" fill="#120d08" fill-opacity=".8" stroke="{RED}" stroke-width="10" transform="rotate(-6 540 555)"/>'
-        f'<text x="540" y="535" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="44" fill="{SEP_FIG}" transform="rotate(-6 540 555)" letter-spacing="6">28. JULI</text>'
-        f'<text x="540" y="640" text-anchor="middle" font-family="Inter" font-weight="900" font-size="120" fill="{RED}" transform="rotate(-6 540 555)">1945</text></g>')
+        f'<text x="540" y="535" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="44" fill="{SEP_FIG}" transform="rotate(-6 540 555)" letter-spacing="6">28. JULI</text>'
+        f'<text x="540" y="640" text-anchor="middle" font-family="Poppins" font-weight="900" font-size="120" fill="{RED}" transform="rotate(-6 540 555)">1945</text></g>')
 tw(f'tl.fromTo("#f-sl1",{{rotation:-8}},{{rotation:10,svgOrigin:"215 1920",duration:{F1-F0:.3f},ease:"sine.inOut"}},{F0:.3f});')
 tw(f'tl.fromTo("#f-sl2",{{rotation:9}},{{rotation:-12,svgOrigin:"895 1920",duration:{F1-F0:.3f},ease:"sine.inOut"}},{F0:.3f});')
 for i in range(4):
@@ -461,13 +483,13 @@ tw(f'tl.fromTo("#k-marks",{{y:0}},{{y:-7000,duration:{K1-K0:.3f},ease:"power2.in
 for i in range(5):
     tw(f'tl.fromTo("#k-sl{i}",{{y:1400}},{{y:-600,duration:.35,repeat:{int((K1-K0)/0.35)},ease:"none"}},{K0 + i*0.07:.3f});')
 for k in range(int((K1 - K0) / 0.12)):
-    tw(f'tl.set("#k-cab",{{x:{(-1)**k * 6}}},{K0 + k*0.12:.3f});')
+    tw(f'tl.to("#k-cab",{{x:{(-1)**k * 3},duration:.12,ease:"sine.inOut"}},{K0 + k*0.12:.3f});')
 
 # --- L: „Und sie überlebt.“ ---
 L0, L1 = t_und_ueb, t_wie
 scene("sl", L0, L1, cam("sl", f'<rect width="1080" height="1920" fill="#000"/>'
       + f'<polygon points="470,0 610,0 900,1100 180,1100" fill="url(#beamS)" opacity=".8"/><ellipse cx="540" cy="1010" rx="260" ry="40" fill="{SEP_LIGHT}" opacity=".18"/>'
-      + figure("l-fig", 540, 1000, 1.6, sep=True, eyes="c")
+      + figure("l-fig", 540, 1000, 1.6, sep=True, cap=True, eyes="c")
       + f'<path id="l-ecg" d="M 60 1350 L 330 1350 L 380 1250 L 440 1470 L 500 1350 L 620 1350 L 660 1280 L 700 1420 L 740 1350 L 1020 1350" '
         f'fill="none" stroke="{RED}" stroke-width="12" stroke-linejoin="round" style="transform-origin:60px 1350px"/>'))
 tw(f'tl.fromTo("#l-fig",{{opacity:0}},{{opacity:1,duration:.5}},{L0:.3f});')
@@ -479,7 +501,7 @@ M0, M1 = t_wie, t_erst
 scene("sm", M0, M1, cam("sm", shaft_bg() + ropes("m-r", rope_xs, 0, 1060)
       + cabin("m-cab", 540, 1350, fig=figure("m-fig", 0, 270, 0.95, eyes="w"))
       + f'<g id="m-q" opacity="0" style="transform-origin:840px 560px"><circle cx="840" cy="560" r="110" fill="{RED}"/>'
-        f'<text x="840" y="610" text-anchor="middle" font-family="Inter" font-weight="900" font-size="150" fill="{WHITE}">?</text></g>')
+        f'<text x="840" y="610" text-anchor="middle" font-family="Poppins" font-weight="900" font-size="150" fill="{WHITE}">?</text></g>')
       + hud("hm", [(M0, "32", WHITE)], [(M0, "0,0", WHITE)])
       + label("m-heute", 300, 560, "HEUTE", RED, 56))
 hud_anim("hm", [(M0, "32", WHITE)], [(M0, "0,0", WHITE)], M1)
@@ -701,18 +723,18 @@ for k, c in enumerate(chunks):
     parts, plain = [], []
     for w in c:
         t = DISPLAY.get(w["t"], w["t"])
-        up = t.upper()
+        up = t
         plain.append(up)
         if norm(w["t"]) in KEY:
             parts.append(f'<span class="k">{html.escape(up)}</span>')
         else:
             parts.append(html.escape(up))
     ln = len(" ".join(plain))
-    fs = min(104, int(1000 / (0.66 * max(ln, 1))))
+    fs = min(62, int(980 / (0.56 * max(ln, 1))))
     sid = f"sub{k}"
     subs.append(f'<div id="{sid}" class="clip sub" data-start="{s:.3f}" data-duration="{e-s:.3f}" data-track-index="9" '
                 f'style="font-size:{fs}px">{" ".join(parts)}</div>')
-    tw(f'tl.fromTo("#{sid}",{{scale:.82,opacity:0}},{{scale:1,opacity:1,duration:.09,ease:"power2.out"}},{s:.3f});')
+    tw(f'tl.fromTo("#{sid}",{{y:14,opacity:0}},{{y:0,opacity:1,duration:.16,ease:"power2.out"}},{s:.3f});')
 
 
 # ================= GLOBALE EBENEN (Skill 6a) =================
@@ -756,7 +778,7 @@ OVER.append(f'<div id="ov-dust" class="clip ov" data-start="0" data-duration="{T
 
 # Filmkorn (gekachelte Rauschtextur, ruckelt alle 0,1 s)
 OVER.append(f'<div id="ov-grain" class="clip ov" data-start="0" data-duration="{TOTAL}" data-track-index="6" '
-            f'style="z-index:6;left:-128px;top:-128px;width:1336px;height:2176px;opacity:.5;mix-blend-mode:overlay;'
+            f'style="z-index:6;left:-128px;top:-128px;width:1336px;height:2176px;opacity:.28;mix-blend-mode:overlay;'
             f'background-image:url(data:image/png;base64,{noise_png()});background-size:256px 256px"></div>')
 k = 0
 t = 0.0
@@ -777,9 +799,9 @@ def archive(aid, t0, t1):
     while tt < t1:
         for i in range(3):
             on = RNG.random() < 0.55
-            tw(f'tl.set("#{aid}-sc{i}",{{opacity:{RNG.uniform(.15,.4) if on else 0:.2f},x:{RNG.randint(80, 1000)}}},{tt:.2f});')
-        tw(f'tl.set("#{aid}-fl",{{opacity:{RNG.choice([0, 0, .03, .06]):.2f}}},{tt:.2f});')
-        tt += 0.12; j += 1
+            tw(f'tl.set("#{aid}-sc{i}",{{opacity:{RNG.uniform(.08,.2) if on else 0:.2f},x:{RNG.randint(80, 1000)}}},{tt:.2f});')
+        tw(f'tl.to("#{aid}-fl",{{opacity:{RNG.choice([0, .02, .04]):.2f},duration:.3,ease:"sine.inOut"}},{tt:.2f});')
+        tt += 0.3; j += 1
 
 archive("ov-arch1", t_genau, t_wie)
 archive("ov-arch2", t_bei, t_also)
@@ -792,22 +814,20 @@ def danger(did, t0, t1):
                 f'<svg viewBox="0 0 1080 1920" width="1080" height="1920"><rect id="{did}-v" width="1080" height="1920" fill="url(#redvig)" opacity=".3"/>'
                 f'<g id="{did}-w">{tri(110)}{tri(970)}</g></svg></div>')
     tw(f'tl.fromTo("#{did}-v",{{opacity:.25}},{{opacity:.85,duration:.32,yoyo:true,repeat:{int((t1-t0)/0.32)},ease:"sine.inOut"}},{t0:.3f});')
-    tw(f'tl.fromTo("#{did}-w",{{opacity:1}},{{opacity:.15,duration:.32,yoyo:true,repeat:{int((t1-t0)/0.32)},ease:"steps(1)"}},{t0:.3f});')
+    tw(f'tl.fromTo("#{did}-w",{{opacity:1}},{{opacity:.15,duration:.32,yoyo:true,repeat:{int((t1-t0)/0.32)},ease:"sine.inOut"}},{t0:.3f});')
 
 danger("ov-d1", t_sie, t_und_ueb)
 danger("ov-d2", t_reissen, t_und_g)
 danger("ov-d3", t_knall, t_dein)
 
 # Blitz-Übergang bei jedem Szenenwechsel
-OVER.append(f'<div id="ov-cut" class="clip ov" data-start="0" data-duration="{TOTAL}" data-track-index="9" style="z-index:9;background:#fff;opacity:0"></div>')
 for sid, t0, t1, *_ in SCENES[1:]:
-    tw(f'tl.fromTo("#ov-cut",{{opacity:0}},{{opacity:.28,duration:0.001,immediateRender:false}},{t0:.3f});')
-    tw(f'tl.fromTo("#ov-cut",{{immediateRender:false}},{{opacity:0,duration:.22,ease:"power2.out"}},{t0+0.001:.3f});')
+    tw(f'tl.fromTo("#{sid}",{{opacity:0}},{{opacity:1,duration:{XF},ease:"sine.inOut"}},{t0:.3f});')
 
 # Figuren atmen, LEDs blinken, Kamera wiegt leicht
 for fid in FIGS:
     tw(f'tl.fromTo("#{fid}-body",{{scaleY:1}},{{scaleY:1.022,transformOrigin:"50% 100%",duration:1.3,yoyo:true,repeat:{int(TOTAL/1.3)},ease:"sine.inOut"}},0);')
-tw(f'tl.fromTo(".blink",{{opacity:1}},{{opacity:.15,duration:.45,yoyo:true,repeat:{int(TOTAL/.45)},ease:"steps(1)"}},0);')
+tw(f'tl.fromTo(".blink",{{opacity:1}},{{opacity:.2,duration:.8,yoyo:true,repeat:{int(TOTAL/.8)},ease:"sine.inOut"}},0);')
 tw(f'tl.fromTo("#v-btn",{{opacity:1}},{{opacity:.3,duration:.4,yoyo:true,repeat:10,ease:"sine.inOut"}},{t_also:.3f});')
 for sid, t0, t1, *_ in SCENES:
     tw(f'tl.fromTo("#{sid}-cam",{{rotation:-0.6}},{{rotation:0.6,svgOrigin:"540 960",duration:{max(t1-t0,0.2):.3f},ease:"sine.inOut"}},{t0:.3f});')
@@ -816,7 +836,7 @@ for sid, t0, t1, *_ in SCENES:
 scene_html = []
 for sid, t0, t1, svg_inner, extra in SCENES:
     scene_html.append(
-        f'<div id="{sid}" class="clip scene" data-start="{t0:.3f}" data-duration="{t1-t0:.3f}" data-track-index="1">'
+        f'<div id="{sid}" class="clip scene" data-start="{t0:.3f}" data-duration="{(min(t1+XF, TOTAL) if t1 < TOTAL else t1)-t0:.3f}" data-track-index="1">'
         f'<svg viewBox="0 0 1080 1920" width="1080" height="1920" xmlns="http://www.w3.org/2000/svg">{svg_inner}{extra}</svg></div>')
 
 doc = f'''<!doctype html>
@@ -827,7 +847,7 @@ doc = f'''<!doctype html>
     <title>Aufzugseil reißt</title>
     <script src="assets/gsap.min.js"></script>
     <style>
-      :root {{ --ground: {BG}; --ink: #ffffff; --signal: {RED}; --font-display: "Inter", sans-serif; }}
+      :root {{ --ground: {BG}; --ink: #ffffff; --signal: {RED}; --font-display: "Poppins", sans-serif; }}
       * {{ margin: 0; padding: 0; box-sizing: border-box; }}
       html, body {{ margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }}
       #root {{ position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font-display); }}
@@ -837,10 +857,10 @@ doc = f'''<!doctype html>
       .ov {{ position: absolute; inset: 0; pointer-events: none; }}
       .sub {{
         position: absolute; left: 40px; right: 40px; top: 960px; transform-origin: 50% 50%;
-        margin-top: -0.6em; text-align: center; color: var(--ink); font-weight: 900; line-height: 1.1;
-        letter-spacing: -0.01em; white-space: nowrap; z-index: 20;
-        -webkit-text-stroke: 14px #000; paint-order: stroke fill;
-        text-shadow: 0 6px 0 #000, 0 0 30px rgba(0,0,0,.65);
+        margin-top: -0.6em; text-align: center; color: var(--ink); font-weight: 600; line-height: 1.15;
+        letter-spacing: 0; white-space: nowrap; z-index: 20;
+        -webkit-text-stroke: 7px rgba(0,0,0,.85); paint-order: stroke fill;
+        text-shadow: 0 3px 10px rgba(0,0,0,.6);
       }}
       .sub .k {{ color: var(--signal); }}
     </style>

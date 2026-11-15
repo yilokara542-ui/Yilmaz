@@ -43,11 +43,13 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 ## 5. Tempo
 - **Keine Stille.** Musik/Atmo + Stimme laufen durchgehend.
 - **Alle 1,5–3 Sekunden** neuer Schnitt, Kamerawechsel oder neues Element im Bild. Kein Standbild länger als 3 s.
+- **Sanft und flüssig** (Feedback 15.11.): Export mit **60 fps**; Szenen per kurzer Überblendung (ca. 0,3 s) statt hartem Schnitt + Blitz; Untertitel weich einblenden (Fade + leichtes Hochgleiten) statt Aufploppen; Wackler nur kurz und schwach; kein hektisches Flackern/Springen (Filmkorn, Kratzer, Warnlichter langsam und weich).
 - Kurze Sätze, max. ca. 12 Wörter. Ein Gedanke pro Satz.
 - **Was gesagt wird, erscheint im selben Moment im Bild.**
 
 ## 6. Bildsprache / Animation
 - **Einfache, gesichtslose Hauptfigur** (Gliederpuppe, Strichfigur oder Flat-Cartoon) – Emotion nur über Augen und Augenbrauen. Immer dieselbe Figur → Wiedererkennung.
+- **Figur ist angezogen** (Feedback 15.11.): nie nackte Puppe. Standard-Outfit: Kapuzenpulli in gedecktem Petrol mit hellen Kordeln, dunkle Jeans, helle Sneaker. Historische/andere Personen bekommen passende Kleidung (z. B. Liftführerin 1945: Uniformjacke mit Messingknöpfen + Mütze). Kleidung nie in der Signalfarbe Rot.
 - **Einheitlicher Stil pro Account** (einen wählen und beibehalten: 3D-Puppe, 2D-Flat oder Isometrie).
 - **Dunkle/ruhige Grundpalette + eine Signal-Farbe** (Rot oder Orange) für Gefahr, Zahlen und Kernbegriffe.
 - **Technik sichtbar machen:** Querschnitte, Röntgen-Blick ins Gerät, Pfeile für Strom/Wärme/Signale, Zoom vom Gerät in das Bauteil.
@@ -64,7 +66,8 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Spannungs-Akzente:** in Gefahrenmomenten rot pulsierende Vignette, Warnsymbole, schnellere Kamera; jeder Szenenwechsel mit kurzem Blitz/Ruck statt hartem Schnitt.
 
 ## 7. Untertitel
-- Eingebrannt, **immer an**, Großbuchstaben, fette serifenlose Schrift, Weiß mit leichtem Schatten.
+- Eingebrannt, **immer an**, normale Groß-/Kleinschreibung, Schrift **Poppins SemiBold** (nicht Inter/Black), Weiß mit dünner dunkler Kontur und weichem Schatten.
+- **Dezent statt dominant** (Feedback 15.11.): max. ca. 64 px Schriftgröße bei 1080 px Breite, Kontur max. 8 px – die Untertitel dürfen das Bild nicht erschlagen.
 - **1–4 Wörter pro Einblendung**, Wechsel im Sprechrhythmus.
 - **Schlüsselwort in der Signal-Farbe** (Zahl, Gefahr, Fachbegriff).
 - Position: Mitte oder oberes Drittel – nicht unten (dort liegt die TikTok-UI).
@@ -100,6 +103,7 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Ende = Frage oder Teil 2
 - [ ] Keine leere Szene: 3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub/Korn, Mikro-Bewegung
 - [ ] Gefahrenmomente visuell verstärkt (rote Vignette, Warnsymbole), Szenenwechsel mit Übergang
+- [ ] Figur angezogen, Untertitel Poppins ≤ 64 px, 60 fps mit weichen Überblendungen
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
@@ -117,3 +121,4 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 |---|---|---|
 | 2026-11-15 | Erstanlage aus 3 Referenz-Videos | Abschnitte 1–11 |
 | 2026-11-15 | Video 08: „spannender und nicht so leer, Kleinigkeiten für mehr Ästhetik“ | Neuer Abschnitt 6a (3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub, Filmkorn, Mikro-Bewegung, Spannungs-Akzente, Übergänge) + 2 Checklisten-Punkte |
+| 2026-11-15 | Video 08: „Person Kleidung geben, Schrift ändern und kleiner, Video sanfter/flüssiger“ | Abschnitt 6 (Kleidung), 5 (60 fps, Überblendungen, weiche Bewegungen), 7 (Poppins, ≤ 64 px, Groß-/Kleinschreibung) + Checkliste |
