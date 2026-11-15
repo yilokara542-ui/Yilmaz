@@ -21,24 +21,31 @@ def click(t0, g=.5): noise(t0, .06, .01, 2, g); tone(t0, 2200, 1800, .05, g*.4, 
 drone = .09*np.sin(2*np.pi*55*t)+.06*np.sin(2*np.pi*82.4*t)+.03*np.sin(2*np.pi*110*t+.5*np.sin(2*np.pi*.1*t))
 drone *= .75+.25*np.sin(2*np.pi*.17*t); drone += .015*lp(rng.standard_normal(n), 80); drone *= np.clip((T-t)/1.5, 0, 1); out += drone
 # Kühlschrank: Tür + Brummen
-for k in ("t_kuehl", "t_naechsten"):
+for k in ("t_kuehl", "t_naechsten", "t_aufgef"):
     whoosh(C[k], .5, .3); L = int(2.5*SR); x = np.arange(L)/SR; add(C[k]+.2, .05*np.sin(2*np.pi*100*x)*np.minimum(1, x/.3)*np.minimum(1, (2.5-x)/.5))
 tone(C["t_joghurt"], 300, 200, .5, .3, .2); tone(C["t_merk"], 880, 880, .4, .2, .2)
+def creak(t0, dur=.8, g=.3):
+    L = int(dur*SR); x = np.arange(L)/L; f = np.linspace(160, 110, L) + 25*np.sin(2*np.pi*14*x)
+    add(t0, g*np.sign(np.sin(2*np.pi*np.cumsum(f)/SR))*lp(np.ones(L), 1)*np.sin(np.pi*x)*0.5)
+creak(C["t_knarzen"], .9, .35); creak(C["t_knarzen"]+1.1, .7, .25)
 boom(C["t_doch"], 1.0)
 boom(C["t_japan"]+.22, .5)
 click(C["t_ab"]-.2, .6); click(C["t_ab"]+.05, .7); boom(C["t_schl"], .3)
-tone(C["t_kameras"], 1500, 1500, .15, .2, .05); tone(C["t_kameras"]+.18, 2000, 2000, .15, .2, .05)
-whoosh(C["t_erst"]-.1, .5, .3); whoosh(C["t_zweit"]-.1, .5, .3); whoosh(C["t_dritt"]-.1, .5, .3)
-click(C["t_wacht"], .5); noise(C["t_foto1"], .25, .05, 3, .6); tone(C["t_foto1"]+.4, 900, 1400, .3, .2, .1)
+tone(C["t_kamera"], 1500, 1500, .15, .2, .05); tone(C["t_kamera"]+.18, 2000, 2000, .15, .2, .05)
 for k in range(5):  # Vibration
-    L = int(.12*SR); x = np.arange(L)/SR; add(C["t_vibr"]+k*.15, .25*np.sign(np.sin(2*np.pi*150*x))*lp(np.ones(L), 1))
+    L = int(.12*SR); x = np.arange(L)/SR; add(C["t_vibr"]+k*.15, .25*np.sign(np.sin(2*np.pi*150*x)))
 for k in range(4): tone(C["t_fremde"]+k*.75, 60, 45, .25, .9, .08); tone(C["t_fremde"]+.22+k*.75, 55, 40, .25, .6, .08)
 boom(C["t_fremde"], .8)
-click(C["t_polizei"], .5)
+for k in range(2):  # Freizeichen
+    L = int(.9*SR); x = np.arange(L)/SR; add(C["t_ruft"]+.3+k*1.4, .07*np.sin(2*np.pi*425*x))
+click(C["t_beamten"], .5)
 for k in (C["t_tueren"], C["t_tueren"]+.3): tone(k, 400, 300, .15, .3, .05)
-L = int(.9*SR); x = np.arange(L)/L; add(C["t_oeffnen"], .25*np.sin(2*np.pi*np.cumsum(np.linspace(180, 90, L))/SR)*(np.sin(np.pi*x)))  # Knarren
+tone(C["t_bis"], 110, 110, 2.0, .25, 1.2)
+L = int(.8*SR); x = np.arange(L)/L; add(C["t_schiebt"]+.3, .2*lp(rng.standard_normal(L), 30)*np.sin(np.pi*x))  # Schiebetür
 boom(C["t_darin"], 1.0)
 for k in range(6): click(C["t_sie"]+.2+k*.3, .25)
+L = int(1.8*SR); add(C["t_dusch"]-.3, .12*lp(rng.standard_normal(L), 3)*np.minimum(1, np.arange(L)/(.2*SR))*np.minimum(1, (L-np.arange(L))/(.4*SR)))  # Dusche
+creak(C["t_und_kn"]+.4, 1.2, .35)
 tone(C["t_fehlende"], 220, 220, 1.5, .25, .8); tone(C["t_fehlende"], 330, 330, 1.5, .15, .8)
 out = out/np.max(np.abs(out))*.6
 with wave.open(os.path.join(HERE, "assets/sfx_bed.wav"), "wb") as w:

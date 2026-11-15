@@ -229,45 +229,123 @@ def scene(sid, t0, t1, inner, drift=True):
 
 
 # ================= CUES =================
-WALL = "#1c2230"; WALL2 = "#222a3a"; FLOOR = "#141922"; WOOD = "#3a2f2a"; FRIDGE = "#d9dee6"
-SEPB = "#2a2118"
+WALL = "#1c2230"; WALL2 = "#222a3a"; FLOOR = "#141922"; FRIDGE = "#d9dee6"
+WOOD = "#5a4130"; WOOD2 = "#6e5038"; PAPER = "#efe6d2"; TATAMI = "#8a8a52"; PLANT = "#3f8f5a"
 
-t_kommst = ws("Du", 4.3); t_alles = ws("Alles"); t_kuehl = ws("Kühlschrank"); t_joghurt = ws("Joghurt"); t_merk = ws("Merk", t_joghurt)
+t_kommst = ws("Du", 4.3); t_kuehl = ws("Kühlschrank"); t_joghurt = ws("Joghurt"); t_merk = ws("Merk", t_joghurt)
 t_denkst = ws("denkst"); t_hab = ws("Hab"); t_naechsten = ws("Am", t_hab); t_saft = ws("Saftflasche"); t_halb = ws("halb")
-t_doch = ws("Doch"); t_genau = ws("Genau", t_doch); t_japan = ws("Japan"); t_2008 = ws("zweitausendacht"); t_mann = ws("Einem")
-t_essen = ws("Essen", t_mann); t_dabei = ws("Dabei"); t_ab = ws("ab", t_dabei + 0.5); t_niemand = ws("Niemand"); t_schl = ws("Schlüssel")
-t_also1 = ws("Also"); t_kameras = ws("Kameras"); t_handy1 = ws("Handy", t_kameras)
-t_aber = ws("Aber"); t_wann = ws("wann", t_aber)
-t_erst = ws("Erstens"); t_bew = ws("Bewegungsmelder"); t_licht = ws("Licht", t_bew); t_waerme1 = ws("Wärme", t_licht)
-t_zweit = ws("Zweitens"); t_mensch = ws("Mensch"); t_laeuft = ws("Läuft"); t_aendert = ws("ändert"); t_wbild = ws("Wärmebild")
-t_dritt = ws("Drittens"); t_wacht = ws("wacht"); t_foto1 = ws("Foto", t_wacht); t_dunkel = ws("Dunkeln")
-t_paar = ws("Ein", t_dunkel); t_vibr = ws("vibriert"); t_arbeit = ws("Arbeit")
-t_auf = ws("Auf", t_arbeit); t_kueche2 = ws("Küche", t_auf); t_fremde = ws("fremde")
-t_polizei = ws("Polizei"); t_tueren = ws("Türen"); t_versch = ws("verschlossen")
-t_dann = ws("Dann", t_versch); t_oeffnen = ws("öffnen"); t_schrank = ws("Schrank", t_oeffnen)
-t_darin = ws("Darin"); t_frau = ws("Frau"); t_matratze = ws("Matratze"); t_flaschen = ws("Plastikflaschen")
-t_sie = ws("Sie", t_flaschen); t_jahr = ws("Jahr", t_sie); t_aufgef = ws("Aufgefallen"); t_fehlende = ws("fehlende")
+t_nachts = ws("Nachts"); t_knarzen = ws("Knarzen"); t_oben = ws("oben", t_knarzen)
+t_doch = ws("Doch"); t_genau = ws("Genau", t_doch); t_japan = ws("Japan"); t_mann = ws("Einem")
+t_dabei = ws("Dabei", t_mann); t_ab = ws("ab", t_dabei + 0.5); t_schl = ws("Schlüssel")
+t_glaubt = ws("glaubt"); t_verrueckt = ws("verrückt", t_glaubt); t_kamera = ws("Kamera", t_verrueckt); t_handy1 = ws("Handy", t_kamera)
+t_paar = ws("Ein", t_handy1); t_vibr = ws("vibriert"); t_arbeit = ws("Arbeit")
+t_auf = ws("Auf", t_arbeit); t_fremde = ws("fremde")
+t_ruft = ws("ruft"); t_polizei1 = ws("Polizei", t_ruft)
+t_beamten = ws("Beamten"); t_tueren = ws("Türen"); t_versch = ws("verschlossen"); t_niemand2 = ws("Niemand", t_versch)
+t_bis = ws("Bis"); t_ganz = ws("Ganz", t_bis); t_fach = ws("Fach"); t_schiebt = ws("schiebt")
+t_darin = ws("Darin"); t_matratze = ws("Matratze"); t_flaschen = ws("Plastikflaschen")
+t_sie = ws("Sie", t_flaschen); t_jahr = ws("Jahr", t_sie); t_wenn = ws("Wenn", t_jahr); t_raus = ws("raus", t_wenn); t_dusch = ws("geduscht")
+t_und_kn = ws("Und", t_dusch); t_jetzt = ws("Jetzt", t_und_kn); t_aufgef = ws("Aufgefallen"); t_fehlende = ws("fehlende")
 t_also2 = ws("Also", t_fehlende); t_vermisst = ws("vermisst"); t_selbst = ws("selbst", t_vermisst)
 
-SEPIA = set()   # Szenen im Archiv-Look (echter Fall 2008)
+SEPIA = set()
 
 
-# ---------- Bausteine Innenraum ----------
-def room(prefix, sep=False):
-    w1 = "#2e2519" if sep else WALL; w2 = "#3a2d1f" if sep else WALL2; fl = "#1f170f" if sep else FLOOR
-    tiles = "".join(f'<rect x="{x}" y="{y}" width="88" height="88" rx="4" fill="{w2}"/>' for x in range(30, 1080, 96) for y in range(700, 1300, 96))
-    return (f'<rect width="1080" height="1920" fill="{w1}"/>{tiles}'
-            f'<rect x="0" y="1300" width="1080" height="620" fill="{fl}"/>'
-            + "".join(f'<rect x="0" y="{y}" width="1080" height="3" fill="#000" opacity=".25"/>' for y in range(1360, 1920, 80))
-            + f'<rect x="0" y="1290" width="1080" height="14" fill="#000" opacity=".35"/>'
-            + f'<polygon points="470,0 610,0 900,1300 180,1300" fill="url(#lampcone)" opacity=".7"/><rect x="480" y="0" width="120" height="22" rx="10" fill="{LAMP}"/>')
+# ---------- Deko-Bausteine (Skill 6a: Wohnräume liebevoll eingerichtet) ----------
+def frame_pic(x, y, w, h, kind=0):
+    inner = {0: f'<polygon points="{x+10},{y+h-10} {x+w*0.4},{y+h*0.35} {x+w*0.62},{y+h*0.6} {x+w*0.78},{y+h*0.45} {x+w-10},{y+h-10}" fill="#4f7a6a"/><circle cx="{x+w*0.75}" cy="{y+h*0.3}" r="{h*0.12}" fill="#ffd98a"/>',
+             1: f'<circle cx="{x+w/2}" cy="{y+h*0.42}" r="{h*0.18}" fill="#c98a6a"/><rect x="{x+w*0.3}" y="{y+h*0.6}" width="{w*0.4}" height="{h*0.3}" rx="10" fill="#4a6a9a"/>',
+             2: "".join(f'<rect x="{x+12+i*(w-24)/4}" y="{y+h-14-(i%3+1)*h*0.18}" width="{(w-24)/4-6}" height="{(i%3+1)*h*0.18}" fill="{c}"/>' for i, c in enumerate(("#e07a5f", "#f2cc8f", "#81b29a", "#3d405b")))}[kind]
+    return (f'<rect x="{x-8}" y="{y-8}" width="{w+16}" height="{h+16}" rx="4" fill="#b08a5a"/><rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#e9e1cf"/>{inner}'
+            f'<rect x="{x-8}" y="{y+h+8}" width="{w+16}" height="10" fill="#000" opacity=".25"/>')
 
 
-def fridge(fid, x, y, open_=False, items=True):
-    """Kühlschrank: Tür (Gruppe {fid}-door) klappt per scaleX auf; Fächer mit Lebensmitteln."""
+def wall_clock(x, y, r=56, hid=None):
+    hid_attr = f' id="{hid}"' if hid else ""
+    return (f'<circle cx="{x}" cy="{y}" r="{r+8}" fill="#6e5038"/><circle cx="{x}" cy="{y}" r="{r}" fill="#f6f1e6"/>'
+            + "".join(f'<rect x="{x-2}" y="{y-r+6}" width="4" height="10" fill="#333" transform="rotate({a} {x} {y})"/>' for a in range(0, 360, 30))
+            + f'<rect x="{x-3}" y="{y-r*0.5}" width="6" height="{r*0.5}" fill="#222" transform="rotate(40 {x} {y})"/>'
+            + f'<rect{hid_attr} x="{x-2}" y="{y-r*0.78}" width="4" height="{r*0.78}" fill="{RED}"/><circle cx="{x}" cy="{y}" r="6" fill="#222"/>')
+
+
+def plant(x, y, s=1.0):
+    leaves = "".join(f'<ellipse cx="{x + math.cos(a)*40*s:.0f}" cy="{y - 70*s + math.sin(a)*34*s:.0f}" rx="{36*s:.0f}" ry="{14*s:.0f}" fill="{PLANT if i%2 else "#4fa86a"}" transform="rotate({math.degrees(a):.0f} {x + math.cos(a)*40*s:.0f} {y - 70*s + math.sin(a)*34*s:.0f})"/>'
+                     for i, a in enumerate([-2.8, -2.2, -1.6, -1.0, -0.4, -1.9, -1.3]))
+    return (f'{leaves}<path d="M {x-34*s} {y-40*s} L {x+34*s} {y-40*s} L {x+26*s} {y} L {x-26*s} {y} Z" fill="#c26a3d"/>'
+            f'<rect x="{x-38*s}" y="{y-48*s}" width="{76*s}" height="{12*s}" rx="4" fill="#a8562f"/>')
+
+
+def bookshelf(x, y, w=260):
+    books = ""
+    bx = x + 10
+    cols = ["#e07a5f", "#3d405b", "#81b29a", "#f2cc8f", "#6a4c93", "#c9ada7", "#2a9d8f"]
+    i = 0
+    while bx < x + w - 60:
+        bw = 18 + (i * 7) % 14; bh = 70 + (i * 13) % 30
+        books += f'<rect x="{bx}" y="{y-bh}" width="{bw}" height="{bh}" rx="2" fill="{cols[i % len(cols)]}"/>'
+        bx += bw + 3; i += 1
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="14" fill="{WOOD2}"/>{books}'
+            f'{plant(x + w - 30, y, 0.5)}<rect x="{x+6}" y="{y+14}" width="10" height="24" fill="{WOOD}"/><rect x="{x+w-16}" y="{y+14}" width="10" height="24" fill="{WOOD}"/>')
+
+
+def window(x, y, w, h, night=True, curtains=True):
+    sky = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="url(#skyg)"/>'
+           f'<circle cx="{x+w*0.7}" cy="{y+h*0.3}" r="{min(w,h)*0.12}" fill="{MOON}"/>'
+           + "".join(f'<circle cx="{x+10+((i*73)%int(w-20))}" cy="{y+10+((i*41)%int(h*0.6))}" r="2" fill="#fff" opacity=".7"/>' for i in range(10))
+           + "".join(f'<rect x="{x+bx}" y="{y+h-bh}" width="{bw}" height="{bh}" fill="#0f1226"/>' for bx, bw, bh in ((0, w*0.25, h*0.35), (w*0.27, w*0.2, h*0.5), (w*0.5, w*0.3, h*0.3), (w*0.82, w*0.18, h*0.45)))) if night else \
+          f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#bcd7ef"/>' + "".join(f'<rect x="{x+bx}" y="{y+h-bh}" width="{bw}" height="{bh}" fill="#8aa6c2"/>' for bx, bw, bh in ((0, w*0.3, h*0.5), (w*0.33, w*0.22, h*0.7), (w*0.6, w*0.4, h*0.45)))
+    cur = (f'<path d="M {x-40} {y-30} Q {x+30} {y+h/2} {x-10} {y+h+40} L {x-60} {y+h+40} L {x-60} {y-30} Z" fill="#8b3a3a"/>'
+           f'<path d="M {x+w+40} {y-30} Q {x+w-30} {y+h/2} {x+w+10} {y+h+40} L {x+w+60} {y+h+40} L {x+w+60} {y-30} Z" fill="#8b3a3a"/>'
+           f'<rect x="{x-70}" y="{y-44}" width="{w+140}" height="14" rx="7" fill="#3a2d1f"/>') if curtains else ""
+    return (f'<rect x="{x-14}" y="{y-14}" width="{w+28}" height="{h+28}" fill="#e9e1cf"/>{sky}'
+            f'<rect x="{x+w/2-5}" y="{y}" width="10" height="{h}" fill="#e9e1cf"/><rect x="{x}" y="{y+h/2-5}" width="{w}" height="10" fill="#e9e1cf"/>'
+            f'<rect x="{x-24}" y="{y+h+10}" width="{w+48}" height="18" fill="#d6ccb6"/>{cur}')
+
+
+def pendant(x, y_len=260, gid=None):
+    g = f' id="{gid}"' if gid else ""
+    return (f'<g{g}><rect x="{x-2}" y="0" width="4" height="{y_len}" fill="#222"/>'
+            f'<path d="M {x-70} {y_len+60} Q {x} {y_len-20} {x+70} {y_len+60} Z" fill="#2a3a4a"/>'
+            f'<ellipse cx="{x}" cy="{y_len+60}" rx="70" ry="12" fill="{LAMP}"/>'
+            f'<polygon points="{x-60},{y_len+64} {x+60},{y_len+64} {x+260},1300 {x-260},1300" fill="url(#lampcone)" opacity=".55"/></g>')
+
+
+def rug(cx, cy, w, h, col="#7a3b3b"):
+    return (f'<ellipse cx="{cx}" cy="{cy}" rx="{w/2}" ry="{h/2}" fill="{col}"/><ellipse cx="{cx}" cy="{cy}" rx="{w/2-24}" ry="{h/2-12}" fill="none" stroke="#e9c46a" stroke-width="6" stroke-dasharray="20 12"/>')
+
+
+def wallpaper(c1, c2):
+    return (f'<rect width="1080" height="1300" fill="{c1}"/>'
+            + "".join(f'<rect x="{x}" y="0" width="34" height="1300" fill="{c2}" opacity=".55"/>' for x in range(0, 1080, 90))
+            + "".join(f'<circle cx="{x+62}" cy="{y}" r="5" fill="{c2}"/>' for x in range(0, 1080, 90) for y in range(60, 1300, 120)))
+
+
+def floor(col1="#3a2c22", col2="#33271e"):
+    return (f'<rect x="0" y="1300" width="1080" height="620" fill="{col1}"/>'
+            + "".join(f'<rect x="{x}" y="{y}" width="236" height="56" fill="{col2 if ((x//240)+(y//60))%2 else col1}"/>' for y in range(1304, 1920, 60) for x in range(-120 * ((y // 60) % 2), 1080, 240))
+            + f'<rect x="0" y="1290" width="1080" height="18" fill="#2a1f17"/>')
+
+
+def kitchen(prefix, sep=False):
+    tiles = "".join(f'<rect x="{x}" y="{y}" width="56" height="40" rx="3" fill="#dfe6ee"/>' for x in range(504, 1080, 60) for y in range(880, 1060, 44))
+    return (wallpaper("#24324a", "#2b3b57") + floor()
+            + f'<rect x="500" y="876" width="580" height="186" fill="#c7cfda"/>{tiles}'
+            + window(640, 420, 300, 300)
+            + wall_clock(560, 560, 46, f"{prefix}-clk")
+            + frame_pic(36, 300, 120, 150, 0) + frame_pic(180, 340, 90, 110, 2)
+            + f'<rect x="500" y="1060" width="580" height="240" fill="#6e5038"/><rect x="490" y="1046" width="600" height="20" rx="6" fill="#d9c7a8"/>'
+            + "".join(f'<rect x="{x}" y="1080" width="130" height="200" rx="8" fill="#7a5a40"/><rect x="{x+56}" y="1150" width="18" height="6" rx="3" fill="#d9c7a8"/>' for x in (510, 650, 790, 930))
+            + f'<rect x="820" y="1010" width="200" height="40" rx="8" fill="#222"/><circle cx="870" cy="1030" r="14" fill="#444"/><circle cx="960" cy="1030" r="14" fill="#444"/>'
+            + f'<path d="M 590 1046 L 600 980 Q 640 960 680 980 L 690 1046 Z" fill="#c0392b"/><rect x="620" y="960" width="40" height="14" rx="6" fill="#222"/><path d="M 690 1000 q 20 0 22 20" stroke="#222" stroke-width="6" fill="none"/>'
+            + plant(750, 1046, 0.7)
+            + "".join(f'<rect x="{x}" y="800" width="8" height="60" fill="#888"/>' for x in (940, 975, 1010)) + '<rect x="920" y="796" width="120" height="8" fill="#555"/>'
+            + rug(560, 1700, 700, 170))
+
+
+def fridge(fid, x, y, items=True):
     shelf = ""
     if items:
-        for k, sy in enumerate((y + 120, y + 280, y + 440)):
+        for sy in (y + 120, y + 280, y + 440):
             shelf += f'<rect x="{x+20}" y="{sy+110}" width="300" height="10" fill="#c9d2de"/>'
         shelf += (f'<g id="{fid}-milk"><rect x="{x+40}" y="{y+150}" width="60" height="80" rx="8" fill="#f4f6fa"/><rect x="{x+40}" y="{y+150}" width="60" height="20" fill="{BLUE}"/></g>'
                   f'<g id="{fid}-yog"><rect x="{x+130}" y="{y+180}" width="64" height="50" rx="10" fill="#ffe28a"/><rect x="{x+126}" y="{y+172}" width="72" height="12" rx="6" fill="#ff8fb1"/></g>'
@@ -277,39 +355,20 @@ def fridge(fid, x, y, open_=False, items=True):
                   f'<g id="{fid}-juice"><rect x="{x+220}" y="{y+300}" width="70" height="130" rx="10" fill="none" stroke="#e6e9ee" stroke-width="5"/>'
                   f'<rect id="{fid}-jlev" x="{x+224}" y="{y+310}" width="62" height="116" rx="6" fill="#ff9b2f"/></g>'
                   f'<g id="{fid}-veg"><circle cx="{x+80}" cy="{y+530}" r="30" fill="#e74c3c"/><circle cx="{x+150}" cy="{y+530}" r="30" fill="#7ac74f"/><ellipse cx="{x+240}" cy="{y+535}" rx="48" ry="22" fill="#ff9b2f"/></g>')
+    magnets = (f'<rect x="{x+40}" y="{y+60}" width="70" height="44" rx="6" fill="#ffcc4d" transform="rotate(-6 {x+75} {y+80})"/>'
+               f'<rect x="{x+150}" y="{y+90}" width="90" height="110" fill="#fff" transform="rotate(4 {x+195} {y+145})"/><circle cx="{x+195}" cy="{y+92}" r="8" fill="{RED}"/>'
+               + "".join(f'<rect x="{x+160}" y="{y+120+k*20}" width="{60-k*8}" height="5" fill="#9aa" transform="rotate(4 {x+195} {y+145})"/>' for k in range(4))
+               + f'<circle cx="{x+90}" cy="{y+260}" r="16" fill="#3b6cff"/><rect x="{x+60}" y="{y+400}" width="100" height="70" fill="#e07a5f" transform="rotate(-3 {x+110} {y+435})"/>')
     return (f'<g id="{fid}"><rect x="{x+12}" y="{y+16}" width="340" height="640" rx="26" fill="#000" opacity=".35"/>'
             f'<rect x="{x}" y="{y}" width="340" height="640" rx="26" fill="{FRIDGE}"/>'
             f'<rect x="{x+16}" y="{y+16}" width="308" height="608" rx="14" fill="#eaf4ff"/><rect x="{x+16}" y="{y+16}" width="308" height="608" rx="14" fill="url(#coldglow)"/>'
             f'{shelf}'
             f'<g id="{fid}-door"><rect x="{x}" y="{y}" width="340" height="640" rx="26" fill="{FRIDGE}" stroke="#aeb6c2" stroke-width="4"/>'
-            f'<rect x="{x+290}" y="{y+180}" width="16" height="140" rx="8" fill="#aeb6c2"/>'
-            f'<rect x="{x+40}" y="{y+60}" width="70" height="40" rx="6" fill="#ffcc4d" transform="rotate(-6 {x+75} {y+80})"/></g></g>')
+            f'<rect x="{x+290}" y="{y+180}" width="16" height="140" rx="8" fill="#aeb6c2"/>{magnets}</g></g>')
 
 
 def open_door(fid, x, t, dur=0.45):
     tw(f'tl.to("#{fid}-door",{{scaleX:-0.25,svgOrigin:"{x} 0",duration:{dur},ease:"power2.out"}},{t:.3f});')
-
-
-def phone_frame(inner, x=540, y=960, s=1.0, pid="ph"):
-    return (f'<g id="{pid}"><g transform="translate({x},{y}) scale({s}) translate(-540,-960)">'
-            f'<rect x="200" y="200" width="680" height="1440" rx="100" fill="#0e0f22"/><rect x="220" y="220" width="640" height="1400" rx="84" fill="#1b2240"/>'
-            f'<rect x="440" y="250" width="200" height="46" rx="23" fill="#0e0f22"/>{inner}</g></g>')
-
-
-def cam_icon(cid, x, y, s=1.0, led=True):
-    return (f'<g id="{cid}"><g transform="translate({x},{y}) scale({s})">'
-            f'<rect x="-30" y="-150" width="60" height="110" rx="12" fill="#c9ccd8"/>'
-            f'<rect x="-130" y="-60" width="260" height="150" rx="40" fill="#e6e9ee"/><circle cx="-20" cy="15" r="52" fill="#151a21"/><circle cx="-20" cy="15" r="30" fill="#2b3a6b"/><circle cx="-30" cy="5" r="9" fill="#fff" opacity=".7"/>'
-            f'<path d="M 60 -10 A 36 36 0 0 1 132 -10 L 132 30 L 60 30 Z" fill="#f6f7fb" stroke="#aeb6c2" stroke-width="3"/>'
-            + "".join(f'<line x1="{60+i*12}" y1="-6" x2="{60+i*12}" y2="30" stroke="#aeb6c2" stroke-width="2"/>' for i in range(1, 6))
-            + (f'<circle id="{cid}-led" cx="100" cy="60" r="10" fill="{RED}" opacity=".25"/>' if led else "")
-            + '</g></g>')
-
-
-def house_icon(hid, x, y, s=1.0, op=1):
-    return (f'<g id="{hid}" opacity="{op}"><g transform="translate({x},{y}) scale({s})"><polygon points="-110,-20 0,-120 110,-20" fill="{RED}"/>'
-            f'<rect x="-90" y="-20" width="180" height="150" fill="#e6e9ee"/><rect x="-24" y="40" width="48" height="90" fill="#2c3a52"/>'
-            f'<rect x="-70" y="10" width="36" height="36" fill="{WIN}"/><rect x="34" y="10" width="36" height="36" fill="{WIN}"/></g></g>')
 
 
 def hud_day(hid, day, item, op=1):
@@ -321,59 +380,152 @@ def hud_day(hid, day, item, op=1):
             f'<text id="{hid}-it" x="655" y="325" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="52" fill="{RED}" opacity="0">{item}</text></g>')
 
 
+def phone_frame(inner, x=540, y=960, s=1.0, pid="ph"):
+    return (f'<g id="{pid}"><g transform="translate({x},{y}) scale({s}) translate(-540,-960)">'
+            f'<rect x="200" y="200" width="680" height="1440" rx="100" fill="#0e0f22"/><rect x="220" y="220" width="640" height="1400" rx="84" fill="#1b2240"/>'
+            f'<rect x="440" y="250" width="200" height="46" rx="23" fill="#0e0f22"/>{inner}</g></g>')
+
+
+def cam_icon(cid, x, y, s=1.0):
+    return (f'<g id="{cid}"><g transform="translate({x},{y}) scale({s})">'
+            f'<rect x="-30" y="-150" width="60" height="110" rx="12" fill="#c9ccd8"/>'
+            f'<rect x="-130" y="-60" width="260" height="150" rx="40" fill="#e6e9ee"/><circle cx="-20" cy="15" r="52" fill="#151a21"/><circle cx="-20" cy="15" r="30" fill="#2b3a6b"/><circle cx="-30" cy="5" r="9" fill="#fff" opacity=".7"/>'
+            f'<circle id="{cid}-led" cx="90" cy="50" r="10" fill="{RED}"/></g></g>')
+
+
+def bedroom(prefix):
+    beams = "".join(f'<rect x="0" y="{y}" width="1080" height="34" fill="#3a2d22"/><rect x="0" y="{y+34}" width="1080" height="6" fill="#000" opacity=".3"/>' for y in (40, 210))
+    return (wallpaper("#232a45", "#2a3254") + f'<rect width="1080" height="260" fill="#2c2238"/>{beams}'
+            + floor("#2e2433", "#28202d")
+            + window(660, 460, 280, 300)
+            + frame_pic(90, 420, 160, 120, 1) + frame_pic(290, 470, 90, 90, 0)
+            + bookshelf(80, 720, 300)
+            + f'<rect x="880" y="1180" width="160" height="150" rx="10" fill="{WOOD2}"/><rect x="900" y="1205" width="120" height="10" fill="{WOOD}"/>'
+            + f'<rect x="900" y="1130" width="90" height="46" rx="8" fill="#0b0e12"/><text id="{prefix}-clock" x="945" y="1166" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="30" fill="{RED}">03:12</text>'
+            + f'<path d="M 940 1060 L 990 1060 L 1000 1110 L 930 1110 Z" fill="#e9c46a"/><rect x="960" y="1110" width="10" height="20" fill="#555"/><circle cx="965" cy="1085" r="80" fill="{LAMP}" opacity=".12"/>'
+            + rug(540, 1760, 760, 180, "#4a3b6a"))
+
+
+def bed_front():
+    return (f'<rect x="120" y="1240" width="720" height="70" rx="20" fill="{WOOD}"/>'
+            f'<path d="M 140 1330 Q 160 1290 260 1290 L 820 1290 L 840 1600 L 140 1600 Z" fill="#3d5a80"/>'
+            + "".join(f'<path d="M {180+i*120} 1300 q 30 140 0 290" stroke="#2f4a6a" stroke-width="6" fill="none"/>' for i in range(6))
+            + f'<rect x="120" y="1590" width="740" height="40" rx="10" fill="{WOOD}"/><rect x="130" y="1620" width="30" height="80" fill="{WOOD}"/><rect x="820" y="1620" width="30" height="80" fill="{WOOD}"/>')
+
+
+def jp_room(prefix, closet=False):
+    """Japanisches Zimmer: Shoji-Schiebetüren, Tatami, Rollbild, Bonsai, Laterne."""
+    shoji = "".join(f'<rect x="{x}" y="380" width="200" height="900" fill="{PAPER}" stroke="{WOOD}" stroke-width="12"/>'
+                    + "".join(f'<rect x="{x}" y="{y}" width="200" height="6" fill="{WOOD}"/>' for y in range(480, 1280, 110))
+                    + f'<rect x="{x+97}" y="380" width="6" height="900" fill="{WOOD}"/>' for x in (0,) )
+    tat = "".join(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{TATAMI}" stroke="#4a3a22" stroke-width="10"/>' for x, y, w, h in ((0, 1300, 540, 300), (540, 1300, 540, 300), (0, 1600, 360, 320), (360, 1600, 720, 320)))
+    scroll = (f'<rect x="300" y="420" width="140" height="440" fill="#efe6d2"/><rect x="290" y="410" width="160" height="16" rx="6" fill="{WOOD}"/><rect x="290" y="860" width="160" height="16" rx="6" fill="{WOOD}"/>'
+              f'<path d="M 320 760 L 360 640 L 390 700 L 410 660 L 430 760 Z" fill="#444"/><circle cx="400" cy="520" r="24" fill="{RED}"/>')
+    bonsai = (f'<rect x="250" y="1250" width="140" height="40" rx="8" fill="#5a4630"/><path d="M 320 1250 Q 300 1190 330 1150" stroke="#4a3426" stroke-width="12" fill="none"/>'
+              f'<ellipse cx="300" cy="1150" rx="60" ry="30" fill="{PLANT}"/><ellipse cx="350" cy="1120" rx="50" ry="26" fill="#4fa86a"/>')
+    lantern = (f'<rect x="538" y="0" width="4" height="180" fill="#222"/><rect x="480" y="180" width="120" height="160" rx="50" fill="#f7e3b0"/>'
+               + "".join(f'<rect x="480" y="{y}" width="120" height="4" fill="#c9a24b"/>' for y in (210, 250, 290)) + f'<circle cx="540" cy="260" r="160" fill="{LAMP}" opacity=".12"/>')
+    clo = ""
+    if closet:
+        clo = (f'<rect x="560" y="380" width="520" height="900" fill="{WOOD}"/>'
+               f'<rect x="580" y="400" width="480" height="160" fill="#1a120a"/>'
+               f'<g id="{prefix}-tdoor">' + "".join(f'<rect x="{x}" y="400" width="240" height="160" fill="{PAPER}" stroke="{WOOD2}" stroke-width="8"/>' for x in (580, 820)) + '</g>'
+               f'<rect x="560" y="560" width="520" height="20" fill="{WOOD2}"/>'
+               + "".join(f'<rect x="{x}" y="590" width="240" height="680" fill="#e9dcc0" stroke="{WOOD2}" stroke-width="8"/><circle cx="{x+30 if x>700 else x+210}" cy="930" r="12" fill="{WOOD}"/>' for x in (580, 820)))
+    else:
+        clo = window(640, 460, 340, 320, night=True, curtains=False)
+    return (f'<rect width="1080" height="1300" fill="#d8c9a8"/><rect width="1080" height="380" fill="#c9b892"/><rect x="0" y="370" width="1080" height="14" fill="{WOOD}"/>'
+            + shoji + scroll + bonsai + clo + tat + lantern)
+
+
 # ================= SZENEN =================
-# A Hook: Haus im Querschnitt bei Nacht
+# A Hook: Haus im Querschnitt, liebevoll eingerichtet
 S0, S1 = 0.0, t_kommst
-rooms = (f'<rect x="140" y="760" width="800" height="900" fill="#262f42"/>'
-         f'<polygon points="100,770 540,430 980,770" fill="#1a2030" stroke="#3a4452" stroke-width="10"/>'
-         f'<rect x="140" y="1200" width="800" height="16" fill="#3a4452"/><rect x="530" y="770" width="16" height="890" fill="#3a4452"/>'
-         f'<rect x="150" y="780" width="370" height="410" fill="#2d3850"/><rect x="556" y="780" width="374" height="410" fill="#1f2738"/>'
-         f'<rect x="150" y="1226" width="370" height="424" fill="#33405c"/><rect x="556" y="1226" width="374" height="424" fill="#2a3349"/>'
-         f'<polygon points="300,1226 380,1226 470,1650 210,1650" fill="url(#lampcone)"/><rect x="320" y="1226" width="40" height="16" fill="{LAMP}"/>'
-         f'<rect x="200" y="1430" width="150" height="220" rx="12" fill="{FRIDGE}"/>'
-         f'<rect x="620" y="1520" width="260" height="70" rx="20" fill="#5a6a8a"/><rect x="600" y="1060" width="300" height="90" rx="16" fill="#4a5a7a"/>'
-         f'<rect x="200" y="840" width="120" height="300" fill="#151a24"/><rect x="200" y="840" width="120" height="70" fill="#0a0d14"/>'
-         f'<rect id="a-gap" x="200" y="840" width="120" height="70" fill="none" stroke="{RED}" stroke-width="5" stroke-dasharray="10 8" opacity="0"/>'
-         f'<rect x="420" y="600" width="240" height="150" fill="#0a0d14"/><rect x="0" y="1660" width="1080" height="260" fill="#10141a"/>')
+roof_tiles = "".join(f'<path d="M {x} {y} q 20 18 40 0" stroke="#3a2a2a" stroke-width="5" fill="none"/>' for y in range(520, 770, 34) for x in range(int(540 - (y - 430) * 1.25) + 20, int(540 + (y - 430) * 1.25) - 40, 40))
+house = (f'<polygon points="80,775 540,420 1000,775" fill="#6b3d3d"/>{roof_tiles}'
+         f'<rect x="760" y="430" width="70" height="170" fill="#7a5a4a"/><rect x="750" y="420" width="90" height="20" fill="#5a3a2a"/>'
+         + "".join(f'<circle id="a-smoke{i}" cx="795" cy="{390-i*40}" r="{20+i*8}" fill="#9aa0b8" opacity="{.35-i*.07:.2f}"/>' for i in range(4))
+         + f'<circle cx="540" cy="640" r="56" fill="#e9e1cf"/><circle cx="540" cy="640" r="44" fill="#0a0d14"/>'
+         + f'<rect id="a-gap" x="496" y="596" width="88" height="88" rx="44" fill="none" stroke="{RED}" stroke-width="6" stroke-dasharray="12 8" opacity="0"/>'
+         f'<rect x="140" y="770" width="800" height="900" fill="#e9dcc4"/>'
+         f'<rect x="150" y="780" width="380" height="410" fill="#3a4a6a"/><rect x="550" y="780" width="380" height="410" fill="#4a3a5a"/>'
+         f'<rect x="150" y="1210" width="380" height="440" fill="#44536f"/><rect x="550" y="1210" width="380" height="440" fill="#3d4a66"/>'
+         # Schlafzimmer oben links
+         f'<rect x="180" y="1050" width="240" height="70" rx="16" fill="#3d5a80"/><rect x="180" y="1030" width="70" height="40" rx="12" fill="#e6e9ee"/><rect x="170" y="1120" width="260" height="20" fill="{WOOD}"/>'
+         + frame_pic(300, 850, 80, 60, 0) + f'<rect x="440" y="1080" width="60" height="60" fill="{WOOD2}"/><path d="M 450 1040 L 490 1040 L 495 1075 L 445 1075 Z" fill="#e9c46a"/>'
+         # Wohnzimmer oben rechts: Sofa, TV-Licht, Regal
+         + f'<rect x="580" y="1080" width="220" height="80" rx="20" fill="#8b3a3a"/><rect x="580" y="1050" width="220" height="50" rx="18" fill="#a04848"/>'
+         + f'<rect x="830" y="1010" width="80" height="60" rx="6" fill="#111"/><rect x="836" y="1016" width="68" height="48" fill="#5aa0ff" opacity=".7"/><polygon points="836,1064 904,1064 980,1190 760,1190" fill="#5aa0ff" opacity=".1"/>'
+         + bookshelf(600, 900, 200) + plant(900, 1190, .6)
+         # Küche unten links
+         + f'<rect x="170" y="1450" width="110" height="200" rx="10" fill="{FRIDGE}"/><rect x="300" y="1520" width="210" height="130" fill="#7a5a40"/><rect x="292" y="1510" width="226" height="14" fill="#d9c7a8"/>'
+         + f'<polygon points="300,1210 380,1210 470,1650 210,1650" fill="url(#lampcone)"/><rect x="320" y="1210" width="40" height="16" fill="{LAMP}"/>' + wall_clock(420, 1300, 30)
+         # Flur unten rechts: Tür, Garderobe
+         + f'<rect x="760" y="1360" width="140" height="290" rx="6" fill="{WOOD2}"/><circle cx="880" cy="1510" r="9" fill="#c9a24b"/>'
+         + f'<rect x="590" y="1300" width="120" height="10" fill="{WOOD}"/>' + "".join(f'<path d="M {610+i*40} 1310 q -10 60 10 120 l 20 0 q 10 -60 -10 -120 z" fill="{c}"/>' for i, c in enumerate(("#2f6f73", "#c0392b", "#e9c46a")))
+         + rug(650, 1640, 200, 30, "#6a4c93")
+         # Außen: Wände, Fensterläden, Tür, Zaun, Baum, Briefkasten
+         + f'<rect x="140" y="1200" width="800" height="14" fill="#c9b892"/><rect x="530" y="770" width="20" height="900" fill="#c9b892"/>'
+         + f'<rect x="0" y="1660" width="1080" height="260" fill="#1e3a2a"/><rect x="0" y="1660" width="1080" height="14" fill="#2b4d38"/>'
+         + "".join(f'<rect x="{x}" y="1690" width="16" height="120" fill="#e9e1cf"/>' for x in range(20, 1080, 60)) + '<rect x="0" y="1720" width="1080" height="12" fill="#e9e1cf"/><rect x="0" y="1780" width="1080" height="12" fill="#e9e1cf"/>'
+         + f'<rect x="990" y="1500" width="16" height="200" fill="#4a3426"/><rect x="960" y="1460" width="76" height="56" rx="10" fill="{RED}"/>'
+         + f'<rect x="40" y="1220" width="40" height="460" fill="#3a2a20"/><circle cx="60" cy="1160" r="120" fill="#24563a"/><circle cx="120" cy="1240" r="90" fill="#2d6a46"/>')
 scene("sa", S0, S1, f'<rect width="1080" height="1920" fill="url(#skyg)"/>'
-      + "".join(f'<circle cx="{RNG.randint(0,1080)}" cy="{RNG.randint(0,600)}" r="2" fill="#fff" opacity="{RNG.uniform(.3,.8):.2f}"/>' for _ in range(50))
-      + f'<circle cx="860" cy="260" r="64" fill="{MOON}"/><circle cx="860" cy="260" r="140" fill="url(#moonglow)"/>' + rooms
-      + f'<g id="a-q" opacity="0"><circle cx="820" cy="560" r="70" fill="{RED}"/><text x="820" y="592" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="92" fill="#fff">?</text></g>')
+      + "".join(f'<circle cx="{RNG.randint(0,1080)}" cy="{RNG.randint(0,500)}" r="2" fill="#fff" opacity="{RNG.uniform(.3,.8):.2f}"/>' for _ in range(50))
+      + f'<circle cx="180" cy="230" r="64" fill="{MOON}"/><circle cx="180" cy="230" r="140" fill="url(#moonglow)"/>' + house
+      + f'<g id="a-q" opacity="0"><circle cx="150" cy="560" r="70" fill="{RED}"/><text x="150" y="592" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="92" fill="#fff">?</text></g>')
 pop("#a-q", 1.0)
 tw(f'tl.fromTo("#a-gap",{{opacity:0}},{{opacity:1,duration:.4,yoyo:true,repeat:5,ease:"sine.inOut"}},{1.6:.3f});')
+for i in range(4):
+    tw(f'tl.fromTo("#a-smoke{i}",{{y:0,x:0}},{{y:-60,x:30,duration:3,ease:"sine.inOut",yoyo:true,repeat:1}},{i*0.3:.3f});')
 
-# B Kühlschrank Tag 1: Joghurt fehlt, „Merk dir das“
+# B Küche Tag 1: Joghurt fehlt
 S0, S1 = t_kommst, t_denkst
-scene("sb", S0, S1, room("sb") + fridge("b-fr", 120, 640) + figure("b-fig", 740, 1620, 1.25, eyes="n")
+scene("sb", S0, S1, kitchen("b") + fridge("b-fr", 120, 640) + figure("b-fig", 740, 1640, 1.25, eyes="n")
       + hud_day("b-hud", "1", "JOGHURT", 0)
       + f'<g id="b-merk" opacity="0"><rect x="560" y="420" width="420" height="96" rx="48" fill="{RED}"/><text x="770" y="484" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="46" fill="#fff">MERK DIR DAS</text></g>')
 pop("#b-hud", S0 + 0.2)
 open_door("b-fr", 120, t_kuehl)
 tw(f'tl.set("#b-fr-yog",{{opacity:0}},{S0:.3f});')
 tw(f'tl.fromTo("#b-fr-gap",{{opacity:0}},{{opacity:1,duration:.35,yoyo:true,repeat:{int((S1-t_joghurt)/0.35)},ease:"sine.inOut"}},{t_joghurt:.3f});')
-toggle("#b-hud-it", t_joghurt)
-pop("#b-merk", t_merk)
+toggle("#b-hud-it", t_joghurt); pop("#b-merk", t_merk)
 tw(f'tl.to("#b-fig-eyes-n",{{opacity:0,duration:.15}},{t_joghurt:.3f});'); tw(f'tl.to("#b-fig-eyes-w",{{opacity:1,duration:.15}},{t_joghurt:.3f});')
 
 # C „Hab ich wohl selbst gegessen“
 S0, S1 = t_denkst, t_naechsten
-scene("sc", S0, S1, room("sc") + figure("c-fig", 420, 1640, 1.3, eyes="n")
-      + f'<g id="c-th" opacity="0"><circle cx="560" cy="1060" r="18" fill="#e6e9ee"/><circle cx="620" cy="960" r="28" fill="#e6e9ee"/>'
-        f'<ellipse cx="760" cy="700" rx="240" ry="190" fill="#e6e9ee"/>'
-        f'<rect x="700" y="640" width="110" height="90" rx="16" fill="#ffe28a"/><rect x="692" y="626" width="126" height="20" rx="10" fill="#ff8fb1"/>'
-        f'<text x="880" y="640" font-family="Poppins" font-weight="800" font-size="90" fill="#2c3a52">?</text></g>')
+scene("sc", S0, S1, kitchen("c") + fridge("c-fr", 120, 640) + figure("c-fig", 760, 1650, 1.3, eyes="n")
+      + f'<g id="c-th" opacity="0"><circle cx="680" cy="1180" r="18" fill="#e6e9ee"/><circle cx="640" cy="1090" r="28" fill="#e6e9ee"/>'
+        f'<ellipse cx="760" cy="700" rx="240" ry="170" fill="#e6e9ee"/>'
+        f'<rect x="700" y="650" width="110" height="90" rx="16" fill="#ffe28a"/><rect x="692" y="636" width="126" height="20" rx="10" fill="#ff8fb1"/>'
+        f'<text x="870" y="650" font-family="Poppins" font-weight="800" font-size="90" fill="#2c3a52">?</text></g>')
 pop("#c-th", S0 + 0.1, 0.35, 0.6)
-tw(f'tl.fromTo("#c-fig",{{rotation:0}},{{rotation:3,svgOrigin:"420 1640",duration:.5,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_hab:.3f});')
+tw(f'tl.fromTo("#c-fig",{{rotation:0}},{{rotation:3,svgOrigin:"760 1650",duration:.5,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_hab:.3f});')
 
 # D Tag 2: Saft halb leer
-S0, S1 = t_naechsten, t_doch
-scene("sd", S0, S1, room("sd") + fridge("d-fr", 370, 640) + hud_day("d-hud", "2", "SAFT", 1)
+S0, S1 = t_naechsten, t_nachts
+scene("sd", S0, S1, kitchen("d") + fridge("d-fr", 370, 640) + hud_day("d-hud", "2", "SAFT", 1)
       + f'<g id="d-half" opacity="0"><circle cx="830" cy="1000" r="74" fill="{RED}"/><text x="830" y="1028" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="76" fill="#fff">½</text></g>')
 tw(f'tl.set("#d-fr-yog",{{opacity:0}},{S0:.3f});')
 open_door("d-fr", 370, S0 + 0.3)
 tw(f'tl.to("#d-fr-cheese",{{opacity:0,duration:.4}},{S0 + 1.0:.3f});')
 tw(f'tl.to("#d-fr-jlev",{{scaleY:.5,svgOrigin:"0 1066",duration:.9,ease:"power2.inOut"}},{t_saft:.3f});')
 toggle("#d-hud-it", t_saft); pop("#d-half", t_halb)
+
+# D2 Nachts: Knarzen über dir – du wohnst ganz oben
+S0, S1 = t_nachts, t_doch
+dust = "".join(f'<circle id="d2-p{i}" cx="{420+i*22}" cy="260" r="{3+i%3}" fill="#cfc6b0" opacity="0"/>' for i in range(10))
+scene("sd2", S0, S1, bedroom("d2") + figure("d2-fig", 470, 1520, 1.2, eyes="w") + bed_front()
+      + f'<rect x="400" y="236" width="300" height="10" fill="#000" opacity=".5"/>' + dust
+      + f'<g id="d2-k1" opacity="0"><text x="300" y="380" font-family="Poppins" font-weight="800" font-size="76" fill="{RED}" transform="rotate(-6 300 380)">KNARZ</text></g>'
+      + f'<g id="d2-k2" opacity="0"><text x="600" y="330" font-family="Poppins" font-weight="800" font-size="60" fill="{RED}" transform="rotate(5 600 330)">KNARZ…</text></g>'
+      + label("d2-l", 540, 640, "ÜBER DIR: NUR DAS DACH", "#e6e9ee", 38), drift=True)
+tw(f'tl.set("#d2-fig-eyes-w",{{opacity:0}},{S0:.3f});'); tw(f'tl.set("#d2-fig-eyes-n",{{opacity:1}},{S0:.3f});')
+tw(f'tl.to("#d2-fig-eyes-n",{{opacity:0,duration:.1}},{t_knarzen:.3f});'); tw(f'tl.to("#d2-fig-eyes-w",{{opacity:1,duration:.1}},{t_knarzen:.3f});')
+pop("#d2-k1", t_knarzen); pop("#d2-k2", t_knarzen + 0.6)
+for i in range(10):
+    tw(f'tl.fromTo("#d2-p{i}",{{opacity:0,y:0}},{{opacity:.8,y:{300+i*40},duration:1.4,ease:"power1.in",immediateRender:false}},{t_knarzen + 0.1 + i*0.08:.3f});')
+shake("#sd2-cam", t_knarzen, 4, 4)
+pop("#d2-l", t_oben)
 
 # E „Doch jetzt wird's unheimlich“ – Kalender springt zurück
 S0, S1 = t_doch, t_genau
@@ -391,26 +543,44 @@ for i in range(len(YEARS)):
     a = S0 + (S1 - S0) * i / len(YEARS)
     toggle(f"#e-y{i}", a, S0 + (S1 - S0) * (i + 1) / len(YEARS) if i < len(YEARS) - 1 else None)
 
-# F Japan 2008: Essen verschwindet (Archiv)
+
+# F Japan 2008: japanische Küche, Essen verschwindet
+def jp_kitchen():
+    noren = "".join(f'<rect x="{620+i*70}" y="380" width="62" height="200" fill="#2a3d6a"/><circle cx="{651+i*70}" cy="470" r="14" fill="{PAPER}"/>' for i in range(5))
+    return (f'<rect width="1080" height="1300" fill="#cdbb95"/>' + "".join(f'<rect x="{x}" y="0" width="8" height="1300" fill="{WOOD}" opacity=".4"/>' for x in range(0, 1080, 120))
+            + f'<rect x="600" y="360" width="400" height="20" fill="{WOOD}"/>{noren}'
+            + f'<rect x="500" y="1060" width="580" height="240" fill="{WOOD}"/><rect x="490" y="1046" width="600" height="20" rx="6" fill="#d9c7a8"/>'
+            + f'<rect x="560" y="960" width="110" height="86" rx="30" fill="#f2f2f2"/><rect x="590" y="950" width="50" height="14" rx="6" fill="#bbb"/><circle cx="615" cy="1010" r="8" fill="#2ecc71"/>'
+            + f'<path d="M 720 1046 L 730 990 Q 770 970 810 990 L 820 1046 Z" fill="#555"/><rect x="750" y="975" width="40" height="12" rx="5" fill="#222"/>'
+            + f'<rect x="870" y="900" width="160" height="140" rx="12" fill="#3a2d1f"/>' + "".join(f'<rect x="{885+i*36}" y="920" width="26" height="100" rx="4" fill="{c}"/>' for i, c in enumerate(("#c0392b", "#e9c46a", "#2a9d8f", "#f4f1de")))
+            + f'<rect x="40" y="380" width="150" height="220" fill="{PAPER}" stroke="{WOOD}" stroke-width="10"/><circle cx="115" cy="470" r="40" fill="{RED}"/>'
+            + floor("#8a7a52", "#7d6e48") + plant(540, 1300, 0.8))
+
+
 S0, S1 = t_genau, t_dabei
 SEPIA.add("sf")
-scene("sf", S0, S1, room("sf", True) + fridge("f-fr", 120, 640) + figure("f-man", 760, 1620, 1.25, eyes="w", outfit="shirt")
-      + f'<g id="f-stamp" opacity="0"><rect x="420" y="380" width="580" height="200" rx="18" fill="#120d08" fill-opacity=".85" stroke="{RED}" stroke-width="10" transform="rotate(-5 710 480)"/>'
-        f'<text x="710" y="460" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="42" fill="#e6d2ad" transform="rotate(-5 710 480)" letter-spacing="8">JAPAN</text>'
-        f'<text x="710" y="550" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="96" fill="{RED}" transform="rotate(-5 710 480)">2008</text></g>')
+scene("sf", S0, S1, jp_kitchen() + fridge("f-fr", 120, 640) + figure("f-man", 760, 1640, 1.25, eyes="w", outfit="shirt")
+      + f'<g id="f-stamp" opacity="0"><rect x="420" y="160" width="580" height="200" rx="18" fill="#120d08" fill-opacity=".85" stroke="{RED}" stroke-width="10" transform="rotate(-5 710 260)"/>'
+        f'<text x="710" y="240" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="42" fill="#e6d2ad" transform="rotate(-5 710 260)" letter-spacing="8">JAPAN</text>'
+        f'<text x="710" y="330" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="96" fill="{RED}" transform="rotate(-5 710 260)">2008</text></g>')
 open_door("f-fr", 120, S0 + 0.2)
 tw(f'tl.fromTo("#f-stamp",{{opacity:0,scale:2.2,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:.22,ease:"power4.in"}},{t_japan:.3f});')
 shake("#sf-cam", t_japan + 0.22, 5, 8)
 for i, it in enumerate(("milk", "yog", "cheese", "egg", "veg")):
     tw(f'tl.to("#f-fr-{it}",{{opacity:0,y:-20,duration:.35,ease:"sine.in"}},{t_mann + 0.35 + i*0.42:.3f});')
 
-# G Abschließen, nur ein Schlüssel
-S0, S1 = t_dabei, t_also1
+# G Abschließen – nur ein Schlüssel (Eingang „Genkan“)
+S0, S1 = t_dabei, t_glaubt
 SEPIA.add("sg")
-scene("sg", S0, S1, room("sg", True)
+scene("sg", S0, S1, f'<rect width="1080" height="1920" fill="#cdbb95"/>' + "".join(f'<rect x="{x}" y="0" width="8" height="1300" fill="{WOOD}" opacity=".4"/>' for x in range(0, 1080, 120))
       + f'<rect x="300" y="420" width="480" height="880" rx="12" fill="#5a4630" stroke="#3a2d1f" stroke-width="16"/>'
       + "".join(f'<rect x="{x}" y="{y}" width="180" height="340" rx="10" fill="none" stroke="#4a3826" stroke-width="8"/>' for x in (340, 560) for y in (470, 860))
       + f'<circle cx="720" cy="860" r="22" fill="#c9a24b"/><rect x="700" y="900" width="40" height="80" rx="10" fill="#c9a24b"/><circle cx="720" cy="930" r="9" fill="#1a120a"/>'
+      + f'<rect x="0" y="1300" width="1080" height="620" fill="#6e6250"/><rect x="0" y="1300" width="1080" height="30" fill="{WOOD}"/>'
+      + f'<rect x="830" y="1050" width="200" height="250" fill="{WOOD2}"/>' + "".join(f'<rect x="840" y="{y}" width="180" height="8" fill="{WOOD}"/>' for y in (1110, 1180, 1250))
+      + "".join(f'<ellipse cx="{x}" cy="{y}" rx="34" ry="14" fill="{c}"/>' for x, y, c in ((880, 1100, "#2a3d6a"), (960, 1100, "#8b3a3a"), (900, 1170, "#444"), (970, 1240, "#c9a24b")))
+      + f'<path d="M 120 1300 L 130 1050 Q 140 1020 150 1050 L 160 1300" fill="#2a3d6a"/><path d="M 140 1050 q -6 -40 10 -50" stroke="#222" stroke-width="6" fill="none"/>'
+      + f'<rect x="150" y="1500" width="160" height="60" rx="20" fill="#3a2d1f"/><rect x="340" y="1520" width="160" height="60" rx="20" fill="#5a4630"/>'
       + f'<g id="g-key"><circle cx="880" cy="930" r="40" fill="none" stroke="#e6d2ad" stroke-width="16"/><rect x="740" y="922" width="100" height="16" fill="#e6d2ad"/><rect x="760" y="938" width="14" height="26" fill="#e6d2ad"/></g>'
       + f'<g id="g-lock" opacity="0"><rect x="430" y="1380" width="220" height="170" rx="26" fill="{RED}"/><path d="M 470 1380 L 470 1330 A 70 70 0 0 1 610 1330 L 610 1380" stroke="{RED}" stroke-width="26" fill="none"/>'
         f'<circle cx="540" cy="1455" r="20" fill="#fff"/></g>'
@@ -419,169 +589,152 @@ tw(f'tl.fromTo("#g-key",{{x:120,opacity:0}},{{x:0,opacity:1,duration:.4,ease:"po
 tw(f'tl.to("#g-key",{{rotation:-90,svgOrigin:"720 930",duration:.35,ease:"power2.inOut"}},{t_ab - 0.2:.3f});')
 pop("#g-lock", t_ab); pop("#g-one", t_schl)
 
-# H Kameras, die Bilder aufs Handy schicken
-S0, S1 = t_also1, t_aber
+# H „Er glaubt, er wird verrückt“ → Kamera, die Bilder aufs Handy schickt
+S0, S1 = t_glaubt, t_paar
 SEPIA.add("sh")
-scene("sh", S0, S1, room("sh", True) + fridge("h-fr", 120, 640, items=False) + cam_icon("h-cam", 820, 520, 1.1)
-      + "".join(f'<path id="h-w{i}" d="M {700-i*60} {760+i*60} A {90+i*60} {90+i*60} 0 0 1 {880+i*60} {700+i*60}" stroke="{RED}" stroke-width="10" fill="none" opacity="0"/>' for i in range(3))
-      + phone_frame('<text x="540" y="900" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="90" fill="#fff">📷</text>', 760, 1450, 0.32, "h-ph"))
-pop("#h-cam", t_kameras, 0.35, 0.6)
+swirl = "".join(f'<path d="M {760+i*30} 980 q 20 -30 40 0 q 20 30 40 0" stroke="#e6d2ad" stroke-width="6" fill="none" transform="rotate({i*40} 800 960)"/>' for i in range(4))
+scene("sh", S0, S1, jp_kitchen() + fridge("h-fr", 120, 640, items=False) + figure("h-man", 760, 1640, 1.25, eyes="w", outfit="shirt")
+      + f'<g id="h-sw" opacity="0">{swirl}<text x="900" y="900" font-family="Poppins" font-weight="800" font-size="70" fill="#e6d2ad">?!</text></g>'
+      + cam_icon("h-cam", 900, 520, 0.9)
+      + "".join(f'<path id="h-w{i}" d="M {760-i*40} {700+i*40} A {80+i*50} {80+i*50} 0 0 1 {900+i*50} {640+i*50}" stroke="{RED}" stroke-width="10" fill="none" opacity="0"/>' for i in range(3))
+      + phone_frame('<rect x="260" y="700" width="560" height="420" fill="#4c6a4c"/><circle cx="540" cy="910" r="80" fill="#2b3a2b"/>', 640, 1350, 0.28, "h-ph"))
+tw(f'tl.set("#h-cam",{{opacity:0}},{S0:.3f});')
+pop("#h-sw", t_verrueckt, 0.3, 0.5)
+tw(f'tl.to("#h-sw",{{rotation:360,svgOrigin:"800 960",duration:{t_kamera-t_verrueckt:.3f},ease:"none"}},{t_verrueckt:.3f});')
+tw(f'tl.to("#h-sw",{{opacity:0,duration:.2}},{t_kamera:.3f});')
+pop("#h-cam", t_kamera, 0.35, 0.6)
 for i in range(3):
-    tw(f'tl.fromTo("#h-w{i}",{{opacity:0}},{{opacity:.9,duration:.25,yoyo:true,repeat:{int((S1-t_handy1)/0.5)},ease:"sine.inOut"}},{t_handy1 - 0.4 + i*0.15:.3f});')
+    tw(f'tl.fromTo("#h-w{i}",{{opacity:0}},{{opacity:.9,duration:.25,yoyo:true,repeat:{max(1,int((S1-t_handy1)/0.5))},ease:"sine.inOut"}},{t_handy1 - 0.4 + i*0.15:.3f});')
 pop("#h-ph", t_handy1 - 0.3, 0.35, 0.7)
 
-
-# I Frage: Woher weiß die Kamera …?
-def card_bg(cid):
-    return (f'<rect width="1080" height="1920" fill="#0b0e14"/><circle cx="540" cy="820" r="560" fill="url(#cardglow)"/>'
-            + "".join(f'<rect x="{x}" y="0" width="2" height="1920" fill="#fff" opacity=".025"/>' for x in range(0, 1080, 60))
-            + "".join(f'<rect x="0" y="{y}" width="1080" height="2" fill="#fff" opacity=".025"/>' for y in range(0, 1920, 60)))
-
-
-S0, S1 = t_aber, t_erst
-scene("si", S0, S1, card_bg("si") + cam_icon("i-cam", 540, 620, 2.0)
-      + f'<g id="i-q" opacity="0"><circle cx="860" cy="1300" r="110" fill="{RED}"/><text x="860" y="1352" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="150" fill="#fff">?</text></g>'
-      + f'<g id="i-ph">{phone_frame("", 300, 1360, 0.3, "i-ph2")}</g>')
-pop("#i-q", t_wann, 0.35, 0.5)
-
-# J Erstens: Bewegungsmelder – kein Licht, sondern Wärme
-S0, S1 = t_erst, t_zweit
-lens = "".join(f'<polygon points="{540+math.cos(a)*r1:.0f},{760+math.sin(a)*r1:.0f} {540+math.cos(a+0.5)*r1:.0f},{760+math.sin(a+0.5)*r1:.0f} {540+math.cos(a+0.5)*r2:.0f},{760+math.sin(a+0.5)*r2:.0f} {540+math.cos(a)*r2:.0f},{760+math.sin(a)*r2:.0f}" fill="#f6f7fb" stroke="#aeb6c2" stroke-width="3"/>'
-               for r1, r2 in ((60, 140), (140, 220)) for a in [i*0.5 - 3.14 for i in range(7)])
-scene("sj", S0, S1, card_bg("sj")
-      + f'<g id="j-dome"><path d="M 300 760 A 240 240 0 0 1 780 760 Z" fill="#f6f7fb"/>{lens}<rect x="300" y="760" width="480" height="40" rx="10" fill="#c9ccd8"/>'
-        f'<rect x="490" y="820" width="100" height="70" rx="10" fill="#2b3442"/><rect x="510" y="835" width="60" height="40" rx="6" fill="#ff6a3b"/></g>'
-      + label("j-l", 540, 380, "1  BEWEGUNGSMELDER (PIR)", RED, 40)
-      + f'<g id="j-sun" opacity="0"><circle cx="300" cy="1420" r="70" fill="{WIN}"/>' + "".join(f'<rect x="296" y="1310" width="8" height="40" fill="{WIN}" transform="rotate({a} 300 1420)"/>' for a in range(0, 360, 45)) + '</g>'
-      + xmark("j-x", 300, 1420, 110)
-      + f'<g id="j-heat" opacity="0"><path d="M 780 1500 Q 740 1440 780 1380 Q 820 1320 780 1270" stroke="#ff6a3b" stroke-width="16" fill="none" stroke-linecap="round"/>'
-        f'<path d="M 840 1500 Q 800 1440 840 1380 Q 880 1320 840 1270" stroke="#ffb35c" stroke-width="16" fill="none" stroke-linecap="round"/>'
-        f'<path d="M 720 1500 Q 680 1440 720 1380 Q 760 1320 720 1270" stroke="{RED}" stroke-width="16" fill="none" stroke-linecap="round"/>'
-        f'<circle cx="780" cy="1580" r="40" fill="#2ecc71"/><path d="M 760 1580 l 14 14 l 26 -30" stroke="#fff" stroke-width="10" fill="none"/></g>'
-      + f'<text x="300" y="1590" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="40" fill="#fff" id="j-t1" opacity="0">Licht</text>'
-      + f'<text x="780" y="1690" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="40" fill="#fff" id="j-t2" opacity="0">Wärme</text>')
-pop("#j-l", S0 + 0.05); tw(f'tl.fromTo("#j-dome",{{scale:.6,transformOrigin:"50% 100%"}},{{scale:1,duration:.5,ease:"power3.out"}},{S0:.3f});')
-pop("#j-sun", t_licht - 0.2); pop("#j-t1", t_licht - 0.2); pop("#j-x", t_licht + 0.25, 0.25, 1.4)
-pop("#j-heat", t_waerme1); pop("#j-t2", t_waerme1)
-
-# K Zweitens: Wärmebild – Zonen leuchten auf, wenn jemand durchläuft
-S0, S1 = t_zweit, t_dritt
-zones = "".join(f'<polygon id="k-z{i}" points="540,300 {60+i*160},1800 {200+i*160},1800" fill="#3a3dff" opacity=".18"/>' for i in range(6))
-heatman = (f'<g id="k-p"><defs></defs><ellipse cx="0" cy="-320" rx="70" ry="70" fill="url(#heatg)"/>'
-           f'<rect x="-70" y="-260" width="140" height="170" rx="40" fill="url(#heatg)"/>'
-           f'<rect x="-40" y="-100" width="30" height="120" rx="14" fill="url(#heatg)"/><rect x="10" y="-100" width="30" height="120" rx="14" fill="url(#heatg)"/></g>')
-scene("sk", S0, S1, f'<rect width="1080" height="1920" fill="#070a2a"/>{zones}'
-      + "".join(f'<rect x="0" y="{y}" width="1080" height="2" fill="#3a3dff" opacity=".2"/>' for y in range(320, 1900, 80))
-      + cam_icon("k-cam", 540, 300, 0.8) + f'<g transform="translate(-200,1500)">{heatman}</g>'
-      + label("k-l", 540, 560, "WÄRMEBILD", "#ffb35c", 40)
-      + f'<text id="k-c" x="540" y="1760" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="40" fill="#ffb35c" opacity="0">36,5 °C</text>')
-pop("#k-l", S0 + 0.1)
-tw(f'tl.fromTo("#k-p",{{x:0}},{{x:1460,duration:{S1-t_laeuft:.3f},ease:"none"}},{t_laeuft:.3f});')
-pop("#k-c", t_mensch)
-for i in range(6):
-    tc = t_laeuft + (S1 - t_laeuft) * (i + 0.6) / 6.6
-    tw(f'tl.fromTo("#k-z{i}",{{opacity:.18}},{{opacity:.75,duration:.15,yoyo:true,repeat:1,ease:"sine.inOut"}},{tc:.3f});')
-
-# L Drittens: Kamera wacht auf, Foto ans Handy – auch im Dunkeln
-S0, S1 = t_dritt, t_paar
-scene("sl", S0, S1, card_bg("sl") + cam_icon("l-cam", 540, 640, 1.8)
-      + f'<rect id="l-flash" width="1080" height="1920" fill="#fff" opacity="0"/>'
-      + f'<g id="l-photo" opacity="0"><rect x="380" y="1040" width="320" height="240" rx="12" fill="#e6e9ee"/><rect x="396" y="1056" width="288" height="180" fill="#2b3a6b"/>'
-        f'<circle cx="540" cy="1130" r="26" fill="#ff6a3b" opacity=".8"/><rect x="520" y="1158" width="40" height="70" rx="12" fill="#ff6a3b" opacity=".8"/></g>'
-      + phone_frame("", 860, 1560, 0.26, "l-ph")
-      + f'<g id="l-moon" opacity="0"><circle cx="200" cy="1500" r="70" fill="{MOON}"/><circle cx="230" cy="1475" r="64" fill="#0b0e14"/></g>')
-tw(f'tl.fromTo("#l-cam-led",{{opacity:.25}},{{opacity:1,duration:.2}},{t_wacht:.3f});')
-tw(f'tl.fromTo("#l-flash",{{opacity:0}},{{opacity:.85,duration:.001,immediateRender:false}},{t_foto1:.3f});')
-tw(f'tl.fromTo("#l-flash",{{immediateRender:false}},{{opacity:0,duration:.3}},{t_foto1+0.001:.3f});')
-tw(f'tl.fromTo("#l-photo",{{opacity:0}},{{opacity:1,duration:.15,immediateRender:false}},{t_foto1 + 0.1:.3f});')
-tw(f'tl.to("#l-photo",{{x:320,y:330,scale:.35,svgOrigin:"540 1160",duration:.6,ease:"power2.in"}},{t_foto1 + 0.5:.3f});')
-pop("#l-moon", t_dunkel)
-
-# M Handy vibriert bei der Arbeit → Foto: Küche + fremde Person
-S0, S1 = t_paar, t_polizei
+# M Bei der Arbeit: Handy vibriert → Foto mit fremder Person
+S0, S1 = t_paar, t_ruft
 SEPIA.add("sm")
 notif = (f'<g id="m-n" opacity="0"><rect x="250" y="560" width="580" height="150" rx="30" fill="#2b2f45" fill-opacity=".95"/>'
          f'<text x="290" y="620" font-family="Poppins" font-weight="700" font-size="30" fill="{RED}">● KAMERA · jetzt</text>'
          f'<text x="290" y="675" font-family="Poppins" font-weight="600" font-size="34" fill="#fff">Bewegung erkannt: Küche</text></g>')
 camimg = (f'<g id="m-img" opacity="0"><rect x="240" y="760" width="600" height="760" rx="20" fill="#1c2a1c"/>'
           f'<rect x="260" y="780" width="560" height="720" fill="#2f4630"/><rect x="280" y="980" width="180" height="420" rx="10" fill="#4c6a4c"/>'
+          f'<rect x="520" y="1200" width="300" height="200" fill="#3a5a3a"/><rect x="560" y="1150" width="90" height="60" rx="20" fill="#4c6a4c"/>'
           f'<rect x="260" y="1380" width="560" height="120" fill="#253a26"/>'
-          f'<g id="m-st" opacity="0" transform="translate(640,1420) scale(.6)"><ellipse cx="0" cy="-320" rx="60" ry="72" fill="#0b120b"/><path d="M -60 -330 Q -80 -200 -70 -150 L 70 -150 Q 80 -200 60 -330 Z" fill="#0b120b"/>'
+          f'<g id="m-st" opacity="0" transform="translate(680,1420) scale(.6)"><ellipse cx="0" cy="-320" rx="60" ry="72" fill="#0b120b"/><path d="M -60 -330 Q -80 -200 -70 -150 L 70 -150 Q 80 -200 60 -330 Z" fill="#0b120b"/>'
           f'<rect x="-62" y="-262" width="124" height="160" rx="36" fill="#0b120b"/><rect x="-34" y="-110" width="27" height="110" rx="12" fill="#0b120b"/><rect x="7" y="-110" width="27" height="110" rx="12" fill="#0b120b"/></g>'
           f'<text x="280" y="820" font-family="JetBrains Mono" font-weight="700" font-size="28" fill="#cfe8c8">CAM 1 · KÜCHE</text>'
-          f'<text x="800" y="820" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="28" fill="#cfe8c8">14:07:33</text>'
-          f'<circle cx="790" cy="1470" r="10" fill="{RED}"/></g>')
-scene("sm", S0, S1, f'<rect width="1080" height="1920" fill="#1a140e"/>'
-      + "".join(f'<rect x="{x}" y="1500" width="200" height="420" fill="#2e2519"/>' for x in (0, 880))
-      + f'<rect x="0" y="1400" width="1080" height="40" fill="#3a2d1f"/>'
-      + phone_frame(notif + camimg + '<text x="540" y="470" text-anchor="middle" font-family="Poppins" font-weight="300" font-size="120" fill="#fff">14:07</text>', 540, 960, 0.92, "m-ph"), drift=True)
+          f'<text x="800" y="820" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="28" fill="#cfe8c8">14:07:33</text><circle cx="790" cy="1470" r="10" fill="{RED}"/></g>')
+office = (f'<rect width="1080" height="1920" fill="#3a3f4a"/>' + window(120, 160, 840, 520, night=False, curtains=False)
+          + f'<rect x="0" y="1420" width="1080" height="500" fill="{WOOD2}"/><rect x="0" y="1400" width="1080" height="30" fill="{WOOD}"/>'
+          + f'<rect x="80" y="1180" width="300" height="200" rx="12" fill="#1a1d22"/><rect x="96" y="1196" width="268" height="168" fill="#4a6a9a"/><rect x="210" y="1380" width="40" height="30" fill="#1a1d22"/>'
+          + f'<rect x="780" y="1300" width="80" height="100" rx="10" fill="#e9e1cf"/><path d="M 860 1320 q 40 10 0 50" stroke="#e9e1cf" stroke-width="10" fill="none"/>'
+          + plant(960, 1400, 0.9) + "".join(f'<rect x="{420+i*14}" y="{1380-i*6}" width="240" height="14" fill="{c}"/>' for i, c in enumerate(("#f4f1de", "#e9e1cf", "#f4f1de"))))
+scene("sm", S0, S1, office + phone_frame(notif + camimg + '<text x="540" y="470" text-anchor="middle" font-family="Poppins" font-weight="300" font-size="120" fill="#fff">14:07</text>', 540, 980, 0.82, "m-ph"))
 pop("#m-n", t_vibr)
-tw(f'tl.fromTo("#m-ph",{{rotation:-2,svgOrigin:"540 960"}},{{rotation:2,svgOrigin:"540 960",duration:.07,yoyo:true,repeat:9,ease:"none"}},{t_vibr:.3f});')
-tw(f'tl.to("#m-ph",{{rotation:0,svgOrigin:"540 960",duration:.1}},{t_vibr + 0.75:.3f});')
+tw(f'tl.fromTo("#m-ph",{{rotation:-2,svgOrigin:"540 980"}},{{rotation:2,svgOrigin:"540 980",duration:.07,yoyo:true,repeat:9,ease:"none"}},{t_vibr:.3f});')
+tw(f'tl.to("#m-ph",{{rotation:0,svgOrigin:"540 980",duration:.1}},{t_vibr + 0.75:.3f});')
 pop("#m-img", t_auf); pop("#m-st", t_fremde, 0.5, 1.0)
-tw(f'tl.to("#m-img",{{scale:1.08,svgOrigin:"540 1140",duration:{S1-t_fremde:.3f},ease:"sine.inOut"}},{t_fremde:.3f});')
+tw(f'tl.to("#m-img",{{scale:1.08,svgOrigin:"540 1140",duration:{max(.3,S1-t_fremde):.3f},ease:"sine.inOut"}},{t_fremde:.3f});')
 
-# N Polizei durchsucht das Haus – Türen & Fenster verschlossen
-S0, S1 = t_polizei, t_dann
+# M2 Er ruft sofort die Polizei (110 – auch in Japan)
+S0, S1 = t_ruft, t_beamten
+SEPIA.add("sm2")
+scene("sm2", S0, S1, office + phone_frame('<text x="540" y="480" text-anchor="middle" font-family="Poppins" font-weight="400" font-size="40" fill="#cfd3ff">Polizei</text>'
+      '<text x="540" y="640" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="150" fill="#fff">110</text>'
+      '<text id="m2-r" x="540" y="760" text-anchor="middle" font-family="Poppins" font-weight="500" font-size="44" fill="#e6d2ad">Verbinden …</text>'
+      '<circle cx="540" cy="1400" r="80" fill="#e74c3c"/><rect x="490" y="1390" width="100" height="22" rx="11" fill="#fff"/>', 540, 980, 0.82, "m2-ph"))
+tw(f'tl.fromTo("#m2-r",{{opacity:1}},{{opacity:.3,duration:.4,yoyo:true,repeat:{max(1,int((S1-S0)/0.4))},ease:"sine.inOut"}},{S0:.3f});')
+
+# N Beamte durchsuchen das Haus – verschlossen, niemand da
+S0, S1 = t_beamten, t_bis
 SEPIA.add("sn")
 lock = lambda lid, x, y: (f'<g id="{lid}" opacity="0"><rect x="{x-40}" y="{y}" width="80" height="64" rx="12" fill="{RED}"/><path d="M {x-24} {y} L {x-24} {y-24} A 24 24 0 0 1 {x+24} {y-24} L {x+24} {y}" stroke="{RED}" stroke-width="12" fill="none"/></g>')
-scene("sn", S0, S1, f'<rect width="1080" height="1920" fill="#0d0a07"/>'
-      + f'<rect x="80" y="620" width="340" height="700" rx="10" fill="#2e2519" stroke="#4a3826" stroke-width="12"/><circle cx="380" cy="980" r="16" fill="#c9a24b"/>'
-      + f'<rect x="560" y="640" width="420" height="380" fill="#151a2a" stroke="#4a3826" stroke-width="14"/><rect x="764" y="640" width="12" height="380" fill="#4a3826"/><rect x="560" y="824" width="420" height="12" fill="#4a3826"/>'
-      + f'<rect x="0" y="1320" width="1080" height="600" fill="#1f170f"/>'
-      + f'<polygon id="n-beam" points="540,1900 300,600 780,600" fill="#fff4c9" opacity=".18"/>'
-      + lock("n-l1", 250, 520) + lock("n-l2", 770, 540)
-      + label("n-v", 540, 1500, "VERSCHLOSSEN", RED, 52))
-tw(f'tl.fromTo("#n-beam",{{rotation:-25,svgOrigin:"540 1900"}},{{rotation:25,svgOrigin:"540 1900",duration:1.4,yoyo:true,repeat:2,ease:"sine.inOut"}},{S0:.3f});')
-pop("#n-l1", t_tueren); pop("#n-l2", t_tueren + 0.3); pop("#n-v", t_versch)
+scene("sn", S0, S1, jp_room("n") + f'<rect width="1080" height="1920" fill="#000" opacity=".45"/>'
+      + f'<polygon id="n-beam" points="540,1900 300,500 780,500" fill="#fff4c9" opacity=".2"/>'
+      + lock("n-l1", 100, 300) + lock("n-l2", 800, 400)
+      + label("n-v", 540, 1500, "VERSCHLOSSEN", RED, 52) + label("n-n", 540, 1640, "NIEMAND DA", "#e6d2ad", 44))
+tw(f'tl.fromTo("#n-beam",{{rotation:-30,svgOrigin:"540 1900"}},{{rotation:30,svgOrigin:"540 1900",duration:1.3,yoyo:true,repeat:{max(1,int((S1-S0)/1.3))},ease:"sine.inOut"}},{S0:.3f});')
+pop("#n-l1", t_tueren); pop("#n-l2", t_tueren + 0.3); pop("#n-v", t_versch); pop("#n-n", t_niemand2)
 
-# O Der oberste Schrank: Matratze, Flaschen, eine Frau
-S0, S1 = t_dann, t_sie
+# N2 + O „Bis auf einen Ort“ → Wandschrank, oberes Fach, Schiebetür auf, Frau
+S0, S1 = t_bis, t_sie
 SEPIA.add("so")
-inside = (f'<rect x="210" y="430" width="660" height="300" fill="#120d08"/>'
-          f'<g id="o-in" opacity="0"><rect x="230" y="640" width="620" height="70" rx="20" fill="#c9b79a"/>'
-          f'<g transform="translate(560,690) rotate(-90) scale(.55)"><ellipse cx="0" cy="4" rx="78" ry="15" fill="#000" opacity=".3"/>'
-          f'<rect x="-34" y="-128" width="27" height="124" rx="12" fill="#4a4a5a"/><rect x="7" y="-128" width="27" height="124" rx="12" fill="#4a4a5a"/>'
+inside = (f'<g id="o-in" opacity="0"><rect x="600" y="500" width="440" height="50" rx="16" fill="#c9b79a"/>'
+          f'<g transform="translate(780,540) rotate(-90) scale(.4)"><rect x="-34" y="-128" width="27" height="124" rx="12" fill="#4a4a5a"/><rect x="7" y="-128" width="27" height="124" rx="12" fill="#4a4a5a"/>'
           f'<rect x="-62" y="-258" width="124" height="152" rx="36" fill="#7a6a8a"/><rect x="-12" y="-278" width="24" height="26" rx="8" fill="{FIG}"/>'
           f'<circle cx="0" cy="-320" r="64" fill="{FIG}"/><path d="M -60 -330 Q -64 -400 0 -392 Q 64 -400 60 -330 Q 50 -370 0 -372 Q -50 -370 -60 -330 Z" fill="#2a2016"/>'
           f'<rect x="-34" y="-324" width="22" height="6" rx="3" fill="{INK}"/><rect x="12" y="-324" width="22" height="6" rx="3" fill="{INK}"/></g>'
-          + "".join(f'<rect x="{x}" y="540" width="34" height="96" rx="10" fill="#cfe7ff" opacity=".85"/><rect x="{x+9}" y="528" width="16" height="16" fill="#3b6cff"/>' for x in (720, 770, 820))
+          + "".join(f'<rect x="{x}" y="430" width="26" height="70" rx="8" fill="#cfe7ff" opacity=".85"/><rect x="{x+7}" y="420" width="12" height="12" fill="#3b6cff"/>' for x in (940, 975, 1010))
           + '</g>')
-scene("so", S0, S1, f'<rect width="1080" height="1920" fill="#1a140e"/>'
-      + f'<rect x="180" y="400" width="720" height="1460" fill="#5a4630" stroke="#3a2d1f" stroke-width="14"/>{inside}'
-      + f'<rect x="180" y="750" width="720" height="16" fill="#3a2d1f"/>'
-      + "".join(f'<rect x="{x}" y="790" width="340" height="1050" rx="8" fill="none" stroke="#4a3826" stroke-width="8"/>' for x in (200, 540))
-      + f'<g id="o-door"><rect x="190" y="410" width="700" height="330" fill="#6a5438" stroke="#3a2d1f" stroke-width="8"/><circle cx="540" cy="700" r="14" fill="#c9a24b"/></g>'
-      + f'<polygon id="o-beam" points="540,1920 160,420 920,420" fill="#fff4c9" opacity="0"/>'
-      + label("o-l1", 310, 300, "MATRATZE", "#e6d2ad", 38) + label("o-l2", 760, 300, "PLASTIKFLASCHEN", "#e6d2ad", 34))
-tw(f'tl.to("#o-door",{{scaleY:.05,svgOrigin:"540 410",duration:.5,ease:"power2.inOut"}},{t_oeffnen:.3f});')
-tw(f'tl.fromTo("#o-beam",{{opacity:0}},{{opacity:.22,duration:.4}},{t_oeffnen + 0.3:.3f});')
+scene("so", S0, S1, jp_room("o", closet=True) + inside
+      + f'<rect id="o-dark" width="1080" height="1920" fill="#000" opacity=".55"/>'
+      + f'<polygon id="o-beam" points="300,1900 600,380 1080,380 1080,600" fill="#fff4c9" opacity="0"/>'
+      + f'<rect id="o-mark" x="574" y="394" width="492" height="172" fill="none" stroke="{RED}" stroke-width="8" stroke-dasharray="20 12" opacity="0"/>'
+      + label("o-l1", 300, 220, "MATRATZE", "#e6d2ad", 38) + label("o-l2", 760, 220, "PLASTIKFLASCHEN", "#e6d2ad", 34))
+tw(f'tl.to("#so-cam",{{scale:1.12,svgOrigin:"760 640",duration:{t_schiebt-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
+tw(f'tl.fromTo("#o-mark",{{opacity:0}},{{opacity:1,duration:.3,yoyo:true,repeat:5,ease:"sine.inOut"}},{t_fach:.3f});')
+tw(f'tl.to("#o-tdoor",{{x:-240,duration:.7,ease:"power2.inOut"}},{t_schiebt + 0.3:.3f});')
+tw(f'tl.fromTo("#o-beam",{{opacity:0}},{{opacity:.25,duration:.4}},{t_schiebt + 0.5:.3f});')
+tw(f'tl.to("#o-dark",{{opacity:.25,duration:.5}},{t_schiebt + 0.5:.3f});')
 tw(f'tl.fromTo("#o-in",{{opacity:0}},{{opacity:1,duration:.5}},{t_darin:.3f});')
 pop("#o-l1", t_matratze); pop("#o-l2", t_flaschen)
 
-# P Ein Jahr – und das fehlende Essen (Payoff)
-S0, S1 = t_sie, t_also2
+# P Ein Jahr – sie kam raus, wenn er weg war – sogar geduscht
+S0, S1 = t_sie, t_und_kn
 SEPIA.add("sp")
-DAYS = ["1", "30", "90", "180", "270", "365"]
-scene("sp", S0, S1, card_bg("sp")
-      + f'<g id="p-cal"><rect x="290" y="420" width="500" height="520" rx="30" fill="#f2efe8"/><rect x="290" y="420" width="500" height="130" rx="30" fill="{RED}"/>'
-        f'<text x="540" y="510" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="56" fill="#fff">TAG</text>'
-      + "".join(f'<text id="p-d{i}" x="540" y="800" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="170" fill="#151a21" opacity="0">{d}</text>' for i, d in enumerate(DAYS)) + '</g>'
-      + f'<g id="p-yog" opacity="0"><rect x="400" y="1180" width="280" height="220" rx="40" fill="#ffe28a"/><rect x="380" y="1150" width="320" height="50" rx="25" fill="#ff8fb1"/>'
-        f'<rect x="380" y="1140" width="320" height="270" rx="40" fill="none" stroke="{RED}" stroke-width="10" stroke-dasharray="22 14"/></g>'
-      + label("p-l", 540, 1560, "DAS FEHLENDE ESSEN", RED, 48))
-for i in range(len(DAYS)):
-    a = S0 + 0.2 + (t_aufgef - S0 - 0.2) * i / len(DAYS)
-    toggle(f"#p-d{i}", a, S0 + 0.2 + (t_aufgef - S0 - 0.2) * (i + 1) / len(DAYS) if i < len(DAYS) - 1 else None)
-pop("#p-yog", t_aufgef + 0.4, 0.4, 0.6); pop("#p-l", t_fehlende)
+DAYS = ["1", "60", "120", "240", "365"]
 
-# Q Ende: zurück in deiner Küche – Ja / Nein
+
+def card_bg():
+    return (f'<rect width="1080" height="1920" fill="#14100c"/><circle cx="540" cy="820" r="560" fill="url(#cardglow)"/>'
+            + "".join(f'<rect x="{x}" y="0" width="2" height="1920" fill="#fff" opacity=".025"/>' for x in range(0, 1080, 60)))
+
+
+drops = "".join(f'<rect id="p-dr{i}" x="{470+i*28}" y="1260" width="6" height="40" rx="3" fill="#8fd3ff" opacity="0"/>' for i in range(6))
+scene("sp", S0, S1, card_bg()
+      + f'<g id="p-cal"><rect x="290" y="300" width="500" height="480" rx="30" fill="#f2efe8"/><rect x="290" y="300" width="500" height="120" rx="30" fill="{RED}"/>'
+        f'<text x="540" y="382" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="52" fill="#fff">TAG</text>'
+      + "".join(f'<text id="p-d{i}" x="540" y="660" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="160" fill="#151a21" opacity="0">{d}</text>' for i, d in enumerate(DAYS)) + '</g>'
+      + f'<g id="p-out" opacity="0"><rect x="160" y="1140" width="220" height="360" rx="10" fill="{WOOD2}"/><rect x="170" y="1150" width="200" height="340" fill="#1a120a"/>'
+        f'<g transform="translate(250,1480) scale(.5)"><rect x="-34" y="-128" width="27" height="124" rx="12" fill="#4a4a5a"/><rect x="7" y="-128" width="27" height="124" rx="12" fill="#4a4a5a"/>'
+        f'<rect x="-62" y="-258" width="124" height="152" rx="36" fill="#7a6a8a"/><circle cx="0" cy="-320" r="64" fill="{FIG}"/><path d="M -60 -330 Q -64 -400 0 -392 Q 64 -400 60 -330 Q 50 -370 0 -372 Q -50 -370 -60 -330 Z" fill="#2a2016"/></g></g>'
+      + f'<g id="p-sh" opacity="0"><rect x="440" y="1100" width="220" height="30" rx="12" fill="#c9ccd8"/><rect x="540" y="1040" width="20" height="70" fill="#c9ccd8"/><path d="M 550 1040 q 0 -40 60 -40 l 120 0" stroke="#c9ccd8" stroke-width="18" fill="none"/>'
+        f'<path d="M 450 1150 L 650 1150 L 700 1520 L 400 1520 Z" fill="#8fd3ff" opacity=".12"/>{drops}'
+        + "".join(f'<circle cx="{480+i*60}" cy="1460" r="{40+i*6}" fill="#fff" opacity=".08"/>' for i in range(4)) + '</g>'
+      + label("p-l", 760, 1600, "SOGAR GEDUSCHT", RED, 40))
+for i in range(len(DAYS)):
+    a = S0 + 0.1 + (t_wenn - S0 - 0.1) * i / len(DAYS)
+    toggle(f"#p-d{i}", a, S0 + 0.1 + (t_wenn - S0 - 0.1) * (i + 1) / len(DAYS) if i < len(DAYS) - 1 else None)
+pop("#p-out", t_raus - 0.2, 0.35, 0.8)
+pop("#p-sh", t_dusch - 0.3, 0.35, 0.8); pop("#p-l", t_dusch)
+for i in range(6):
+    tw(f'tl.fromTo("#p-dr{i}",{{opacity:.9,y:0}},{{y:240,duration:.5,repeat:{max(1,int((S1-t_dusch)/0.5))},ease:"none",immediateRender:false}},{t_dusch + i*0.07:.3f});')
+
+# P2 „Und das Knarzen über dir?“ – Dachluke über deinem Bett öffnet sich einen Spalt
+S0, S1 = t_und_kn, t_aufgef
+scene("sp2", S0, S1, bedroom("p2") + f'<rect x="400" y="236" width="280" height="24" fill="#120d08"/>'
+      + f'<g id="p2-hatch"><rect x="400" y="236" width="280" height="24" fill="#4a3a2a" stroke="#2a1f17" stroke-width="4"/></g>'
+      + f'<g id="p2-eyes" opacity="0"><circle cx="510" cy="250" r="7" fill="#f4e3a1"/><circle cx="560" cy="250" r="7" fill="#f4e3a1"/></g>'
+      + figure("p2-fig", 470, 1520, 1.2, eyes="w") + bed_front()
+      + f'<rect x="0" y="0" width="1080" height="1920" fill="#000" opacity=".25"/>')
+tw(f'tl.to("#p2-hatch",{{rotation:-14,svgOrigin:"400 248",duration:1.2,ease:"sine.inOut"}},{S0 + 0.4:.3f});')
+tw(f'tl.fromTo("#p2-eyes",{{opacity:0}},{{opacity:1,duration:.5}},{t_jetzt + 0.6:.3f});')
+tw(f'tl.to("#sp2-cam",{{scale:1.35,svgOrigin:"540 260",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+
+# P3 Payoff: das fehlende Essen
+S0, S1 = t_aufgef, t_also2
+scene("sp3", S0, S1, kitchen("p3") + fridge("p3-fr", 370, 640)
+      + label("p3-l", 540, 470, "DAS FEHLENDE ESSEN", RED, 50))
+tw(f'tl.set("#p3-fr-yog",{{opacity:0}},{S0:.3f});')
+open_door("p3-fr", 370, S0 + 0.1)
+tw(f'tl.fromTo("#p3-fr-gap",{{opacity:0}},{{opacity:1,duration:.3,yoyo:true,repeat:{max(1,int((S1-S0)/0.3))},ease:"sine.inOut"}},{S0 + 0.4:.3f});')
+tw(f'tl.to("#sp3-cam",{{scale:1.3,svgOrigin:"530 860",duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
+pop("#p3-l", t_fehlende)
+
+# Q Ende: Ja / Nein
 S0, S1 = t_also2, TOTAL
-scene("sq", S0, S1, room("sq") + fridge("q-fr", 120, 640) + figure("q-fig", 760, 1640, 1.25, eyes="w")
-      + pill("q-p1", 380, 470, "JA", RED) + pill("q-p2", 700, 470, "NEIN", "#3a4452"))
+scene("sq", S0, S1, kitchen("q") + fridge("q-fr", 120, 640) + figure("q-fig", 760, 1650, 1.25, eyes="w")
+      + pill("q-p1", 380, 230, "JA", RED) + pill("q-p2", 700, 230, "NEIN", "#3a4452"))
 tw(f'tl.set("#q-fr-yog",{{opacity:0}},{S0:.3f});')
 open_door("q-fr", 120, S0 + 0.2)
-tw(f'tl.fromTo("#q-fr-gap",{{opacity:0}},{{opacity:1,duration:.35,yoyo:true,repeat:{int((S1-S0)/0.35)},ease:"sine.inOut"}},{S0 + 0.6:.3f});')
+tw(f'tl.fromTo("#q-fr-gap",{{opacity:0}},{{opacity:1,duration:.35,yoyo:true,repeat:{max(1,int((S1-S0)/0.35))},ease:"sine.inOut"}},{S0 + 0.6:.3f});')
 pop("#q-p1", t_vermisst); pop("#q-p2", t_vermisst + 0.3)
 tw(f'tl.to("#q-fig",{{y:-12,duration:.6,ease:"sine.inOut",yoyo:true,repeat:3}},{t_selbst:.3f});')
 
@@ -590,7 +743,8 @@ brand_html = []
 # ================= UNTERTITEL (Skill 7, Format A: Akzent Rot) =================
 KEY = {"JAHRELANG", "HEIMLICH", "JOGHURT", "MERK", "SELBST", "HALB", "LEER", "UNHEIMLICH", "WIRKLICH", "JAPAN", "ZWEITAUSENDACHT",
        "ESSEN", "ABSCHLIESST", "SCHLÜSSEL", "KAMERAS", "HANDY", "BEWEGUNGSMELDER", "LICHT", "WÄRME", "WÄRMEBILD", "FOTO", "DUNKELN",
-       "VIBRIERT", "FREMDE", "PERSON", "VERSCHLOSSEN", "SCHRANK", "FRAU", "MATRATZE", "PLASTIKFLASCHEN", "JAHR", "FEHLENDE", "VERMISST"}
+       "VIBRIERT", "FREMDE", "PERSON", "VERSCHLOSSEN", "SCHRANK", "FRAU", "MATRATZE", "PLASTIKFLASCHEN", "JAHR", "FEHLENDE", "VERMISST",
+       "KNARZEN", "OBEN", "VERRÜCKT", "POLIZEI", "NIEMAND", "ORT", "WANDSCHRANK", "FACH", "GEDUSCHT", "KAMERA"}
 DISPLAY = {"zweitausendacht.": "2008."}
 SKIP = set()
 
@@ -688,7 +842,7 @@ def danger(did, t0, t1):
     tw(f'tl.fromTo("#{did}-v",{{opacity:.2}},{{opacity:.7,duration:.45,yoyo:true,repeat:{int((t1-t0)/0.45)},ease:"sine.inOut"}},{t0:.3f});')
 
 
-danger("ov-d1", t_fremde, t_polizei)
+danger("ov-d1", t_fremde, t_ruft)
 danger("ov-d2", t_darin, t_sie)
 
 
@@ -707,8 +861,7 @@ def archive(aid, t0, t1):
         tt += 0.3
 
 
-archive("ov-arch1", t_genau, t_aber)
-archive("ov-arch2", t_paar, t_also2)
+archive("ov-arch1", t_genau, t_und_kn)
 
 for fid in FIGS:
     tw(f'tl.fromTo("#{fid}-body",{{scaleY:1}},{{scaleY:1.02,transformOrigin:"50% 100%",duration:1.3,yoyo:true,repeat:{int(TOTAL/1.3)},ease:"sine.inOut"}},0);')

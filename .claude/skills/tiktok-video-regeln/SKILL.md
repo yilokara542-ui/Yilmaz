@@ -27,7 +27,7 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 |---|---|---|
 | 1. Hook | 0–5 % | Situation + offene Frage |
 | 2. Verschärfen | 5–25 % | Lage wird enger: Zahl sinkt, Zeit läuft, etwas geht schief |
-| 3. Erklären | 25–60 % | Die Technik Schritt für Schritt, nummeriert („Erstens … Zweitens …“) oder als Ablauf („Zuerst … dann … und genau jetzt …“) |
+| 3. Erklären | 25–60 % | Die Technik **in die Handlung eingebaut** – max. 1–2 Sätze am Stück, nie ein eigener Erklär-Block, der die Geschichte anhält (Feedback 15.11.). Bei Story-Themen (echte Fälle, Mysterys) darf diese Phase ganz zugunsten weiterer Story-Eskalation entfallen. |
 | 4. Eskalation / Aha | 60–90 % | Überraschender Fakt, Wendung („Doch dann …“, „Aber hier wird's verrückt:“) |
 | 5. Ende | letzte 5–10 % | Frage an den Zuschauer ODER „Teil 2“ – nie ein langes Fazit |
 
@@ -38,6 +38,7 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Alle 10–15 Sekunden ein Wendepunkt-Satz:** „Doch dann …“, „Plötzlich …“, „Aber irgendetwas stimmt nicht.“, „Und genau hier passiert der Trick.“
 - **Nummerierte Punkte** ankündigen („4 Dinge …“) → Zuschauer wartet auf den letzten.
 - Optional **zweiter Strang** im Hintergrund, der im letzten Satz zurückkommt.
+- **Story vor Erklärung** (Feedback 15.11.): Unterhaltung und Spannung haben Vorrang. Lieber ein weiteres unheimliches Detail, eine Sinneswahrnehmung (Geräusch, Geruch, Wärme) oder ein überraschender Fakt als ein Lehrbuch-Abschnitt. Fiktive „Du“-Szenen dürfen frei zugespitzt werden; der echte Fall bleibt faktentreu.
 - **Ende:** Frage, die zum Kommentieren zwingt („Was würdest du tun?“, „Was glaubst du: A oder B?“) oder Cliffhanger + „Teil 2 kommt morgen – folge, damit du ihn nicht verpasst.“
 
 ## 5. Tempo
@@ -60,6 +61,7 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 ### 6a. Keine leeren Bilder – Detailreichtum (aus Feedback 15.11.)
 - **Jede Szene hat 3 Ebenen:** Hintergrund (Wand, Textur, Umgebung), Mittelgrund (Handlung), Vordergrund (Partikel, Licht, Rahmen). Nie eine Figur oder ein Objekt allein auf flacher Farbe.
 - **Umgebungsdetails:** Schrauben, Kabel, Paneele, Schilder, Etagennummern, Lampen, Warnstreifen, Bodenfliesen – kleine Dinge, die die Welt glaubwürdig machen.
+- **Wohnräume immer liebevoll eingerichtet** (Feedback 15.11.): Bilder an der Wand, Uhr, Pflanzen, Regal mit Büchern, Teppich, Vorhänge + Fenster mit Nachthimmel, Hängelampen, Küchenzeile mit Herd/Wasserkocher/Fliesenspiegel, Magnete am Kühlschrank. Häuser von außen: Dachziegel, Schornstein, Fensterläden, Vorgarten, Zaun, Baum, Briefkasten, Außenlampe. Andere Länder/Epochen mit typischer Einrichtung (z. B. Japan: Shoji-Schiebetüren, Tatami, Wandschrank „Oshiire“). Nie kahle Wände.
 - **Licht statt Flachfarbe:** Lichtkegel, Glühen um Lampen, weiche Schatten unter Figuren und Objekten, Verläufe im Hintergrund, Vignette an den Rändern.
 - **Dauerhafte Mikro-Bewegung:** schwebender Staub, leichtes Lampenflackern, Atmen der Figur, sanfte Kamerafahrt – auch wenn gerade „nichts passiert“.
 - **Filmkorn** leicht über dem ganzen Video; Rückblenden zusätzlich mit Archiv-Look (Filmrand, Kratzer, Sepia).
@@ -104,6 +106,7 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Keine leere Szene: 3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub/Korn, Mikro-Bewegung
 - [ ] Gefahrenmomente visuell verstärkt (rote Vignette, Warnsymbole), Szenenwechsel mit Übergang
 - [ ] Figur angezogen, Untertitel Poppins ≤ 64 px, 60 fps mit weichen Überblendungen
+- [ ] Räume dekoriert (mind. 5 Deko-Objekte pro Innenraum), kein Erklär-Block > 2 Sätze, Story bleibt durchgehend spannend
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
@@ -175,3 +178,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-15 | Video 08: „spannender und nicht so leer, Kleinigkeiten für mehr Ästhetik“ | Neuer Abschnitt 6a (3 Ebenen, Umgebungsdetails, Licht/Schatten, Staub, Filmkorn, Mikro-Bewegung, Spannungs-Akzente, Übergänge) + 2 Checklisten-Punkte |
 | 2026-11-15 | Video 08: „Person Kleidung geben, Schrift ändern und kleiner, Video sanfter/flüssiger“ | Abschnitt 6 (Kleidung), 5 (60 fps, Überblendungen, weiche Bewegungen), 7 (Poppins, ≤ 64 px, Groß-/Kleinschreibung) + Checkliste |
 | 2026-11-15 | Neues Referenzvideo „NEBEL · Teil 1“ (85,7 s): „Füge diese Art von Video zu meinem Skill hinzu“ | Neues Format B „Regel-Serie“ (Abschnitt 11a) mit Aufbau, Bildsprache, Untertiteln, Spannung, Brücke zur Nische, eigener Checkliste |
+| 2026-11-15 | Video 10: „Haus mit mehr Deko, nicht so langweilig; Kamera-Erklärung raus, stattdessen etwas Spannenderes“ | Abschnitt 3 (Erklären max. 1–2 Sätze, in Handlung eingebaut, darf bei Story-Themen entfallen), 4 (Story vor Erklärung), 6a (Wohnräume liebevoll eingerichtet, Deko-Liste) + Checkliste |
