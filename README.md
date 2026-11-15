@@ -9,6 +9,8 @@ Komplett-Plan für ein TikTok-Business ohne Gesicht, das nur über das **TikTok 
 | [03_10-Video-Skripte.md](03_10-Video-Skripte.md) | 10 fertige Skripte mit Bild, Voiceover, Text, Caption |
 | [04_30-Tage-Posting-Plan.md](04_30-Tage-Posting-Plan.md) | Tag-für-Tag-Plan, Review-Kennzahlen, Workflow |
 | [05_Geldmodell-und-1000-Euro-Rechnung.md](05_Geldmodell-und-1000-Euro-Rechnung.md) | Einnahmequellen, Rechnung bis 1.000 €/Tag, Szenarien, Kosten, Recht |
+| [06_Referenz-Analyse.md](06_Referenz-Analyse.md) | Analyse der 3 Referenz-Videos (Einstieg, Tempo, Länge, Bildsprache, Spannung) |
+| [.claude/skills/tiktok-video-regeln/SKILL.md](.claude/skills/tiktok-video-regeln/SKILL.md) | Skill mit allen Video-Regeln + Feedback-Log |
 
 **Empfehlung:** Nische „Clever Haushalt“ (Putz-, Küchen- und Ordnungs-Hacks + ehrliche Produkttests).
 **Kernrechnung:** ~634.000 Aufrufe/Tag (3 Accounts) → ~800 € Shop-Provision + ~200 € Creator Rewards = ~1.000 €/Tag. Realistischer Zeitraum: 6–12 Monate. Alle Zahlen sind Planungsannahmen, keine Garantie.
