@@ -1,4 +1,4 @@
-# 10 – Skript: „Könnte jemand jahrelang heimlich in deinem Haus leben, ohne dass du es bemerkst?“
+# 10 – Skript (Version 2): „Könnte jemand jahrelang heimlich in deinem Haus leben, ohne dass du es bemerkst?“
 
 **Format A „Erklär-Story“** · Ziel 70–90 s · Stimme ElevenLabs „Mark - Natural Conversations“
 **Technik:** PIR-Bewegungsmelder (Passiv-Infrarot) in Überwachungskameras – sie „sehen“ Wärme, nicht Licht.
@@ -29,3 +29,15 @@
 - PIR-Sensoren (Passiv-Infrarot) messen Änderungen der Wärmestrahlung (Infrarot) im Raum; Facettenlinsen teilen den Raum in Zonen. Wechselt eine warme Person zwischen Zonen, löst der Sensor aus – unabhängig von sichtbarem Licht.
 
 **Caption:** Würdest du es merken? 😳 Ein echter Fall aus Japan. #wusstestdu #technik #alltagstechnik #truecrime #fyp
+
+
+---
+
+## Version 2 (nach Feedback 15.11.)
+Kamera-Erklärung (Bewegungsmelder/Wärmebild) entfernt, stattdessen mehr Story. Vollständiger Sprechertext: `videos/10_mitbewohner/script.txt`.
+
+Neu:
+- „Nachts hörst du über dir ein Knarzen. Dabei wohnst du ganz oben.“ (Setup) → „Und das Knarzen über dir? Jetzt weißt du, was es sein könnte.“ (Payoff, Dachluke öffnet sich einen Spalt)
+- „Er glaubt, er wird verrückt.“ / „Er ruft sofort die Polizei.“ / „Niemand da. Bis auf einen Ort.“ / „Ganz oben im Wandschrank gibt es ein winziges Fach. Ein Beamter schiebt die Tür auf.“
+- „Wenn er weg war, kam sie raus. Sie hat sogar bei ihm geduscht.“ (so in Medienberichten zum Fall genannt)
+- Alle Räume dekoriert (Küche, Schlafzimmer, Haus außen, japanische Räume mit Shoji, Tatami, Oshiire-Wandschrank).
