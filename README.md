@@ -13,6 +13,7 @@ Komplett-Plan für ein TikTok-Business ohne Gesicht, das nur über das **TikTok 
 | [07_20-Themen.md](07_20-Themen.md) | 20 Themen-Fragen, nach Neugier sortiert, Top 5 markiert |
 | [08_Skript_Aufzugseil.md](08_Skript_Aufzugseil.md) | Skript „Was passiert, wenn das Seil deines Aufzugs reißt?“ (78 s) |
 | [audio/](audio/) | Voiceovers (ElevenLabs) + Satz-Timings |
+| [videos/08_Aufzugseil_final.mp4](videos/08_Aufzugseil_final.mp4) | Fertiges Video 08 (HyperFrames-Projekt in videos/08_aufzugseil/) |
 | [.claude/skills/tiktok-video-regeln/SKILL.md](.claude/skills/tiktok-video-regeln/SKILL.md) | Skill mit allen Video-Regeln + Feedback-Log |
 
 **Empfehlung:** Nische „Clever Haushalt“ (Putz-, Küchen- und Ordnungs-Hacks + ehrliche Produkttests).
