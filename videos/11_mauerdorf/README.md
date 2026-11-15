@@ -3,7 +3,7 @@
 HyperFrames-Projekt, 1080×1920 (9:16). Skript: `../../11_Skript_Mauerdorf.md`, Sprechertext: `script.txt`.
 Alle Figuren, Riesen, Jäger, Wappen und Orte sind eigene Entwürfe.
 
-**Status:** Voiceover fehlt noch (ElevenLabs-Gratis-Kontingent gesperrt). `assets/voiceover.mp3` ist ein stiller Platzhalter, `assets/words.json` enthält geschätzte Zeiten.
+**Status:** Fertig – Voiceover ElevenLabs „Mark - Natural Conversations“ (73,2 s).
 
 Sobald das echte Voiceover da ist (Datei nach `assets/voiceover.mp3`):
 ```bash
