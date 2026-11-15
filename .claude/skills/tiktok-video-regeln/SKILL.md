@@ -64,6 +64,8 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Wohnräume immer liebevoll eingerichtet** (Feedback 15.11.): Bilder an der Wand, Uhr, Pflanzen, Regal mit Büchern, Teppich, Vorhänge + Fenster mit Nachthimmel, Hängelampen, Küchenzeile mit Herd/Wasserkocher/Fliesenspiegel, Magnete am Kühlschrank. Häuser von außen: Dachziegel, Schornstein, Fensterläden, Vorgarten, Zaun, Baum, Briefkasten, Außenlampe. Andere Länder/Epochen mit typischer Einrichtung (z. B. Japan: Shoji-Schiebetüren, Tatami, Wandschrank „Oshiire“). Nie kahle Wände.
 - **Licht statt Flachfarbe:** Lichtkegel, Glühen um Lampen, weiche Schatten unter Figuren und Objekten, Verläufe im Hintergrund, Vignette an den Rändern.
 - **Dauerhafte Mikro-Bewegung:** schwebender Staub, leichtes Lampenflackern, Atmen der Figur, sanfte Kamerafahrt – auch wenn gerade „nichts passiert“.
+- **Neue Orte mit Überblick einführen** (Feedback 15.11.): Sobald ein Ort (Dorf, Stadt, Haus, Gebäude) zum ersten Mal genannt wird, zuerst 1,5–3 s eine Ansicht von oben bzw. die Totale zeigen (ganzer Ort auf einen Blick, langsamer Zoom hinein), erst danach Details auf Straßenhöhe.
+- **Bedrohungen wirklich unheimlich** (Feedback 15.11.): Gegner/Monster nie freundlich-rund oder niedlich. Stattdessen: hagere, langgezogene Formen, tiefe dunkle Augenhöhlen mit kleinen glühenden Pupillen, Risse/Narben mit Glimmen, harte Schatten von unten, langsame Bewegungen, kurzes Augen-Pulsieren, dazu tiefer Ton. Immer eigene Designs, keine Anlehnung an bekannte Figuren.
 - **Filmkorn** leicht über dem ganzen Video; Rückblenden zusätzlich mit Archiv-Look (Filmrand, Kratzer, Sepia).
 - **Spannungs-Akzente:** in Gefahrenmomenten rot pulsierende Vignette, Warnsymbole, schnellere Kamera; jeder Szenenwechsel mit kurzem Blitz/Ruck statt hartem Schnitt.
 
@@ -107,6 +109,7 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Gefahrenmomente visuell verstärkt (rote Vignette, Warnsymbole), Szenenwechsel mit Übergang
 - [ ] Figur angezogen, Untertitel Poppins ≤ 64 px, 60 fps mit weichen Überblendungen
 - [ ] Räume dekoriert (mind. 5 Deko-Objekte pro Innenraum), kein Erklär-Block > 2 Sätze, Story bleibt durchgehend spannend
+- [ ] Neuer Ort → erst Überblick von oben, dann Details · Bedrohungen wirken unheimlich (nicht niedlich)
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
@@ -179,3 +182,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-15 | Video 08: „Person Kleidung geben, Schrift ändern und kleiner, Video sanfter/flüssiger“ | Abschnitt 6 (Kleidung), 5 (60 fps, Überblendungen, weiche Bewegungen), 7 (Poppins, ≤ 64 px, Groß-/Kleinschreibung) + Checkliste |
 | 2026-11-15 | Neues Referenzvideo „NEBEL · Teil 1“ (85,7 s): „Füge diese Art von Video zu meinem Skill hinzu“ | Neues Format B „Regel-Serie“ (Abschnitt 11a) mit Aufbau, Bildsprache, Untertiteln, Spannung, Brücke zur Nische, eigener Checkliste |
 | 2026-11-15 | Video 10: „Haus mit mehr Deko, nicht so langweilig; Kamera-Erklärung raus, stattdessen etwas Spannenderes“ | Abschnitt 3 (Erklären max. 1–2 Sätze, in Handlung eingebaut, darf bei Story-Themen entfallen), 4 (Story vor Erklärung), 6a (Wohnräume liebevoll eingerichtet, Deko-Liste) + Checkliste |
+| 2026-11-15 | Video 11: „Riesen unheimlicher; beim Erwähnen des Dorfs kurz das ganze Dorf von oben zeigen“ | Abschnitt 6a (Orte mit Überblick einführen, Bedrohungen wirklich unheimlich) + Checkliste |

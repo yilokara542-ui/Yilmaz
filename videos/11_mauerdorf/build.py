@@ -350,20 +350,31 @@ def villager(fid, x, y, s=1.0, eyes="n", kind="tunic"):
 
 
 def giant_head(gid, cx, cy, s=1.0, name="@dein.name", glow=True):
-    cracks = "".join(f'<path d="M {cx+dx} {cy+dy} l {a} {b} l {c} {d}" stroke="{GIANT2}" stroke-width="5" fill="none" opacity=".8"/>' for dx, dy, a, b, c, d in
-                     ((-200, -120, 40, 50, -20, 60), (150, -60, -30, 70, 30, 40), (-120, 120, 50, 30, 10, 50), (90, 160, 30, -40, 40, 20)))
+    """Eigener Riese: hageres, langes Steingesicht, eingefallene Augenhöhlen mit glühenden Pupillen,
+    glimmende Risse, harte Schatten – bewusst unheimlich, eigenes Design."""
+    EMB = "#ff5a1f"
+    cracks = "".join(f'<path d="M {cx+dx} {cy+dy} l {a} {bb} l {c} {d} l {e} {f}" stroke="{EMB}" stroke-width="7" fill="none" opacity=".9" filter="url(#emberglow)"/>'
+                     for dx, dy, a, bb, c, d, e, f in ((-190, -200, 40, 70, -30, 80, 20, 60), (150, -150, -40, 90, 40, 60, -20, 70),
+                                                      (-150, 160, 60, 40, 10, 70, 30, 40), (110, 210, 30, -50, 40, 30, 20, 50), (-40, -300, 20, 60, -10, 50, 0, 0)))
+    hair = "".join(f'<path d="M {cx+hx} {cy-330} Q {cx+hx*1.25} {cy-120} {cx+hx*1.1+(-20 if hx<0 else 20)} {cy+80+abs(hx)//3}" stroke="#1a1612" stroke-width="{10+(abs(hx)%3)*4}" fill="none" opacity=".9"/>'
+                   for hx in (-230, -200, -170, 160, 190, 225, 245))
+    face = (f'M {cx-230} {cy-200} Q {cx-260} {cy-420} {cx} {cy-430} Q {cx+260} {cy-420} {cx+230} {cy-200} '
+            f'Q {cx+250} {cy+120} {cx+130} {cy+330} Q {cx} {cy+430} {cx-130} {cy+330} Q {cx-250} {cy+120} {cx-230} {cy-200} Z')
     return (f'<g id="{gid}"><g transform="translate({cx},{cy}) scale({s}) translate({-cx},{-cy})">'
-            f'<ellipse cx="{cx}" cy="{cy}" rx="300" ry="340" fill="{GIANT}"/>{cracks}'
-            f'<ellipse cx="{cx-300}" cy="{cy+20}" rx="40" ry="80" fill="{GIANT2}"/><ellipse cx="{cx+300}" cy="{cy+20}" rx="40" ry="80" fill="{GIANT2}"/>'
-            f'<path d="M {cx-280} {cy-160} Q {cx} {cy-420} {cx+280} {cy-160} Q {cx} {cy-260} {cx-280} {cy-160} Z" fill="#3a2a22"/>'
-            f'<rect x="{cx-170}" y="{cy-40}" width="120" height="20" rx="10" fill="#6e4a3a" transform="rotate(10 {cx-110} {cy-30})"/>'
-            f'<rect x="{cx+50}" y="{cy-40}" width="120" height="20" rx="10" fill="#6e4a3a" transform="rotate(-10 {cx+110} {cy-30})"/>'
-            f'<g id="{gid}-eyes"><ellipse cx="{cx-110}" cy="{cy+30}" rx="48" ry="34" fill="#1a120a"/><ellipse cx="{cx+110}" cy="{cy+30}" rx="48" ry="34" fill="#1a120a"/>'
-            + (f'<circle cx="{cx-110}" cy="{cy+30}" r="20" fill="{GLOW}"/><circle cx="{cx+110}" cy="{cy+30}" r="20" fill="{GLOW}"/>'
-               f'<circle cx="{cx-110}" cy="{cy+30}" r="70" fill="url(#fireglow)"/><circle cx="{cx+110}" cy="{cy+30}" r="70" fill="url(#fireglow)"/>' if glow else "")
-            + f'</g><rect x="{cx-70}" y="{cy+170}" width="140" height="14" rx="7" fill="#7a5a4a"/>'
-            f'<g id="{gid}-tag"><rect x="{cx-200}" y="{cy-170}" width="400" height="76" rx="14" fill="#1a120a" fill-opacity=".85" stroke="{RED}" stroke-width="6"/>'
-            f'<text id="{gid}-name" x="{cx}" y="{cy-118}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#fff">{name}</text></g>'
+            f'<path d="{face}" fill="#8f8c80"/><path d="{face}" fill="url(#giantshade)"/>'
+            f'<ellipse cx="{cx-150}" cy="{cy+120}" rx="60" ry="120" fill="#000" opacity=".35"/><ellipse cx="{cx+150}" cy="{cy+120}" rx="60" ry="120" fill="#000" opacity=".35"/>'
+            f'{cracks}{hair}'
+            f'<path d="M {cx-200} {cy-40} Q {cx-110} {cy-110} {cx-30} {cy-30}" stroke="#2a2620" stroke-width="22" fill="none"/>'
+            f'<path d="M {cx+200} {cy-40} Q {cx+110} {cy-110} {cx+30} {cy-30}" stroke="#2a2620" stroke-width="22" fill="none"/>'
+            f'<g id="{gid}-eyes"><ellipse cx="{cx-110}" cy="{cy+10}" rx="70" ry="56" fill="#050404"/><ellipse cx="{cx+110}" cy="{cy+10}" rx="70" ry="56" fill="#050404"/>'
+            + (f'<circle cx="{cx-104}" cy="{cy+16}" r="11" fill="#ffe28a"/><circle cx="{cx+104}" cy="{cy+16}" r="11" fill="#ffe28a"/>'
+               f'<circle cx="{cx-104}" cy="{cy+16}" r="60" fill="url(#fireglow)"/><circle cx="{cx+104}" cy="{cy+16}" r="60" fill="url(#fireglow)"/>' if glow else "")
+            + f'</g><path d="M {cx-12} {cy+40} L {cx-30} {cy+150} L {cx+30} {cy+150} L {cx+12} {cy+40}" fill="#000" opacity=".3"/>'
+            f'<path d="M {cx-110} {cy+250} Q {cx} {cy+230} {cx+110} {cy+250}" stroke="#14100c" stroke-width="12" fill="none"/>'
+            f'<path d="M {cx-60} {cy+246} l 0 18 M {cx-20} {cy+240} l 0 18 M {cx+20} {cy+240} l 0 18 M {cx+60} {cy+246} l 0 18" stroke="#14100c" stroke-width="6"/>'
+            f'<path d="{face}" fill="url(#underlight)"/>'
+            f'<g id="{gid}-tag"><rect x="{cx-200}" y="{cy-330}" width="400" height="76" rx="14" fill="#1a120a" fill-opacity=".85" stroke="{RED}" stroke-width="6"/>'
+            f'<text id="{gid}-name" x="{cx}" y="{cy-278}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#fff">{name}</text></g>'
             f'</g></g>')
 
 
@@ -394,8 +405,42 @@ tw(f'tl.fromTo("#s1-fig",{{y:120,opacity:.0}},{{y:0,opacity:1,duration:.9,ease:"
 tw(f'tl.set("#s1-fig-eyes-c",{{opacity:0}},{t_riesen0:.3f});'); tw(f'tl.set("#s1-fig-eyes-w",{{opacity:1}},{t_riesen0:.3f});')
 pop("#s1-q", t_entsch)
 
+# S2a Dorf von oben (Skill 6a: neuer Ort -> erst Überblick)
+S0, S1 = t_vor, t_fach
+
+
+def aerial_village():
+    cx, cy = 540, 980
+    out = '<rect x="-600" y="-600" width="2280" height="3120" fill="#5a8a4a"/>'
+    out += "".join(f'<rect x="{x}" y="{y}" width="230" height="140" fill="{c}" opacity=".85" transform="rotate({r} {x+115} {y+70})"/>' for x, y, c, r in
+                   ((40, 160, "#c9b45a", 8), (720, 220, "#8aa64a", -6), (60, 1640, "#b5a050", -4), (760, 1600, "#c9b45a", 10), (850, 900, "#8aa64a", 4), (-20, 960, "#b5a050", -8)))
+    out += '<path d="M -40 300 Q 300 520 160 900 T 220 1500 T -40 1920" stroke="#5aa0d0" stroke-width="60" fill="none" opacity=".9"/>'
+    out += "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#2f6a3a"/>' for x, y, r in ((900, 400, 50), (960, 470, 40), (1000, 1300, 60), (120, 1250, 44), (880, 1750, 48), (300, 200, 40)))
+    out += f'<circle cx="{cx}" cy="{cy}" r="430" fill="#6a675f"/><circle cx="{cx}" cy="{cy}" r="430" fill="none" stroke="#8d8a82" stroke-width="40"/>'
+    out += "".join(f'<rect x="{cx-14}" y="{cy-452}" width="28" height="44" fill="#8d8a82" transform="rotate({a} {cx} {cy})"/>' for a in range(0, 360, 12))
+    out += f'<circle cx="{cx}" cy="{cy}" r="390" fill="#8a8377"/>'
+    rr = random.Random(5)
+    for ring, n in ((330, 22), (250, 16)):
+        for k in range(n):
+            a = k * 2 * math.pi / n + ring
+            x = cx + math.cos(a) * ring; y = cy + math.sin(a) * ring
+            col = rr.choice((ROOF, "#7a4a8a", "#b5651d", "#6a7a3a"))
+            out += (f'<g transform="rotate({math.degrees(a)+90:.0f} {x:.0f} {y:.0f})"><rect x="{x-34:.0f}" y="{y-26:.0f}" width="68" height="52" fill="{col}"/>'
+                    f'<line x1="{x-34:.0f}" y1="{y:.0f}" x2="{x+34:.0f}" y2="{y:.0f}" stroke="#000" stroke-opacity=".3" stroke-width="4"/></g>')
+    out += f'<circle cx="{cx}" cy="{cy}" r="150" fill="#9a9284"/>' + "".join(
+        f'<rect x="{cx+math.cos(a)*120-22:.0f}" y="{cy+math.sin(a)*120-14:.0f}" width="44" height="28" fill="{c}"/>' for a, c in ((0.5, "#e63946"), (2.0, "#2a9d8f"), (3.6, "#f4a261"), (5.0, "#e63946")))
+    out += f'<circle cx="{cx}" cy="{cy}" r="50" fill="#6fb9e0" stroke="#5e5a52" stroke-width="12"/>'
+    out += f'<rect x="{cx+170}" y="{cy-230}" width="90" height="90" fill="{ROOF}"/><circle cx="{cx+215}" cy="{cy-185}" r="18" fill="{GOLD}"/>'
+    out += f'<rect x="{cx-30}" y="{cy+400}" width="60" height="70" fill="#3a2a1a"/>'
+    return out
+
+
+scene("s2a", S0, S1, aerial_village() + label("s2a-l", 540, 360, "DAS DORF", "#fff4dc", 46, fill="#1a120a"))
+tw(f'tl.fromTo("#s2a-cam",{{scale:1.0,rotation:-5,svgOrigin:"540 980"}},{{scale:1.3,rotation:0,svgOrigin:"540 980",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+pop("#s2a-l", S0 + 0.2)
+
 # S2 Dorf: Fachwerk, Markt, Brunnen
-S0, S1 = t_vor, t_und1
+S0, S1 = t_fach - 0.05, t_und1
 scene("s2", S0, S1, sky_dawn() + wall(300, 300, gid="s2-wall", torches=False)
       + village_row(980, seed=2) + bell_tower(820, 360, "s2-bell")
       + f'<rect x="0" y="980" width="1080" height="940" fill="{COBBLE}"/>'
@@ -485,13 +530,15 @@ scene("s8", S0, S1, f'<rect width="1080" height="1920" fill="url(#dusk)"/>'
 tw(f'tl.fromTo("#s8-g",{{y:700}},{{y:0,duration:{t_ein_r-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 tw(f'tl.set("#s8-g-tag",{{opacity:0}},{S0:.3f});')
 tw(f'tl.fromTo("#s8-g-eyes",{{opacity:.15}},{{opacity:1,duration:.3,ease:"power2.out"}},{t_augen:.3f});')
+for gsel in ("#s9-g-eyes", "#s11-g-eyes"):
+    tw(f'tl.to("{gsel}",{{opacity:.55,duration:.6,yoyo:true,repeat:6,ease:"sine.inOut"}},{t_stirn:.3f});')
 shake("#s8-cam", t_ein_r, 6, 10)
 
 # S9 Name auf der Stirn – vielleicht deiner
 S0, S1 = t_stirn, t_denn
 scene("s9", S0, S1, f'<rect width="1080" height="1920" fill="url(#dusk)"/>'
       + giant_head("s9-g", 540, 1060, 1.6, name="")
-      + "".join(f'<text id="s9-n{i}" x="540" y="{1060-118*1.6+0:.0f}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="70" fill="#fff" opacity="0">{n}</text>' for i, n in enumerate(NAMES[:4] + ["@DU?"])))
+      + "".join(f'<text id="s9-n{i}" x="540" y="{1060-278*1.6+0:.0f}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="70" fill="#fff" opacity="0">{n}</text>' for i, n in enumerate(NAMES[:4] + ["@DU?"])))
 tw(f'tl.set("#s9-g-name",{{opacity:0}},{S0:.3f});')
 seq = NAMES[:4] + ["@DU?"]
 step = (S1 - t_name1) / len(seq)
@@ -561,9 +608,10 @@ pop("#r3-a-plate", t_tuer - 0.4); pop("#r3-b-plate", t_tuer - 0.2); pop("#r3-c-p
 
 # S11 Action: Riese hebt die Hand, Jäger springen, Türen zu
 S0, S1 = t_hebt, t_und_j
-hand = (f'<g id="s11-hand"><ellipse cx="820" cy="900" rx="170" ry="210" fill="{GIANT}"/>'
-        + "".join(f'<rect x="{700+i*62}" y="{560+abs(i-2)*30}" width="54" height="260" rx="27" fill="{GIANT}"/>' for i in range(4))
-        + f'<rect x="620" y="840" width="160" height="56" rx="28" fill="{GIANT}" transform="rotate(-30 700 868)"/></g>')
+hand = (f'<g id="s11-hand"><ellipse cx="820" cy="900" rx="170" ry="210" fill="#8f8c80"/>'
+        + "".join(f'<rect x="{700+i*62}" y="{540+abs(i-2)*30}" width="50" height="290" rx="22" fill="#7e7b70"/><path d="M {714+i*62} {600+abs(i-2)*30} l 10 60 l -8 50" stroke="#ff5a1f" stroke-width="5" fill="none" filter="url(#emberglow)"/>' for i in range(4))
+        + f'<rect x="620" y="840" width="160" height="56" rx="24" fill="#7e7b70" transform="rotate(-30 700 868)"/>'
+        + f'<path d="M 760 860 l 40 60 l -20 60 M 860 900 l -20 70" stroke="#ff5a1f" stroke-width="6" fill="none" filter="url(#emberglow)"/></g>')
 lines = "".join(f'<path id="s11-l{i}" d="M {200+i*220} 1080 Q {300+i*220} 760 {700+i*60} 700" stroke="#c9ccd8" stroke-width="5" fill="none" stroke-dasharray="800" stroke-dashoffset="800"/>' for i in range(3))
 scene("s11", S0, S1, f'<rect width="1080" height="1920" fill="url(#dusk)"/>' + hand
       + giant_head("s11-g", 540, 700, 0.8, name=NAMES[1]) + wall(1080, 840, gid="s11-wall") + lines
@@ -677,6 +725,9 @@ DEFS = f"""<svg width="0" height="0" style="position:absolute" aria-hidden="true
 <radialGradient id="sunglow"><stop offset="0" stop-color="#ffd27a" stop-opacity=".6"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
 <radialGradient id="fireglow"><stop offset="0" stop-color="#ffb22e" stop-opacity=".55"/><stop offset="1" stop-color="#ffb22e" stop-opacity="0"/></radialGradient>
 <linearGradient id="wallshade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient>
+<radialGradient id="giantshade" cx=".5" cy=".75" r=".8"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient>
+<linearGradient id="underlight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#ff5a1f" stop-opacity=".18"/></linearGradient>
+<filter id="emberglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <radialGradient id="redvig" cx=".5" cy=".5" r=".72"><stop offset=".5" stop-color="{RED}" stop-opacity="0"/><stop offset="1" stop-color="{RED}" stop-opacity=".7"/></radialGradient>
 <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <filter id="glowsoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
