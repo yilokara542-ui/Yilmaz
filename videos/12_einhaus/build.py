@@ -9,7 +9,7 @@ import json, re, html, os, math, random, zlib, struct, base64
 HERE = os.path.dirname(os.path.abspath(__file__))
 W = json.load(open(os.path.join(HERE, "assets/words.json"), encoding="utf-8"))
 VO_END = W[-1]["e"]
-TOTAL = round(VO_END + 1.6, 2)          # Schlussfrage steht noch kurz
+TOTAL = round(max(VO_END + 1.6, 61.2), 2)   # Skill: mind. 61 s          # Schlussfrage steht noch kurz
 XF = 0.3                                 # Überblendung zwischen Szenen
 RNG = random.Random(12)
 
@@ -247,9 +247,9 @@ SEPIA = set()
 
 t_ich = ws("Ich"); t_zumindest = ws("Zumindest")
 t_es = ws("Es", 5); t_wiese = ws("Wiese"); t_ringsum = ws("Ringsum"); t_strassen = ws("Straßen"); t_baeume = ws("Bäume"); t_see = ws("See")
-t_innen = ws("Und", t_see); t_einzig2 = ws("einziges", t_see); t_meins = ws("Meins")
+t_innen = ws("Eine", t_see)
 t_matr = ws("Matratze"); t_lampe = ws("Lampe"); t_fenster1 = ws("Fenster", t_lampe); t_mehr = ws("Mehr")
-t_aber = ws("Aber"); t_wiese2 = ws("Wiese", t_aber); t_platz = ws("Platz", t_aber)
+t_aber = ws("Aber"); t_dunklen = ws("dunklen"); t_platz = ws("Platz", t_aber)
 t_also1 = ws("Also"); t_regel = ws("Regel"); t_laut = ws("Laut")
 t_jeder = ws("Jeder"); t_komm1 = ws("Kommentare"); t_genau = ws("genau", t_komm1)
 t_gaming = ws("Gaming"); t_baue1 = ws("baue", t_gaming); t_pflanzen = ws("Pflanzen"); t_baue2 = ws("baue", t_pflanzen)
@@ -466,7 +466,7 @@ tw(f'tl.fromTo("#sb-cam",{{scale:1.0,rotation:-4,svgOrigin:"740 700"}},{{scale:1
 pop("#sb-l", S0 + 0.2)
 
 # C Straßen, Bäume, See
-S0, S1 = t_ringsum, t_innen
+S0, S1 = t_ringsum, t_matr - 0.2
 ducks = "".join(f'<g id="sc-duck{i}"><ellipse cx="{180+i*70}" cy="{1590+i%2*16}" rx="22" ry="12" fill="#fff"/><circle cx="{196+i*70}" cy="{1576+i%2*16}" r="9" fill="#fff"/><polygon points="{204+i*70},{1576+i%2*16} {214+i*70},{1580+i%2*16} {204+i*70},{1582+i%2*16}" fill="#ffb02e"/></g>' for i in range(3))
 scene("sc", S0, S1, sky_sunset() + f'<rect x="0" y="1000" width="1080" height="920" fill="{GRASS}"/>'
       + f'<g transform="translate(560,680) scale(.4)">{cottage("scx")}</g>'
@@ -481,13 +481,6 @@ pop("#sc-l1", t_strassen); pop("#sc-l2", t_baeume); pop("#sc-l3", t_see)
 for i in range(3):
     tw(f'tl.to("#sc-duck{i}",{{x:{60+i*10},duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
-# D Ein einziges Zimmer – meins (Häuschen aufgeschnitten)
-S0, S1 = t_innen, t_matr - 0.2
-scene("sd", S0, S1, sky_sunset() + meadow("sd") + cottage("sd", cutaway=True)
-      + label("sd-l1", 540, 360, "1 ZIMMER", "#1a1f2e", 52, fill="#fff4dc") + label("sd-l2", 540, 470, "MEINS", RED, 52, fill="#fff4dc"))
-tw(f'tl.fromTo("#sd-cam",{{scale:1}},{{scale:1.25,svgOrigin:"540 1420",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
-pop("#sd-l1", t_einzig2); pop("#sd-l2", t_meins)
-
 # E Mein Zimmer: Matratze, Lampe, Fenster – mehr nicht
 S0, S1 = t_matr - 0.2, t_aber
 x3, y3 = room_xy(3)
@@ -499,12 +492,14 @@ pop("#se-l", t_mehr)
 
 # F Nacht: leere Wiese – so viel Platz (Geister-Zimmer als Vorausdeutung)
 S0, S1 = t_aber, t_also1
-ghosts = "".join(f'<rect id="sf-g{i}" x="{gx}" y="{gy}" width="200" height="160" rx="10" fill="none" stroke="#cfe0ff" stroke-width="5" stroke-dasharray="18 12" opacity="0"/>'
+ghosts = "".join(f'<g id="sf-g{i}" opacity="0"><rect x="{gx}" y="{gy}" width="200" height="160" rx="10" fill="#cfe0ff" fill-opacity=".06" stroke="#cfe0ff" stroke-width="5" stroke-dasharray="18 12"/>'
+                 f'<rect x="{gx+60}" y="{gy+40}" width="80" height="80" rx="4" fill="#0b1030" stroke="#cfe0ff" stroke-width="4"/></g>'
                  for i, (gx, gy) in enumerate(((60, 1500), (820, 1500), (60, 1320), (820, 1320), (360, 960), (560, 960))))
 scene("sf", S0, S1, sky_night() + f'<g opacity=".6">{meadow("sf")}</g>' + cottage("sf", night=True) + ghosts
       + f'<rect width="1080" height="1920" fill="#0a0f2a" opacity=".2"/>')
 for i in range(6):
-    tw(f'tl.fromTo("#sf-g{i}",{{opacity:0}},{{opacity:.8,duration:.4,ease:"sine.out"}},{t_platz + i*0.15:.3f});')
+    tw(f'tl.fromTo("#sf-g{i}",{{opacity:0}},{{opacity:.85,duration:.4,ease:"sine.out"}},{t_dunklen + i*0.15:.3f});')
+tw(f'tl.to("#sf-g0, #sf-g1, #sf-g2, #sf-g3, #sf-g4, #sf-g5",{{opacity:.4,duration:.3,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_platz:.3f});')
 tw(f'tl.to("#sf-cam",{{scale:1.08,svgOrigin:"540 1400",duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
 
@@ -611,6 +606,15 @@ pop("#so-p", t_wie, 0.35, 0.6)
 tw(f'tl.fromTo("#so-p",{{scale:1}},{{scale:1.08,transformOrigin:"50% 50%",duration:.3,yoyo:true,repeat:3}},{t_schreib:.3f});')
 for i in range(3):
     tw(f'tl.to("#bird{i}",{{x:200,y:-30,duration:4,ease:"sine.inOut"}},0);')
+for k in range(12):
+    tw(f'tl.to("#so-w{k}",{{opacity:.7,duration:.4,yoyo:true,repeat:5,ease:"sine.inOut"}},{VO_END + 0.2 + (k%4)*0.15:.3f});')
+OUT_NAMES = "".join(f'<g id="so-n{k}" opacity="0"><rect x="{nx-90}" y="{ny-30}" width="180" height="44" rx="10" fill="#fff4dc" stroke="{WOODC}" stroke-width="4"/>'
+                    f'<text x="{nx}" y="{ny}" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="22" fill="#3a2a1a">{NAMES[k]}</text></g>'
+                    for k, (nx, ny) in enumerate(((180, 520), (900, 560), (200, 1720), (880, 1760), (540, 480))))
+SCENES[-1] = (SCENES[-1][0], SCENES[-1][1], SCENES[-1][2], SCENES[-1][3].replace("</g>", "", 0) + OUT_NAMES)
+for k in range(5):
+    tw(f'tl.fromTo("#so-n{k}",{{opacity:0,y:40}},{{opacity:1,y:0,duration:.4,ease:"back.out(1.6)"}},{VO_END + 0.4 + k*0.4:.3f});')
+tw(f'tl.to("#so-p",{{scale:1.08,transformOrigin:"50% 50%",duration:.35,yoyo:true,repeat:{int((TOTAL-VO_END)/0.35)}}},{VO_END:.3f});')
 
 brand_html = []
 

@@ -27,7 +27,7 @@ out += .012*lp(rng.standard_normal(n), 120)  # leiser Wind
 for k in range(14): tone(.4+k*.45, 2800+(k%3)*350, 3500, .1, .06, .04)   # Vögel
 for k in range(10): tone(C["t_ringsum"]+k*.35, 2600+(k%4)*200, 3300, .1, .05, .04)
 for k in range(3): tone(C["t_see"]+.1+k*.25, 520, 480, .12, .12, .05)   # Enten
-tone(C["t_meins"], 523, 659, .4, .15, .2)
+
 for k in ("t_matr", "t_lampe", "t_fenster1"): tone(C[k], 660, 880, .2, .15, .08)
 for k in range(6): tone(C["t_aber"]+k*.5, 1200, 1200, .4, .03, .3)   # Grillen-artig
 for k in range(6): tone(C["t_platz"]+k*.15, 700+k*60, 700+k*60, .15, .06, .1)
