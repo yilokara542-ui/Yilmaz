@@ -27,13 +27,14 @@ out += .012*lp(rng.standard_normal(n), 120)  # leiser Wind
 for k in range(14): tone(.4+k*.45, 2800+(k%3)*350, 3500, .1, .06, .04)   # Vögel
 for k in range(10): tone(C["t_ringsum"]+k*.35, 2600+(k%4)*200, 3300, .1, .05, .04)
 for k in range(3): tone(C["t_see"]+.1+k*.25, 520, 480, .12, .12, .05)   # Enten
-for k in range(11): click(C["t_elf"]+k*.08, .25)
+tone(C["t_meins"], 523, 659, .4, .15, .2)
 for k in ("t_matr", "t_lampe", "t_fenster1"): tone(C[k], 660, 880, .2, .15, .08)
-for k in range(6): tone(C["t_dunklen"]+k*.5, 1200, 1200, .4, .03, .3)   # Grillen-artig
+for k in range(6): tone(C["t_aber"]+k*.5, 1200, 1200, .4, .03, .3)   # Grillen-artig
+for k in range(6): tone(C["t_platz"]+k*.15, 700+k*60, 700+k*60, .15, .06, .1)
 boom(C["t_regel"], .6); whoosh(C["t_laut"], .6, .3)
 whoosh(C["t_komm1"]+.5, .6, .3); tone(C["t_komm1"]+1.1, 880, 1320, .25, .15, .1)
 for k in ("t_baue1", "t_baue2", "t_baue3"): boom(C[k]-.1+.22, .6); tone(C[k]+.2, 523, 523, .5, .12, .3); tone(C[k]+.2, 659, 659, .5, .1, .3)
-for k in range(11): tone(C["t_jeder2"]+.2+k*.12, 900+k*40, 900+k*40, .08, .08, .04)
+for k in range(11): click(C["t_jeder2"]+.1+k*.11, .3); tone(C["t_jeder2"]+.2+k*.11, 900+k*40, 900+k*40, .08, .08, .04)
 whoosh(C["t_stock"]-.3, .8, .35); boom(C["t_stock"]+.6, 1.0)
 for k in range(5): click(C["t_morgen"]+k*.3, .3)
 for k in range(12): tone(C["t_morgen"]+k*.12, 700, 720, .1, .05, .05)
