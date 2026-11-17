@@ -247,9 +247,10 @@ SEPIA = set()
 
 t_ich = ws("Ich"); t_zumindest = ws("Zumindest")
 t_es = ws("Es", 5); t_wiese = ws("Wiese"); t_ringsum = ws("Ringsum"); t_strassen = ws("Straßen"); t_baeume = ws("Bäume"); t_see = ws("See")
-t_innen = ws("Eine", t_see)
+HAS_INNEN = any(w["t"].lower().startswith("innen") for w in W)
+t_innen = ws("Und", t_see) if HAS_INNEN else ws("Eine", t_see)
 t_matr = ws("Matratze"); t_lampe = ws("Lampe"); t_fenster1 = ws("Fenster", t_lampe); t_mehr = ws("Mehr")
-t_aber = ws("Aber"); t_dunklen = ws("dunklen"); t_platz = ws("Platz", t_aber)
+t_aber = ws("Aber"); t_dunklen = ws("leere", t_aber) if any(w["t"].lower().startswith("leere") for w in W) else ws("dunklen"); t_platz = ws("Platz", t_aber)
 t_also1 = ws("Also"); t_regel = ws("Regel"); t_laut = ws("Laut")
 t_jeder = ws("Jeder"); t_komm1 = ws("Kommentare"); t_genau = ws("genau", t_komm1)
 t_gaming = ws("Gaming"); t_baue1 = ws("baue", t_gaming); t_pflanzen = ws("Pflanzen"); t_baue2 = ws("baue", t_pflanzen)
@@ -365,7 +366,7 @@ def house_cut(prefix, kinds, names=None, extra_floor=False):
               + "".join(f'<g><rect x="{HX+k*RW+62}" y="{HY-RH+110}" width="100" height="44" rx="8" fill="#fff" stroke="#2a9d8f" stroke-width="4"/>'
                         f'<text x="{HX+k*RW+112}" y="{HY-RH+141}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="24" fill="#2a9d8f">FREI</text></g>' for k in range(4))
               + f'<polygon points="{HX-50},{HY-RH} {HX+2*RW},{HY-RH-300} {HX+4*RW+50},{HY-RH}" fill="{ROOFC}"/></g>')
-    return f'<g id="{prefix}-house">{"" if extra_floor else roof}{rooms}{grid}{ef}<rect x="{HX-20}" y="{HY+3*RH}" width="{4*RW+40}" height="24" fill="#8a7a6a"/></g>'
+    return f'<g id="{prefix}-house">{"" if extra_floor else f'<g id="{prefix}-roof">{roof}</g>'}{rooms}{grid}{ef}<rect x="{HX-20}" y="{HY+3*RH}" width="{4*RW+40}" height="24" fill="#8a7a6a"/></g>'
 
 
 def house_ext(prefix, lit, night=False):
@@ -415,7 +416,7 @@ def cottage(prefix, night=False, me=True, cutaway=False):
             + f'<rect x="{x+w-90}" y="{y-200}" width="46" height="120" fill="#8a5a42"/>'
             + "".join(f'<circle id="{prefix}-sm{k}" cx="{x+w-67}" cy="{y-220-k*40}" r="{16+k*7}" fill="#e9e6f2" opacity="{.45-k*.1:.2f}"/>' for k in range(3)))
     if cutaway:
-        inner = (f'<g transform="translate({x},{y}) scale({w/RW:.4f},{h/RH:.4f}) translate({-room_xy(3)[0]},{-room_xy(3)[1]})">{room_inner(3, "mine", prefix)}</g>'
+        inner = (f'<g transform="translate({x},{y}) scale({w/RW:.4f},{h/RH:.4f}) translate({-room_xy(8)[0]},{-room_xy(8)[1]})">{room_inner(8, "mine", prefix)}</g>'
                  + f'<rect x="{x-8}" y="{y}" width="16" height="{h}" fill="{WOODC}"/><rect x="{x+w-8}" y="{y}" width="16" height="{h}" fill="{WOODC}"/>'
                  + f'<rect x="{x-8}" y="{y-8}" width="{w+16}" height="16" fill="{WOODC}"/><rect x="{x-20}" y="{y+h}" width="{w+40}" height="20" fill="#8a7a6a"/>')
         return f'<g id="{prefix}-cot">{roof}{inner}</g>'
@@ -466,7 +467,7 @@ tw(f'tl.fromTo("#sb-cam",{{scale:1.0,rotation:-4,svgOrigin:"740 700"}},{{scale:1
 pop("#sb-l", S0 + 0.2)
 
 # C Straßen, Bäume, See
-S0, S1 = t_ringsum, t_matr - 0.2
+S0, S1 = t_ringsum, (t_innen if HAS_INNEN else t_matr - 0.2)
 ducks = "".join(f'<g id="sc-duck{i}"><ellipse cx="{180+i*70}" cy="{1590+i%2*16}" rx="22" ry="12" fill="#fff"/><circle cx="{196+i*70}" cy="{1576+i%2*16}" r="9" fill="#fff"/><polygon points="{204+i*70},{1576+i%2*16} {214+i*70},{1580+i%2*16} {204+i*70},{1582+i%2*16}" fill="#ffb02e"/></g>' for i in range(3))
 scene("sc", S0, S1, sky_sunset() + f'<rect x="0" y="1000" width="1080" height="920" fill="{GRASS}"/>'
       + f'<g transform="translate(560,680) scale(.4)">{cottage("scx")}</g>'
@@ -481,25 +482,34 @@ pop("#sc-l1", t_strassen); pop("#sc-l2", t_baeume); pop("#sc-l3", t_see)
 for i in range(3):
     tw(f'tl.to("#sc-duck{i}",{{x:{60+i*10},duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
+if HAS_INNEN:
+    SCENES_C_END = t_innen
+    S0, S1 = t_innen, t_matr - 0.2
+    scene("sd", S0, S1, sky_sunset() + meadow("sd") + cottage("sd", cutaway=True)
+          + label("sd-l", 540, 360, "1 ZIMMER", "#1a1f2e", 50, fill="#fff4dc"))
+    pop("#sd-l", ws("einziges", t_innen))
+    tw(f'tl.fromTo("#sd-cam",{{scale:1,svgOrigin:"540 1400"}},{{scale:1.12,svgOrigin:"540 1400",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+
 # E Mein Zimmer: Matratze, Lampe, Fenster – mehr nicht
 S0, S1 = t_matr - 0.2, t_aber
-x3, y3 = room_xy(3)
-scene("se", S0, S1, f'<rect width="1080" height="1920" fill="#2a2030"/><g transform="translate({540-(x3+RW/2)*4},{1000-(y3+RH/2)*4}) scale(4)">{room_inner(3, "mine", "se")}</g>'
+x3, y3 = room_xy(8)
+scene("se", S0, S1, f'<rect width="1080" height="1920" fill="#2a2030"/><g transform="translate({540-(x3+RW/2)*4},{1000-(y3+RH/2)*4}) scale(4)">{room_inner(8, "mine", "se")}</g>'
       + figure("se-me", 760, 1560, 1.0, eyes="n") + label("se-l", 540, 360, "MEHR NICHT.", "#fff4dc", 50, fill="#1a1f2e"))
-for sel, t in (("#se-mat", t_matr), ("#se-lamp", t_lampe), ("#se-win", t_fenster1)):
-    tw(f'tl.fromTo("{sel}",{{opacity:0,y:-30}},{{opacity:1,y:0,duration:.35,ease:"back.out(2)"}},{t:.3f});')
+for sel, t in (("#se-mat", t_matr), ("#se-lamp", t_lampe)):
+    tw(f'tl.fromTo("{sel}",{{opacity:0,y:-14}},{{opacity:1,y:0,duration:.5,ease:"power2.out"}},{t:.3f});')
+tw(f'tl.fromTo("#se-win",{{opacity:.25}},{{opacity:1,duration:.6,ease:"sine.inOut"}},{t_fenster1:.3f});')
 pop("#se-l", t_mehr)
 
 # F Nacht: leere Wiese – so viel Platz (Geister-Zimmer als Vorausdeutung)
 S0, S1 = t_aber, t_also1
 ghosts = "".join(f'<g id="sf-g{i}" opacity="0"><rect x="{gx}" y="{gy}" width="200" height="160" rx="10" fill="#cfe0ff" fill-opacity=".06" stroke="#cfe0ff" stroke-width="5" stroke-dasharray="18 12"/>'
                  f'<rect x="{gx+60}" y="{gy+40}" width="80" height="80" rx="4" fill="#0b1030" stroke="#cfe0ff" stroke-width="4"/></g>'
-                 for i, (gx, gy) in enumerate(((60, 1500), (820, 1500), (60, 1320), (820, 1320), (360, 960), (560, 960))))
+                 for i, (gx, gy) in enumerate(((60, 1500), (820, 1500), (60, 1340), (820, 1340))))
 scene("sf", S0, S1, sky_night() + f'<g opacity=".6">{meadow("sf")}</g>' + cottage("sf", night=True) + ghosts
       + f'<rect width="1080" height="1920" fill="#0a0f2a" opacity=".2"/>')
-for i in range(6):
+for i in range(4):
     tw(f'tl.fromTo("#sf-g{i}",{{opacity:0}},{{opacity:.85,duration:.4,ease:"sine.out"}},{t_dunklen + i*0.15:.3f});')
-tw(f'tl.to("#sf-g0, #sf-g1, #sf-g2, #sf-g3, #sf-g4, #sf-g5",{{opacity:.4,duration:.3,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_platz:.3f});')
+tw(f'tl.to("#sf-g0, #sf-g1, #sf-g2, #sf-g3",{{opacity:.4,duration:.3,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_platz:.3f});')
 tw(f'tl.to("#sf-cam",{{scale:1.08,svgOrigin:"540 1400",duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
 
@@ -523,16 +533,25 @@ bubble = (f'<g id="sh-bub"><rect x="150" y="560" width="780" height="200" rx="40
           f'<circle cx="230" cy="660" r="44" fill="#ffd166"/><text x="300" y="640" font-family="Poppins" font-weight="700" font-size="32" fill="#555">@dein.name</text>'
           f'<text x="300" y="700" font-family="Poppins" font-weight="600" font-size="38" fill="#1a1f2e">Ich will ein Zimmer mit …</text></g>')
 scene("sh", S0, S1, card(bubble) + f'<g transform="translate(540,1300) scale(.7) translate(-540,-1420)">{cottage("shc")}'
-      f'<g id="sh-new" opacity="0"><rect x="{CX0+CW}" y="{CY0+180}" width="240" height="300" fill="{WALLC}" stroke="{WOODC}" stroke-width="10"/>'
-      f'<polygon points="{CX0+CW-10},{CY0+180} {CX0+CW+120},{CY0+60} {CX0+CW+250},{CY0+180}" fill="{ROOFC}"/>'
-      f'<rect x="{CX0+CW+70}" y="{CY0+260}" width="100" height="120" rx="6" fill="{GLOWC}" stroke="#fff" stroke-width="8"/></g></g>'
+      f'<g id="sh-new"><g id="sh-nw"><rect x="{CX0+CW}" y="{CY0+180}" width="240" height="300" fill="{WALLC}" stroke="{WOODC}" stroke-width="10"/>'
+      f'<rect id="sh-nwin" x="{CX0+CW+70}" y="{CY0+260}" width="100" height="120" rx="6" fill="#9fb4cc" stroke="#fff" stroke-width="8"/></g>'
+      f'<polygon id="sh-nr" points="{CX0+CW-10},{CY0+180} {CX0+CW+120},{CY0+60} {CX0+CW+250},{CY0+180}" fill="{ROOFC}"/>'
+      + "".join(f'<ellipse id="sh-d{k}" cx="{CX0+CW+40+k*80}" cy="{CY0+CH}" rx="50" ry="22" fill="#e9dcc4" opacity="0"/>' for k in range(3)) + '</g></g>'
       + label("sh-l", 540, 380, "KOMMENTAR = DEIN ZIMMER", GOLD, 44, fill="#1a1f2e")
       + label("sh-l2", 540, 1780, "GENAU SO, WIE DU WILLST", "#fff", 40, fill="#1a1f2e"))
 pop("#sh-l", S0 + 0.1)
 tw(f'tl.fromTo("#sh-bub",{{opacity:0,y:60}},{{opacity:1,y:0,duration:.4,ease:"back.out(1.6)"}},{t_komm1 - 0.6:.3f});')
 tw(f'tl.to("#sh-bub",{{scale:.25,x:260,y:700,svgOrigin:"540 660",duration:.6,ease:"power2.in"}},{t_komm1 + 0.5:.3f});')
 tw(f'tl.to("#sh-bub",{{opacity:0,duration:.2}},{t_komm1 + 1.1:.3f});')
-tw(f'tl.fromTo("#sh-new",{{opacity:0,scale:.3,transformOrigin:"0% 100%"}},{{opacity:1,scale:1,duration:.5,ease:"back.out(1.6)"}},{t_komm1 + 1.1:.3f});')
+tb = t_komm1 + 1.1
+tw(f'tl.set("#sh-nw",{{scaleY:0,transformOrigin:"50% 100%"}},{S0:.3f});')
+tw(f'tl.set("#sh-nr",{{opacity:0}},{S0:.3f});')
+tw(f'tl.fromTo("#sh-nw",{{scaleY:0,transformOrigin:"50% 100%"}},{{scaleY:1,duration:.7,ease:"power2.out"}},{tb:.3f});')
+tw(f'tl.fromTo("#sh-nr",{{opacity:0,y:-90}},{{opacity:1,y:0,duration:.5,ease:"power2.inOut"}},{tb + 0.65:.3f});')
+tw(f'tl.to("#sh-nwin",{{attr:{{fill:"{GLOWC}"}},duration:.3}},{tb + 1.2:.3f});')
+for k in range(3):
+    tw(f'tl.fromTo("#sh-d{k}",{{opacity:0,scale:.4,transformOrigin:"50% 50%"}},{{opacity:.8,scale:1.4,duration:.4,ease:"power1.out"}},{tb + k*0.08:.3f});')
+    tw(f'tl.to("#sh-d{k}",{{opacity:0,duration:.6}},{tb + 0.45 + k*0.08:.3f});')
 pop("#sh-l2", t_genau)
 
 
@@ -540,12 +559,17 @@ pop("#sh-l2", t_genau)
 def wish_scene(sid, t0, t1, idx, kind, name, t_stamp, title):
     xi, yi = room_xy(idx)
     scene(sid, t0, t1, f'<rect width="1080" height="1920" fill="#16213a"/><circle cx="540" cy="900" r="600" fill="url(#cardglow)"/>'
-          + f'<g transform="translate({540-(xi+RW/2)*3.6},{1000-(yi+RH/2)*3.6}) scale(3.6)">{room_inner(idx, "empty", sid+"e")}<g id="{sid}-new" opacity="0">{room_inner(idx, kind, sid, name)}</g></g>'
+          + f'<g transform="translate({540-(xi+RW/2)*3.6},{1000-(yi+RH/2)*3.6}) scale(3.6)">{room_inner(idx, "empty", sid+"e")}<clipPath id="{sid}-clip"><rect id="{sid}-cr" x="{xi}" y="{yi+RH}" width="{RW}" height="0"/></clipPath><g clip-path="url(#{sid}-clip)">{room_inner(idx, kind, sid, name)}</g>'
+          + f'<rect id="{sid}-line" x="{xi}" y="{yi+RH-3}" width="{RW}" height="3" fill="{GOLD}" opacity="0"/></g>'
           + label(f"{sid}-t", 540, 380, title, "#fff4dc", 48, fill="#1a1f2e")
           + f'<g id="{sid}-st" opacity="0"><rect x="250" y="1520" width="580" height="130" rx="20" fill="{RED}" transform="rotate(-6 540 1585)"/>'
             f'<text x="540" y="1610" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="70" fill="#fff" transform="rotate(-6 540 1585)">ICH BAUE ES!</text></g>')
     pop(f"#{sid}-t", t0 + 0.1)
-    tw(f'tl.fromTo("#{sid}-new",{{opacity:0}},{{opacity:1,duration:.5,ease:"sine.out"}},{t0 + 0.6:.3f});')
+    tb = t0 + 0.5; db = max(0.6, min(1.2, t_stamp - tb - 0.15))
+    tw(f'tl.to("#{sid}-cr",{{attr:{{y:{yi}, height:{RH}}},duration:{db:.3f},ease:"power1.inOut"}},{tb:.3f});')
+    tw(f'tl.set("#{sid}-line",{{opacity:.9}},{tb:.3f});')
+    tw(f'tl.to("#{sid}-line",{{y:{-RH+3},duration:{db:.3f},ease:"power1.inOut"}},{tb:.3f});')
+    tw(f'tl.to("#{sid}-line",{{opacity:0,duration:.15}},{tb + db:.3f});')
     tw(f'tl.set("#{sid}-np{idx}",{{opacity:1}},{t_stamp:.3f});')
     tw(f'tl.fromTo("#{sid}-st",{{opacity:0,scale:2.2,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:.22,ease:"power4.in"}},{t_stamp:.3f});')
     shake(f"#{sid}-cam", t_stamp + 0.22, 4, 6)
@@ -557,30 +581,59 @@ wish_scene("sk", t_bett, t_jeder2, 1, "stars", NAMES[10], t_baue3 - 0.1, "STERNE
 
 # L Jeder Kommentar ein Zimmer – Name an der Tür
 S0, S1 = t_jeder2, t_wenn
-kinds = {3: "mine", 0: "gaming", 5: "plants", 1: "stars", 2: "plants", 4: "gaming", 6: "stars", 7: "plants", 8: "gaming", 9: "stars", 10: "plants", 11: "gaming"}
-nm = {i: NAMES[i % len(NAMES)] for i in range(12) if i != 3}
+kinds = {8: "mine", 3: "gaming", 0: "gaming", 5: "plants", 1: "stars", 2: "plants", 4: "gaming", 6: "stars", 7: "plants", 9: "stars", 10: "plants", 11: "gaming"}
+nm = {i: NAMES[i % len(NAMES)] for i in range(12) if i != 8}
 door = (f'<g id="sl-door" opacity="0"><rect width="1080" height="1920" fill="#16213a"/><rect x="320" y="520" width="440" height="900" rx="20" fill="{WOODC}"/>'
         f'<rect x="350" y="560" width="380" height="380" rx="12" fill="none" stroke="#5a3a24" stroke-width="10"/><circle cx="700" cy="1000" r="20" fill="{GOLD}"/>'
         f'<rect x="380" y="640" width="320" height="90" rx="12" fill="#fff4dc" stroke="{GOLD}" stroke-width="6"/>'
         f'<text x="540" y="700" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#3a2a1a">@DEIN.NAME</text></g>')
-scene("sl", S0, S1, sky_sunset() + meadow("sl") + house_cut("sl", kinds, nm) + door)
+sl_dust = "".join(f'<ellipse id="sl-d{r}-{k}" cx="{HX+40+k*150}" cy="{HY+(r+1)*RH}" rx="70" ry="26" fill="#e9dcc4" opacity="0"/>' for r in range(3) for k in range(6))
+scene("sl", S0, S1, sky_sunset() + meadow("sl") + house_cut("sl", kinds, nm) + sl_dust + door)
 tw(f'tl.set("#sl-house > polygon, #sl-house > line, #sl-house > rect",{{opacity:1}},{S0:.3f});')
-grow = [2, 7, 6, 1, 11, 10, 5, 0, 9, 4, 8]
-for k, i in enumerate(grow):
-    tw(f'tl.fromTo("#sl-r{i}",{{opacity:0,scale:.2,transformOrigin:"50% 100%"}},{{opacity:1,scale:1,duration:.22,ease:"back.out(1.8)"}},{S0 + 0.1 + k*0.11:.3f});')
-    tw(f'tl.fromTo("#sl-np{i}",{{opacity:0}},{{opacity:1,duration:.15}},{S0 + 0.25 + k*0.11:.3f});')
+rows = [[9, 10, 11], [4, 5, 6, 7], [0, 1, 2, 3]]
+tw(f'tl.set("#sl-r9, #sl-r10, #sl-r11, #sl-r4, #sl-r5, #sl-r6, #sl-r7, #sl-r0, #sl-r1, #sl-r2, #sl-r3",{{scaleY:0,transformOrigin:"50% 100%"}},{S0:.3f});')
+tw(f'tl.set("#sl-roof",{{opacity:0}},{S0:.3f});')
+span = max(1.0, t_namen - 0.35 - S0)
+rd = span / 3.4
+for r, row in enumerate(rows):
+    tr = S0 + 0.05 + r * rd
+    for k, i in enumerate(row):
+        tw(f'tl.fromTo("#sl-r{i}",{{scaleY:0,transformOrigin:"50% 100%"}},{{scaleY:1,duration:{rd*0.95:.3f},ease:"power2.out"}},{tr + k*0.04:.3f});')
+        tw(f'tl.fromTo("#sl-np{i}",{{opacity:0}},{{opacity:1,duration:.15}},{tr + rd*0.8:.3f});')
+    for k in range(6):
+        tw(f'tl.fromTo("#sl-d{2-r}-{k}",{{opacity:0,scale:.4,transformOrigin:"50% 50%"}},{{opacity:.75,scale:1.3,duration:{rd*0.6:.3f},ease:"power1.out"}},{tr:.3f});')
+        tw(f'tl.to("#sl-d{2-r}-{k}",{{opacity:0,duration:.4}},{tr + rd*0.6:.3f});')
+tw(f'tl.fromTo("#sl-roof",{{opacity:0,y:-160}},{{opacity:1,y:0,duration:{rd*0.9:.3f},ease:"power2.inOut"}},{S0 + 0.05 + 3*rd - 0.1:.3f});')
 tw(f'tl.fromTo("#sl-door",{{opacity:0,scale:.8,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:.35,ease:"power3.out"}},{t_namen - 0.1:.3f});')
 
 # M Neues Stockwerk wird aufgesetzt
 S0, S1 = t_wenn, t_heute
 scene("sm", S0, S1, sky_sunset() + meadow("sm") + f'<g transform="translate(0,200)">{house_cut("sm", kinds, nm, extra_floor=True)}</g>'
-      + f'<g id="sm-crane"><rect x="1000" y="0" width="20" height="900" fill="#e9c46a"/><rect x="560" y="0" width="460" height="20" fill="#e9c46a"/><line x1="560" y1="20" x2="560" y2="140" stroke="#333" stroke-width="4"/></g>'
+      + f'<g id="sm-crane"><rect x="1000" y="0" width="20" height="1700" fill="#e9c46a"/>'
+        + "".join(f'<line x1="1000" y1="{k*80}" x2="1020" y2="{k*80+80}" stroke="#b8963e" stroke-width="4"/>' for k in range(21))
+        + f'<rect x="440" y="0" width="600" height="22" fill="#e9c46a"/><rect x="520" y="18" width="40" height="24" fill="#555"/></g>'
+      + f'<g transform="translate(0,200)"><g id="sm-oroof"><line x1="540" y1="-1500" x2="540" y2="{HY-300}" stroke="#333" stroke-width="4"/><circle cx="540" cy="{HY-300}" r="10" fill="none" stroke="#333" stroke-width="5"/>'
+        + f'<polygon points="{HX-50},{HY} {HX+2*RW},{HY-300} {HX+4*RW+50},{HY}" fill="{ROOFC}"/>'
+        + "".join(f'<line x1="{HX-30+k*60}" y1="{HY}" x2="{HX+2*RW}" y2="{HY-290}" stroke="{ROOFC2}" stroke-width="4"/>' for k in range(17)) + '</g>'
+        + f'<g id="sm-cable"><line x1="540" y1="-1500" x2="540" y2="{HY-RH-300}" stroke="#333" stroke-width="4"/><circle cx="540" cy="{HY-RH-300}" r="10" fill="none" stroke="#333" stroke-width="5"/></g>'
+        + "".join(f'<ellipse id="sm-d{k}" cx="{HX+40+k*150}" cy="{HY}" rx="70" ry="24" fill="#e9dcc4" opacity="0"/>' for k in range(6)) + '</g>'
       + label("sm-l", 540, 220, "+1 STOCKWERK", GOLD, 50, fill="#1a1f2e"))
 for i in range(12):
     tw(f'tl.set("#sm-np{i}",{{opacity:1}},{S0:.3f});')
-tw(f'tl.fromTo("#sm-ef",{{y:-900}},{{y:0,duration:1.2,ease:"bounce.out"}},{t_stock - 0.3:.3f});')
+t_lift = S0 + 0.1
+tw(f'tl.set("#sm-ef, #sm-cable",{{y:-1100}},{S0:.3f});')
+tw(f'tl.to("#sm-oroof",{{y:-1100,duration:1.1,ease:"power2.in"}},{t_lift:.3f});')
+t_low = max(t_lift + 0.9, t_stock - 0.6); d_low = max(1.0, min(1.8, S1 - 0.6 - t_low))
+for sel in ("#sm-ef", "#sm-cable"):
+    tw(f'tl.fromTo("{sel}",{{y:-1100}},{{y:0,duration:{d_low:.3f},ease:"power2.out"}},{t_low:.3f});')
+tw(f'tl.fromTo("#sm-ef",{{rotation:-1.2,svgOrigin:"540 {HY-RH-300}"}},{{rotation:0,svgOrigin:"540 {HY-RH-300}",duration:{d_low:.3f},ease:"sine.out"}},{t_low:.3f});')
+t_land = t_low + d_low
+tw(f'tl.to("#sm-cable",{{y:-1200,duration:.8,ease:"power2.in"}},{t_land + 0.1:.3f});')
+for k in range(6):
+    tw(f'tl.fromTo("#sm-d{k}",{{opacity:0,scale:.4,transformOrigin:"50% 50%"}},{{opacity:.8,scale:1.4,duration:.35,ease:"power1.out"}},{t_land - 0.05:.3f});')
+    tw(f'tl.to("#sm-d{k}",{{opacity:0,duration:.5}},{t_land + 0.3:.3f});')
 pop("#sm-l", t_stock)
-shake("#sm-cam", t_stock + 0.6, 5, 8)
+shake("#sm-cam", t_land - 0.02, 3, 3)
 
 # N Heute 1 – morgen vielleicht hundert
 S0, S1 = t_heute, t_also2
@@ -588,13 +641,13 @@ COUNTS = ["1", "1", "7", "23", "48", "100"]
 scene("sn", S0, S1, sky_night() + f'<g opacity=".6">{meadow("sn")}</g>' + house_ext("sn", set(), night=True)
       + f'<g><rect x="390" y="140" width="300" height="50" rx="25" fill="#1a1f2e" fill-opacity=".85"/><text x="540" y="174" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="26" fill="#fff" letter-spacing="4">BEWOHNER</text></g>'
       + "".join(f'<text id="sn-c{i}" x="540" y="330" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="130" fill="{GOLD}" stroke="#1a1f2e" stroke-width="12" paint-order="stroke" opacity="0">{c}</text>' for i, c in enumerate(COUNTS)))
-tw(f'tl.set("#sn-w3",{{opacity:1}},{S0:.3f});')
+tw(f'tl.set("#sn-w8 rect:first-child",{{attr:{{fill:"{GLOWC}"}}}},{S0:.3f});')
 toggle("#sn-c0", S0, t_morgen)
 steps = len(COUNTS) - 1
 for i in range(1, len(COUNTS)):
     a = t_morgen + (t_hundert + 0.4 - t_morgen) * (i - 1) / steps
     toggle(f"#sn-c{i}", a, t_morgen + (t_hundert + 0.4 - t_morgen) * i / steps if i < len(COUNTS) - 1 else None)
-lit_order = [3, 7, 0, 10, 5, 1, 9, 2, 6, 11, 4, 8]
+lit_order = [8, 9, 10, 11, 4, 5, 6, 7, 0, 1, 2, 3]
 for k, i in enumerate(lit_order):
     tw(f'tl.to("#sn-w{i} rect:first-child",{{attr:{{fill:"{GLOWC}"}},duration:.15}},{t_morgen + k*0.12:.3f});')
 
