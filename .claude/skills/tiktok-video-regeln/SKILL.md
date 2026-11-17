@@ -59,6 +59,8 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Wiederkehrender Anker** (gleiches Gerät, gleiche Uhr) zur Orientierung.
 
 ### 6a. Keine leeren Bilder – Detailreichtum (aus Feedback 15.11.)
+- **Realistische, physikalisch glaubwürdige Animationen** (aus Feedback 17.11.): Nichts „ploppt“ magisch auf. Gebäude/Räume werden **von unten nach oben gebaut** (Wände wachsen hoch, Dach zuletzt, Staubwolke), schwere Teile werden **vom Kran an einem Seil langsam abgesenkt** (sanftes Ein-/Ausbremsen, kein Hüpfen/Bounce), Möbel werden hingestellt und setzen sanft auf. Schwerkraft beachten: nichts schwebt ohne Grund in der Luft.
+- **Räumliche Logik bleibt gleich**: Was einmal gezeigt wurde (z. B. „mein Zimmer im Erdgeschoss“), bleibt an derselben Stelle, wenn das Haus wächst. Größen, Positionen und Tageszeit zwischen Szenen konsistent halten.
 - **Jede Szene hat 3 Ebenen:** Hintergrund (Wand, Textur, Umgebung), Mittelgrund (Handlung), Vordergrund (Partikel, Licht, Rahmen). Nie eine Figur oder ein Objekt allein auf flacher Farbe.
 - **Umgebungsdetails:** Schrauben, Kabel, Paneele, Schilder, Etagennummern, Lampen, Warnstreifen, Bodenfliesen – kleine Dinge, die die Welt glaubwürdig machen.
 - **Wohnräume immer liebevoll eingerichtet** (Feedback 15.11.): Bilder an der Wand, Uhr, Pflanzen, Regal mit Büchern, Teppich, Vorhänge + Fenster mit Nachthimmel, Hängelampen, Küchenzeile mit Herd/Wasserkocher/Fliesenspiegel, Magnete am Kühlschrank. Häuser von außen: Dachziegel, Schornstein, Fensterläden, Vorgarten, Zaun, Baum, Briefkasten, Außenlampe. Andere Länder/Epochen mit typischer Einrichtung (z. B. Japan: Shoji-Schiebetüren, Tatami, Wandschrank „Oshiire“). Nie kahle Wände.
@@ -77,7 +79,8 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - Position: Mitte oder oberes Drittel – nicht unten (dort liegt die TikTok-UI).
 
 ## 8. Ton
-- Sprecher: ruhig, leicht spannungsvoll, Erzähler-Stil in 2. Person („du“).
+- Sprecher: **energiegeladen und begeistert**, zügiges Tempo, klare Betonung auf Schlüsselwörtern (aus Feedback 17.11.). Bei Spannungsmomenten kurz abgesenkt/dramatisch, danach sofort wieder Energie. Erzähler-Stil in 2. Person („du“) bzw. Ich-Perspektive bei Mitmach-Videos.
+- ElevenLabs-Prompt: Tags wie `[energetic, enthusiastic, fast-paced]`, `[excited]`, `[dramatic]` setzen und Ausrufezeichen an Schlüsselsätzen verwenden. Kein monotones, schläfriges Vorlesen.
 - Spannungs-/Ambient-Musik leise unter der Stimme, Soundeffekte auf Aktionen (Klick, Piepen, Brummen).
 - Laut genug abmischen (Richtwert um −14 bis −10 LUFS).
 
@@ -113,6 +116,7 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
+- [ ] Voiceover klingt energiegeladen (nicht monoton)? Animationen physikalisch glaubwürdig (nichts ploppt/schwebt, Bauen von unten, Kran senkt ab), Orte/Zimmer bleiben an derselben Stelle?
 
 ## 11a. Format B – „Regel-Serie“ (Referenz: Video „NEBEL · Teil 1“, 85,7 s)
 
@@ -184,3 +188,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-15 | Video 10: „Haus mit mehr Deko, nicht so langweilig; Kamera-Erklärung raus, stattdessen etwas Spannenderes“ | Abschnitt 3 (Erklären max. 1–2 Sätze, in Handlung eingebaut, darf bei Story-Themen entfallen), 4 (Story vor Erklärung), 6a (Wohnräume liebevoll eingerichtet, Deko-Liste) + Checkliste |
 | 2026-11-15 | Video 11: „Riesen unheimlicher; beim Erwähnen des Dorfs kurz das ganze Dorf von oben zeigen“ | Abschnitt 6a (Orte mit Überblick einführen, Bedrohungen wirklich unheimlich) + Checkliste |
 | 2026-11-15 | Video 11: „Titanen ungefähr so machen“ (Screenshot einer Anime-Serie) | Abschnitt 6a: Riesen als ganze, massige Körper in Reihen im Dampf – mit eigenem Design statt Serien-Look |
+| 2026-11-17 | Video 12: „VoiceOver mit mehr Energie; an manchen Stellen stimmt die Animation nicht, realistischer machen“ | Abschnitt 8 (energiegeladener Sprecher + ElevenLabs-Tags), 6a (physikalisch glaubwürdige Animationen: von unten bauen, Kran senkt ab, kein Plopp/Bounce, räumliche Konsistenz) + Checkliste |
