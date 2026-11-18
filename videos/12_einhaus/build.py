@@ -470,14 +470,15 @@ pop("#sb-l", S0 + 0.2)
 S0, S1 = t_ringsum, (t_innen if HAS_INNEN else t_matr - 0.2)
 ducks = "".join(f'<g id="sc-duck{i}"><ellipse cx="{180+i*70}" cy="{1590+i%2*16}" rx="22" ry="12" fill="#fff"/><circle cx="{196+i*70}" cy="{1576+i%2*16}" r="9" fill="#fff"/><polygon points="{204+i*70},{1576+i%2*16} {214+i*70},{1580+i%2*16} {204+i*70},{1582+i%2*16}" fill="#ffb02e"/></g>' for i in range(3))
 scene("sc", S0, S1, sky_sunset() + f'<rect x="0" y="1000" width="1080" height="920" fill="{GRASS}"/>'
-      + f'<g transform="translate(560,680) scale(.4)">{cottage("scx")}</g>'
+      + f'<path d="M 724 1146 L 704 1236 L 768 1236 L 748 1146 Z" fill="#e2d2b0"/>'
+      + f'<g transform="translate(560,470) scale(.4)">{cottage("scx")}</g>'
       + tree(120, 1040, .6) + tree(980, 1060, .7) + tree(860, 1040, .5)
       + f'<path d="M -50 1220 Q 540 1160 1130 1240 L 1130 1330 Q 540 1250 -50 1310 Z" fill="{ROAD}"/>'
       + "".join(f'<rect x="{x}" y="{1262 - abs(540-x)*0.02:.0f}" width="50" height="8" fill="#f6efe2"/>' for x in range(0, 1080, 110))
-      + lantern(240, 1220) + lantern(820, 1225)
+      + lantern(240, 1220) + lantern(470, 1218)
       + f'<ellipse cx="300" cy="1620" rx="300" ry="120" fill="{WATER}"/><ellipse cx="280" cy="1600" rx="180" ry="50" fill="#8fd0f0" opacity=".6"/>' + ducks
       + tree(900, 1800, 1.3) + flowers(700, 1700, 14, 12)
-      + label("sc-l1", 540, 1130, "STRASSEN", "#1a1f2e", 36, fill="#fff4dc") + label("sc-l2", 900, 820, "BÄUME", "#1a1f2e", 36, fill="#fff4dc") + label("sc-l3", 300, 1480, "SEE", "#1a1f2e", 36, fill="#fff4dc"))
+      + label("sc-l1", 540, 1400, "STRASSEN", "#1a1f2e", 36, fill="#fff4dc") + label("sc-l2", 900, 820, "BÄUME", "#1a1f2e", 36, fill="#fff4dc") + label("sc-l3", 300, 1480, "SEE", "#1a1f2e", 36, fill="#fff4dc"))
 pop("#sc-l1", t_strassen); pop("#sc-l2", t_baeume); pop("#sc-l3", t_see)
 for i in range(3):
     tw(f'tl.to("#sc-duck{i}",{{x:{60+i*10},duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')

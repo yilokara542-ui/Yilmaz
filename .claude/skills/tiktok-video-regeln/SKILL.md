@@ -60,6 +60,7 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 
 ### 6a. Keine leeren Bilder – Detailreichtum (aus Feedback 15.11.)
 - **Realistische, physikalisch glaubwürdige Animationen** (aus Feedback 17.11.): Nichts „ploppt“ magisch auf. Gebäude/Räume werden **von unten nach oben gebaut** (Wände wachsen hoch, Dach zuletzt, Staubwolke), schwere Teile werden **vom Kran an einem Seil langsam abgesenkt** (sanftes Ein-/Ausbremsen, kein Hüpfen/Bounce), Möbel werden hingestellt und setzen sanft auf. Schwerkraft beachten: nichts schwebt ohne Grund in der Luft.
+- **Keine Überschneidungen** (aus Feedback 18.11.): Straßen, Wege, Flüsse usw. führen **am Haus vorbei oder zur Haustür hin**, nie durch Gebäude, Figuren oder Objekte hindurch. Häuser stehen mit Abstand neben der Straße, ein kleiner Weg verbindet Tür und Straße. Laternen/Bäume nicht vor Türen oder Fenstern platzieren.
 - **Räumliche Logik bleibt gleich**: Was einmal gezeigt wurde (z. B. „mein Zimmer im Erdgeschoss“), bleibt an derselben Stelle, wenn das Haus wächst. Größen, Positionen und Tageszeit zwischen Szenen konsistent halten.
 - **Jede Szene hat 3 Ebenen:** Hintergrund (Wand, Textur, Umgebung), Mittelgrund (Handlung), Vordergrund (Partikel, Licht, Rahmen). Nie eine Figur oder ein Objekt allein auf flacher Farbe.
 - **Umgebungsdetails:** Schrauben, Kabel, Paneele, Schilder, Etagennummern, Lampen, Warnstreifen, Bodenfliesen – kleine Dinge, die die Welt glaubwürdig machen.
@@ -116,7 +117,7 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
-- [ ] Voiceover klingt energiegeladen (nicht monoton)? Animationen physikalisch glaubwürdig (nichts ploppt/schwebt, Bauen von unten, Kran senkt ab), Orte/Zimmer bleiben an derselben Stelle?
+- [ ] Voiceover klingt energiegeladen (nicht monoton)? Animationen physikalisch glaubwürdig (nichts ploppt/schwebt, Bauen von unten, Kran senkt ab), Orte/Zimmer bleiben an derselben Stelle? Keine Straße/kein Objekt läuft durch ein Haus?
 
 ## 11a. Format B – „Regel-Serie“ (Referenz: Video „NEBEL · Teil 1“, 85,7 s)
 
@@ -189,3 +190,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-15 | Video 11: „Riesen unheimlicher; beim Erwähnen des Dorfs kurz das ganze Dorf von oben zeigen“ | Abschnitt 6a (Orte mit Überblick einführen, Bedrohungen wirklich unheimlich) + Checkliste |
 | 2026-11-15 | Video 11: „Titanen ungefähr so machen“ (Screenshot einer Anime-Serie) | Abschnitt 6a: Riesen als ganze, massige Körper in Reihen im Dampf – mit eigenem Design statt Serien-Look |
 | 2026-11-17 | Video 12: „VoiceOver mit mehr Energie; an manchen Stellen stimmt die Animation nicht, realistischer machen“ | Abschnitt 8 (energiegeladener Sprecher + ElevenLabs-Tags), 6a (physikalisch glaubwürdige Animationen: von unten bauen, Kran senkt ab, kein Plopp/Bounce, räumliche Konsistenz) + Checkliste |
+| 2026-11-18 | Video 12: „Straße nicht in das Haus rein“ | Abschnitt 6a: keine Überschneidungen – Straßen führen am Haus vorbei, Weg zur Tür + Checkliste |
