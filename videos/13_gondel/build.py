@@ -291,7 +291,7 @@ def creature(cid, x, y, s=1.0):
 # A Hook: du wachst in der Kabine auf
 S0, S1 = 0.0, t_tausend - 0.1
 scene("sa", S0, S1, interior("sa", dark=True) + figure("sa-fig", 360, 1420, 1.15, eyes="n"))
-tw(f'tl.set("#sa-fig-eyes-n",{{opacity:0}},0);')
+tw(f'tl.set("#sa-fig-eyes-n",{{opacity:0}},{t_drei0:.3f});')
 tw(f'tl.set("#sa-fig-eyes-w",{{opacity:1}},{t_drei0:.3f});')
 tw(f'tl.fromTo("#sa-fig",{{y:30}},{{y:0,duration:.5,ease:"power2.out"}},{t_drei0 - 0.3:.3f});')
 
@@ -300,7 +300,7 @@ S0, S1 = t_tausend - 0.1, t_handy
 arrow = (f'<g id="sb-arr" opacity="0"><line x1="900" y1="760" x2="900" y2="1660" stroke="{RED}" stroke-width="6" stroke-dasharray="20 14"/>'
          f'<polygon points="880,780 900,740 920,780" fill="{RED}"/><polygon points="880,1640 900,1680 920,1640" fill="{RED}"/></g>')
 scene("sb", S0, S1, night_sky(1) + gorge(2) + cable(470, 640) + gondola_ext("sb-g", 540, 548, 0.8) + arrow
-      + label("sb-l", 900, 1240, "1000 M", RED, 54) + label("sb-l2", 540, 1180, "STILLSTAND", "#fff", 40))
+      + label("sb-l", 760, 1240, "1000 M", RED, 54) + label("sb-l2", 540, 1180, "STILLSTAND", "#fff", 40))
 pop("#sb-arr", S0 + 0.2, 0.5, 0.95); pop("#sb-l", S0 + 0.4)
 tw(f'tl.fromTo("#sb-cam",{{scale:1.5,svgOrigin:"540 760"}},{{scale:1,svgOrigin:"540 760",duration:1.6,ease:"power2.inOut"}},{S0:.3f});')
 tw(f'tl.to("#sb-l",{{opacity:0,duration:.3}},{t_gondel - 0.2:.3f});')
