@@ -77,7 +77,8 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Dezent statt dominant** (Feedback 15.11.): max. ca. 64 px Schriftgröße bei 1080 px Breite, Kontur max. 8 px – die Untertitel dürfen das Bild nicht erschlagen.
 - **1–4 Wörter pro Einblendung**, Wechsel im Sprechrhythmus.
 - **Schlüsselwort in der Signal-Farbe** (Zahl, Gefahr, Fachbegriff).
-- Position: Mitte oder oberes Drittel – nicht unten (dort liegt die TikTok-UI).
+- **Position (aus Feedback 18.11., ersetzt „Mitte“):** feste Untertitel-Leiste bei **y ≈ 1385–1480 px** (von 1920) – unter dem Bildgeschehen, aber **über** der TikTok-UI unten (Beschreibung/Name ab ca. y 1550) und links neben der Button-Spalte rechts (Text-Box max. 820 px breit, mittig). Nie mitten über Figur, Handy-Display oder Regel-Karte.
+- **Gut lesbar auf dem Handy:** Text in einer **dunklen, halbtransparenten Box** (ca. 78 % Deckkraft, runde Ecken), 56–60 px, weiß, Schlüsselwort in Akzentfarbe. Die Leiste y 1330–1500 in allen Szenen von wichtigen Inhalten freihalten.
 
 ## 8. Ton
 - Sprecher: **energiegeladen und begeistert**, zügiges Tempo, klare Betonung auf Schlüsselwörtern (aus Feedback 17.11.). Bei Spannungsmomenten kurz abgesenkt/dramatisch, danach sofort wieder Energie. Erzähler-Stil in 2. Person („du“) bzw. Ich-Perspektive bei Mitmach-Videos.
@@ -146,7 +147,7 @@ Länge: **80–90 s**. Jede Regel muss später in der Story **benutzt** werden (
 - **Regel-Karten:** dunkler Hintergrund mit weichem Glow, oben roter Badge „REGEL #1“, Überschrift in Weiß + Zusatz in Akzentfarbe, in der Mitte **ein einfaches Flat-Icon** (Glühbirne, Tür mit Sprechblase, Sonnenaufgang), das bei der Regel animiert wird (rotes ✕ über Glühbirne, ✕ über Sprechblase „Ich bin's, Papa ♥“, Uhr 5:59 durchgestrichen).
 - **Dialog-Zitate** der fremden Stimme oben im Bild, rot/kursiv, mit Label „– VOR DER TÜR –“, Satz für Satz ergänzt.
 - **Lautmalerei** groß ins Bild (DING. DONG.) in Rot.
-- **Wahl am Ende:** zwei Pillen-Labels nebeneinander (rot = riskant, blau = Alternative).
+- **Wahl am Ende als interaktive Abstimmung** (aus Feedback 18.11.): Badge „DU ENTSCHEIDEST“, große Frage, zwei Options-Karten **A (rot)** und **B (blau)** mit Icon, die von links/rechts hereinfahren; dazwischen „ODER“ mit ablaufendem Timer-Ring; Live-Abstimmungsbalken, die hin und her schwanken; ein Finger tippt abwechselnd auf A und B (Ripple + Aufleuchten); zum Schluss Aufruf „💬 Schreib A oder B“. Es muss so aussehen, als würden die Zuschauer entscheiden, was in Teil 2 passiert. Szene mind. 4–5 s stehen lassen.
 - **Teil-2-Karte:** Nebel-/Rauch-Hintergrund, Serienname klein, „TEIL 2“ riesig in leuchtendem Rot, Termin + Button „FOLGE FÜR TEIL 2“.
 
 ### Untertitel Format B
@@ -169,7 +170,8 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 - [ ] 3 Regel-Karten mit Badge + Icon-Animation
 - [ ] Jede Regel kommt später in der Story vor, eine wird emotional getestet
 - [ ] Gegenbeweis über Handy/Technik, Schlusssatz dreht eine Regel um
-- [ ] Ende: 2 Optionen + Teil-2-Karte, Länge 80–90 s
+- [ ] Ende: interaktive A/B-Abstimmung (Karten, Timer, Balken, Tipp-Finger, „Schreib A oder B“) + Teil-2-Karte, Länge 80–90 s
+- [ ] Untertitel in der Leiste y ≈ 1385 mit dunkler Box, nichts Wichtiges darunter
 
 ## 12. Feedback-Log (wird laufend erweitert)
 
@@ -191,3 +193,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-15 | Video 11: „Titanen ungefähr so machen“ (Screenshot einer Anime-Serie) | Abschnitt 6a: Riesen als ganze, massige Körper in Reihen im Dampf – mit eigenem Design statt Serien-Look |
 | 2026-11-17 | Video 12: „VoiceOver mit mehr Energie; an manchen Stellen stimmt die Animation nicht, realistischer machen“ | Abschnitt 8 (energiegeladener Sprecher + ElevenLabs-Tags), 6a (physikalisch glaubwürdige Animationen: von unten bauen, Kran senkt ab, kein Plopp/Bounce, räumliche Konsistenz) + Checkliste |
 | 2026-11-18 | Video 12: „Straße nicht in das Haus rein“ | Abschnitt 6a: keine Überschneidungen – Straßen führen am Haus vorbei, Weg zur Tür + Checkliste |
+| 2026-11-18 | Video 13: „Untertitel so, dass sie nicht im Weg stehen und man auf dem Handy alles lesen kann; ‚Was machst du‘ am Ende so animieren, als könnten die Zuschauer entscheiden“ | Abschnitt 7 (feste Untertitel-Leiste unten-mittig über der TikTok-UI, dunkle Box, Leiste freihalten – ersetzt „Mitte“), 11a (Wahl als interaktive A/B-Abstimmung) + Checklisten |
