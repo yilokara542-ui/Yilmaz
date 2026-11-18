@@ -360,13 +360,22 @@ for i in range(3):
 
 # E Zweifel → Fenster → Kabine kippt
 S0, S1 = t_bestimmt, t_tief
-scene("se", S0, S1, f'<g transform="translate(540,960) scale(1.18) translate(-540,-960)"><g id="se-tilt">{interior("se", dark=True)}{figure("se-fig", 360, 1450, 1.15, eyes="n")}</g></g>', drift=False)
-walk_cycle("se-fig", t_fenster - 0.2, t_kippt - 0.1)
-tw(f'tl.to("#se-fig",{{x:-120,duration:{max(0.6, t_kippt - t_fenster):.3f},ease:"sine.inOut"}},{t_fenster - 0.2:.3f});')
-tw(f'tl.to("#se-tilt",{{rotation:-8,svgOrigin:"540 -400",duration:.6,ease:"power2.out"}},{t_kippt:.3f});')
-tw(f'tl.to("#se-tilt",{{rotation:4,svgOrigin:"540 -400",duration:1.1,ease:"sine.inOut"}},{t_kippt + 0.6:.3f});')
-tw(f'tl.to("#se-tilt",{{rotation:-2,svgOrigin:"540 -400",duration:1.1,ease:"sine.inOut"}},{t_kippt + 1.7:.3f});')
-tw(f'tl.to("#se-fig",{{x:-60,y:-20,duration:.5,ease:"power2.out"}},{t_kippt + 0.05:.3f});')
+scene("se", S0, S1, f'<g transform="translate(540,960) scale(1.18) translate(-540,-960)"><g id="se-tilt">{interior("se", dark=True)}<g id="se-up">{figure("se-fig", 360, 1450, 1.15, eyes="n")}</g></g></g>', drift=False)
+# Physik: er läuft nach RECHTS zum Fenster → Gewicht rechts → rechte Seite sinkt (Drehung im Uhrzeigersinn um das Gehänge oben).
+# Die Figur bleibt durch Gegendrehung senkrecht (Schwerkraft), die Kabine pendelt gedämpft aus und bleibt leicht rechts geneigt.
+PIV = "540 150"; FEET = "585 1450"   # Drehpunkt = Gehänge an der Kabinendecke
+t_w0 = t_fenster - 0.2; d_w = max(0.8, t_kippt - t_w0 - 0.05)
+walk_cycle("se-fig", t_w0, t_w0 + d_w)
+tw(f'tl.to("#se-fig",{{x:200,duration:{d_w:.3f},ease:"sine.inOut"}},{t_w0:.3f});')
+TILT = [(t_w0, d_w, 1.2, "sine.in"), (t_kippt, .7, 5.5, "power2.out"), (t_kippt + .7, 1.0, 2.0, "sine.inOut"),
+        (t_kippt + 1.7, .9, 4.0, "sine.inOut"), (t_kippt + 2.6, .9, 2.8, "sine.inOut"), (t_kippt + 3.5, .8, 3.2, "sine.inOut")]
+for t0, dd, ang, ez in TILT:
+    if t0 >= S1 + XF: break
+    tw(f'tl.to("#se-tilt",{{rotation:{ang},svgOrigin:"{PIV}",duration:{dd:.3f},ease:"{ez}"}},{t0:.3f});')
+    tw(f'tl.to("#se-up",{{rotation:{-ang},svgOrigin:"{FEET}",duration:{dd:.3f},ease:"{ez}"}},{t0:.3f});')
+# Er stolpert durch den Ruck einen kleinen Schritt weiter nach rechts und fängt sich
+tw(f'tl.to("#se-fig",{{x:240,duration:.45,ease:"power2.out"}},{t_kippt + 0.05:.3f});')
+tw(f'tl.to("#se-fig",{{x:225,duration:.6,ease:"sine.inOut"}},{t_kippt + 0.5:.3f});')
 tw(f'tl.set("#se-fig-eyes-n",{{opacity:0}},{t_kippt:.3f});'); tw(f'tl.set("#se-fig-eyes-w",{{opacity:1}},{t_kippt:.3f});')
 
 # E2 Blick nach unten: ein Licht blinkt – dann weg
@@ -424,7 +433,7 @@ icon1 = (f'<g id="r1-gon"><line x1="540" y1="700" x2="540" y2="820" stroke="{CAB
 scene("r1", S0, S1, rule_card("r1", 1, "BLEIB IN DER MITTE", "Jeder Schritt = Schaukeln", icon1) + xmark("r1-x", 700, 1060, 90))
 rule_in("r1", S0, t_schritt)
 tw(f'tl.to("#r1-fig",{{x:140,duration:.6,ease:"sine.inOut"}},{t_schritt:.3f});')
-tw(f'tl.to("#r1-gon",{{rotation:-9,svgOrigin:"540 760",duration:.7,ease:"sine.inOut"}},{t_schritt + 0.2:.3f});')
+tw(f'tl.to("#r1-gon",{{rotation:9,svgOrigin:"540 760",duration:.7,ease:"sine.inOut"}},{t_schritt + 0.2:.3f});')
 pop("#r1-x", t_schaukeln, 0.25, 1.4)
 tw(f'tl.to("#r1-x",{{opacity:0,duration:.2}},{t_schaukeln + 0.8:.3f});')
 tw(f'tl.to("#r1-fig",{{x:0,duration:.6,ease:"sine.inOut"}},{t_schaukeln + 0.8:.3f});')
