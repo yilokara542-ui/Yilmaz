@@ -316,8 +316,8 @@ alt = (f'<text x="0" y="-380" text-anchor="middle" font-family="Poppins" font-we
        f'<circle cx="0" cy="170" r="190" fill="#1d2152" stroke="#3a3f8a" stroke-width="14"/>'
        + "".join(f'<rect x="-3" y="-10" width="6" height="34" fill="#9aa0d0" transform="translate(0,170) rotate({a}) translate(0,-160)"/>' for a in range(-120, 121, 20))
        + f'<g id="sc-needle"><rect x="-6" y="0" width="12" height="150" rx="6" fill="{RED}" transform="translate(0,170) rotate(180)"/></g><circle cx="0" cy="170" r="20" fill="#fff"/>'
-       f'<g id="sc-p" opacity="0"><text x="0" y="440" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="48" fill="#fff">899 hPa</text>'
-       f'<text x="0" y="490" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="30" fill="#9aa0d0">Luftdruck</text></g>')
+       f'<g id="sc-p" opacity="0"><text x="0" y="290" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="44" fill="#fff">899 hPa</text>'
+       f'<text x="0" y="330" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="30" fill="#9aa0d0">Luftdruck</text></g>')
 scene("sc", S0, S1, night_sky(3) + f'<rect width="1080" height="1920" fill="#000" opacity=".45"/>' + phone("sc-ph", alt))
 tw(f'tl.fromTo("#sc-ph",{{y:200,opacity:0}},{{y:0,opacity:1,duration:.5,ease:"power2.out"}},{S0:.3f});')
 pop("#sc-h", t_hoehe); pop("#sc-p", t_luftdruck)
@@ -380,7 +380,7 @@ for i in range(3):
     tw(f'tl.fromTo("#sf-w{i}",{{opacity:0}},{{opacity:1,duration:.25,yoyo:true,repeat:5}},{S0 + 0.2 + i*0.1:.3f});')
 
 
-ICON_DY = {"r1": 60, "r2": 150, "r3": 110}
+ICON_DY = {"r1": 60, "r2": 40, "r3": 40}
 
 
 def rule_card(sid, n, head, sub, icon):
@@ -402,7 +402,7 @@ icon1 = (f'<g id="r1-gon"><line x1="540" y1="700" x2="540" y2="820" stroke="{CAB
          + "".join(f'<rect x="{360+k*130}" y="850" width="100" height="130" rx="14" fill="#2a2f66"/>' for k in range(3))
          + f'<g id="r1-fig">{figure("r1-f", 540, 1130, 0.42)}</g></g>'
          + f'<line x1="200" y1="700" x2="880" y2="700" stroke="{CABLE}" stroke-width="8"/>'
-         + f'<g id="r1-ok" opacity="0"><circle cx="540" cy="1320" r="60" fill="{LIME}"/><path d="M 510 1320 l 22 22 l 40 -44" stroke="#0b0d22" stroke-width="12" fill="none"/></g>')
+         + f'<g id="r1-ok" opacity="0"><circle cx="860" cy="1000" r="60" fill="{LIME}"/><path d="M 830 1000 l 22 22 l 40 -44" stroke="#0b0d22" stroke-width="12" fill="none"/></g>')
 scene("r1", S0, S1, rule_card("r1", 1, "BLEIB IN DER MITTE", "Jeder Schritt = Schaukeln", icon1) + xmark("r1-x", 700, 1060, 90))
 rule_in("r1", S0, t_schritt)
 tw(f'tl.to("#r1-fig",{{x:140,duration:.6,ease:"sine.inOut"}},{t_schritt:.3f});')
@@ -419,7 +419,7 @@ icon2 = (f'<rect x="380" y="720" width="320" height="640" rx="20" fill="#c3c7da"
          f'<rect x="410" y="1130" width="110" height="30" rx="15" fill="{STEEL}"/><rect x="380" y="1220" width="320" height="14" fill="#c74545"/>'
          f'<g id="r2-bub" opacity="0"><rect x="560" y="600" width="400" height="130" rx="30" fill="#fff"/><polygon points="640,730 700,730 620,790" fill="#fff"/>'
          f'<text x="760" y="682" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="44" fill="#151a21">„Mach auf!“</text></g>')
-scene("r2", S0, S1, rule_card("r2", 2, "ÖFFNE NIE DIE TÜR", "Egal, wer draußen ruft", icon2) + xmark("r2-x", 760, 815, 90))
+scene("r2", S0, S1, rule_card("r2", 2, "ÖFFNE NIE DIE TÜR", "Egal, wer draußen ruft", icon2) + xmark("r2-x", 760, 705, 90))
 rule_in("r2", S0, t_ruft - 0.4)
 pop("#r2-bub", t_tuer); pop("#r2-x", t_ruft + 0.2, 0.25, 1.4)
 
@@ -428,12 +428,12 @@ S0, S1 = t_r3, t_waehlst
 icon3 = (f'<rect x="490" y="660" width="100" height="520" rx="50" fill="#e8ecff"/><circle cx="540" cy="1220" r="90" fill="#e8ecff"/>'
          f'<rect id="r3-merc" x="515" y="740" width="50" height="460" rx="25" fill="{RED}"/><circle cx="540" cy="1220" r="66" fill="{RED}"/>'
          + "".join(f'<rect x="600" y="{720+k*80}" width="40" height="8" fill="#9aa0d0"/>' for k in range(6))
-         + label("r3-dt", 800, 900, "−6,5 °C", "#7fd0ff", 52)
-         + f'<g id="r3-clock" opacity="0"><rect x="250" y="1380" width="580" height="200" rx="30" fill="#1d2152" stroke="{LIME}" stroke-width="6"/>'
-           f'<text x="540" y="1440" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="34" fill="{LIME}" letter-spacing="4">RETTUNG</text>'
-           f'<text x="540" y="1545" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="110" fill="#fff">5:30</text></g>'
-         + f'<g id="r3-st" opacity="0"><rect x="300" y="1620" width="480" height="90" rx="16" fill="{RED}" transform="rotate(-5 540 1665)"/>'
-           f'<text x="540" y="1682" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="46" fill="#fff" transform="rotate(-5 540 1665)">KEINE MINUTE FRÜHER</text></g>')
+         + label("r3-dt", 820, 860, "−6,5 °C", "#7fd0ff", 52)
+         + f'<g id="r3-clock" opacity="0"><rect x="650" y="1000" width="340" height="200" rx="30" fill="#1d2152" stroke="{LIME}" stroke-width="6"/>'
+           f'<text x="820" y="1055" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="32" fill="{LIME}" letter-spacing="4">RETTUNG</text>'
+           f'<text x="820" y="1165" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="100" fill="#fff">5:30</text></g>'
+         + f'<g id="r3-st" opacity="0"><rect x="630" y="1215" width="400" height="80" rx="16" fill="{RED}" transform="rotate(-5 830 1255)"/>'
+           f'<text x="830" y="1268" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="36" fill="#fff" transform="rotate(-5 830 1255)">KEINE MINUTE FRÜHER</text></g>')
 scene("r3", S0, S1, rule_card("r3", 3, "HALTE DICH WARM", "Oben ist es kälter", icon3))
 rule_in("r3", S0, t_sechs - 0.3)
 tw(f'tl.fromTo("#r3-merc",{{scaleY:1,transformOrigin:"50% 100%"}},{{scaleY:.45,transformOrigin:"50% 100%",duration:1.2,ease:"power2.inOut"}},{t_sechs - 0.2:.3f});')
@@ -450,7 +450,7 @@ call = (f'<text x="0" y="-380" text-anchor="middle" font-family="Poppins" font-w
         f'<g id="sg-net" opacity="0"><rect x="-230" y="-60" width="460" height="170" rx="26" fill="#1d2152"/>'
         f'<text x="0" y="0" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="34" fill="#fff">Eigenes Netz: ✕</text>'
         f'<text x="0" y="60" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="34" fill="{LIME}">Fremdes Netz: ✓</text></g>'
-        f'<circle cx="0" cy="380" r="70" fill="{RED}"/><rect x="-40" y="366" width="80" height="28" rx="14" fill="#fff"/>')
+        f'<circle cx="0" cy="250" r="60" fill="{RED}"/><rect x="-40" y="236" width="80" height="28" rx="14" fill="#fff"/>')
 scene("sg", S0, S1, interior("sg", dark=True) + f'<rect width="1080" height="1920" fill="#000" opacity=".5"/>' + phone("sg-ph", call))
 tw(f'tl.fromTo("#sg-ph",{{y:200,opacity:0}},{{y:0,opacity:1,duration:.5,ease:"power2.out"}},{S0:.3f});')
 pop("#sg-c", S0 + 0.7); pop("#sg-net", t_netz - 0.6)
@@ -521,24 +521,80 @@ for i in range(4):
 tw(f'tl.to("#sl-hlever",{{rotation:-35,svgOrigin:"610 209",duration:.9,ease:"power1.inOut"}},{t_dach - 0.3:.3f});')
 shake("#sl-hatch", t_dach + 0.5, 4, 4)
 
-# M Wahl
-S0, S1 = t_was, t_teil2
-scene("sm", S0, S1, interior("sm", frost=True, dark=True) + f'<rect width="1080" height="1920" fill="#000" opacity=".45"/>' + figure("sm-fig", 540, 1500, 1.2, eyes="w")
-      + pill("sm-p1", 540, 760, "DACHLUKE ZUHALTEN", RED) + pill("sm-p2", 540, 920, "NOCH MAL 112", BLUE)
-      )
-pop("#sm-p1", t_luke); pop("#sm-p2", t_112b - 0.3)
-tw(f'tl.to("#sm-fig",{{x:-50,duration:.9,ease:"sine.inOut",yoyo:true,repeat:1}},{t_luke:.3f});')
+# M Wahl: sieht aus wie eine Abstimmung – die Zuschauer entscheiden Teil 2
+S0, S1 = t_was, t_folge - 0.3
+
+
+def vote_card(cid, x, col, letter, l1, l2, icon):
+    return (f'<g id="{cid}" opacity="0"><g id="{cid}-in"><rect x="{x}" y="640" width="420" height="440" rx="36" fill="#14163a" stroke="{col}" stroke-width="8"/>'
+            f'<rect id="{cid}-hl" x="{x}" y="640" width="420" height="440" rx="36" fill="{col}" opacity="0"/>'
+            f'<circle cx="{x+60}" cy="700" r="38" fill="{col}"/><text x="{x+60}" y="716" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#fff">{letter}</text>'
+            f'{icon}'
+            f'<text x="{x+210}" y="985" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="40" fill="#fff">{l1}</text>'
+            f'<text x="{x+210}" y="1035" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="40" fill="#fff">{l2}</text>'
+            f'<rect x="{x+20}" y="1110" width="380" height="34" rx="17" fill="#262a5e"/><rect id="{cid}-bar" x="{x+20}" y="1110" width="380" height="34" rx="17" fill="{col}"/>'
+            f'</g></g>')
+
+
+icon_a = (f'<rect x="200" y="740" width="200" height="130" rx="14" fill="#7a7fa0" stroke="#4d5276" stroke-width="8"/><rect x="260" y="795" width="90" height="22" rx="11" fill="#2c3157"/>'
+          f'<rect x="230" y="860" width="130" height="60" rx="30" fill="{FIG}"/>' + "".join(f'<rect x="{240+k*28}" y="830" width="24" height="50" rx="12" fill="{FIG}"/>' for k in range(4)))
+icon_b = (f'<rect x="715" y="730" width="130" height="200" rx="22" fill="#0c0d1c"/><rect x="725" y="745" width="110" height="170" rx="14" fill="#13163a"/>'
+          f'<text x="780" y="845" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="46" fill="#fff">112</text>'
+          + "".join(f'<path id="sm-bw{k}" d="M {860+k*22} {800-k*14} q {24+k*8} {30+k*14} 0 {60+k*28}" stroke="#7fb0ff" stroke-width="6" fill="none" opacity="0"/>' for k in range(2)))
+ring_len = 2 * math.pi * 70
+finger = (f'<g id="sm-tap"><g transform="translate(540,1200)"><circle id="sm-ripple" cx="0" cy="-40" r="30" fill="none" stroke="#fff" stroke-width="5" opacity="0"/>'
+          f'<rect x="-14" y="-40" width="28" height="80" rx="14" fill="{FIG}"/><rect x="-34" y="10" width="68" height="80" rx="26" fill="{FIG}"/>'
+          f'<rect x="-34" y="70" width="68" height="40" rx="12" fill="#2f6f73"/></g></g>')
+scene("sm", S0, S1, interior("sm", frost=True, dark=True) + f'<rect width="1080" height="1920" fill="#05061a" opacity=".72"/>'
+      + f'<g id="sm-badge" opacity="0"><rect x="370" y="390" width="340" height="60" rx="30" fill="{LIME}"/>'
+        f'<text x="540" y="432" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="30" fill="#0b0d22" letter-spacing="3">DU ENTSCHEIDEST</text></g>'
+      + f'<g id="sm-q" opacity="0"><text x="540" y="560" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="74" fill="#fff">Was machst du?</text></g>'
+      + vote_card("sm-a", 70, RED, "A", "DACHLUKE", "ZUHALTEN", icon_a) + vote_card("sm-b", 590, BLUE, "B", "NOCH MAL", "112 ANRUFEN", icon_b)
+      + f'<g id="sm-or" opacity="0"><circle cx="540" cy="860" r="70" fill="#0b0d22" stroke="#33376e" stroke-width="10"/>'
+        f'<circle id="sm-ring" cx="540" cy="860" r="70" fill="none" stroke="{LIME}" stroke-width="10" stroke-dasharray="{ring_len:.1f}" stroke-dashoffset="0" transform="rotate(-90 540 860)"/>'
+        f'<text x="540" y="876" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#fff">ODER</text></g>'
+      + finger
+      + f'<g id="sm-cta" opacity="0"><rect x="250" y="1215" width="580" height="80" rx="40" fill="#fff"/>'
+        f'<text x="540" y="1268" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="36" fill="#0b0d22">💬 Schreib A oder B</text></g>', drift=False)
+d = S1 - S0
+tw(f'tl.fromTo("#sm-badge",{{opacity:0,y:-30}},{{opacity:1,y:0,duration:.35,ease:"power2.out"}},{S0:.3f});')
+pop("#sm-q", S0 + 0.1, 0.35, 0.8)
+tw(f'tl.fromTo("#sm-a",{{opacity:0,x:-260}},{{opacity:1,x:0,duration:.45,ease:"power3.out"}},{t_luke - 0.25:.3f});')
+tw(f'tl.fromTo("#sm-b",{{opacity:0,x:260}},{{opacity:1,x:0,duration:.45,ease:"power3.out"}},{t_112b - 0.6:.3f});')
+pop("#sm-or", t_luke + 0.2, 0.3, 0.6)
+tw(f'tl.fromTo("#sm-ring",{{attr:{{"stroke-dashoffset":0}}}},{{attr:{{"stroke-dashoffset":{ring_len:.1f}}},duration:{max(1.0, S1 - t_luke):.3f},ease:"none"}},{t_luke + 0.2:.3f});')
+# Live-Abstimmung: Balken schwanken wie echte Stimmen
+tw(f'tl.set("#sm-a-bar, #sm-b-bar",{{scaleX:0,transformOrigin:"0% 50%"}},{S0:.3f});')
+va = [0.35, 0.62, 0.48, 0.57, 0.52]; t_v = t_luke + 0.3
+for k, a in enumerate(va):
+    tv = t_v + k * max(0.35, (S1 - t_v) / len(va))
+    tw(f'tl.to("#sm-a-bar",{{scaleX:{a},duration:.35,ease:"power2.out"}},{tv:.3f});')
+    tw(f'tl.to("#sm-b-bar",{{scaleX:{1-a:.2f},duration:.35,ease:"power2.out"}},{tv:.3f});')
+# Finger tippt abwechselnd auf A und B – wie ein Zuschauer, der wählt
+tw(f'tl.set("#sm-tap",{{opacity:0}},{S0:.3f});')
+tw(f'tl.fromTo("#sm-tap",{{opacity:0,y:200}},{{opacity:1,y:0,duration:.4,ease:"power2.out"}},{t_luke + 0.1:.3f});')
+seq = [(-260, "a"), (260, "b"), (-260, "a"), (260, "b")]
+step = max(0.45, (S1 - t_luke - 0.5) / len(seq))
+for k, (dx, c) in enumerate(seq):
+    tk = t_luke + 0.4 + k * step
+    tw(f'tl.to("#sm-tap",{{x:{dx},y:-60,duration:{step*0.5:.3f},ease:"power2.inOut"}},{tk:.3f});')
+    tw(f'tl.fromTo("#sm-ripple",{{opacity:.9,scale:.5,transformOrigin:"50% 50%"}},{{opacity:0,scale:2.2,duration:.4,ease:"power1.out"}},{tk + step*0.5:.3f});')
+    tw(f'tl.fromTo("#sm-{c}-hl",{{opacity:.35}},{{opacity:0,duration:.45,ease:"sine.out"}},{tk + step*0.5:.3f});')
+    tw(f'tl.fromTo("#sm-{c}-in",{{scale:.96,transformOrigin:"50% 50%"}},{{scale:1,duration:.3,ease:"power2.out"}},{tk + step*0.5:.3f});')
+for k in range(2):
+    tw(f'tl.fromTo("#sm-bw{k}",{{opacity:0}},{{opacity:1,duration:.25,yoyo:true,repeat:7}},{t_112b + k*0.1:.3f});')
+tw(f'tl.fromTo("#sm-cta",{{opacity:0,y:30}},{{opacity:1,y:0,duration:.35,ease:"power2.out"}},{max(t_112b, S1 - 1.2):.3f});')
 
 # N Teil-2-Karte
-S0, S1 = t_teil2, TOTAL
+S0, S1 = t_folge - 0.3, TOTAL
 fog = "".join(f'<ellipse id="sn-f{i}" cx="{RNG.randint(0,1080)}" cy="{RNG.randint(300,1700)}" rx="{RNG.randint(300,520)}" ry="{RNG.randint(90,170)}" fill="#8a8fb8" opacity=".09"/>' for i in range(10))
-scene("sn", S0, S1, f'<rect width="1080" height="1920" fill="#14152e"/>{fog}' + cable(1490, 1560, 4) + gondola_ext("sn-g", 540, 1530, 0.5, lit=False)
+scene("sn", S0, S1, f'<rect width="1080" height="1920" fill="#14152e"/>{fog}' + cable(1040, 1100, 4) + gondola_ext("sn-g", 540, 1070, 0.5, lit=False)
       + f'<text x="540" y="450" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="36" fill="#cfd3ff" letter-spacing="14">HÖHE</text>'
       + f'<g id="sn-t" opacity="0"><text x="540" y="680" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="230" fill="{RED}" filter="url(#glow)">TEIL 2</text></g>'
-      + f'<g id="sn-s" opacity="0"><text x="540" y="1420" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="44" fill="#fff">heute Nacht · 3:12 Uhr</text></g>'
+      + f'<g id="sn-s" opacity="0"><text x="540" y="850" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="44" fill="#fff">heute Nacht · 3:12 Uhr</text></g>'
       + f'<g id="sn-b" opacity="0"><rect x="330" y="1560" width="420" height="80" rx="40" fill="none" stroke="#fff" stroke-width="5"/>'
         f'<text x="540" y="1613" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="34" fill="#fff" letter-spacing="3">FOLGE FÜR TEIL 2</text></g>')
-pop("#sn-t", S0 + 0.1, 0.5, 1.3); pop("#sn-s", S0 + 0.6); pop("#sn-b", t_folge)
+pop("#sn-t", S0 + 0.1, 0.5, 1.3); pop("#sn-s", S0 + 0.4); pop("#sn-b", S0 + 0.9)
 for i in range(10):
     tw(f'tl.fromTo("#sn-f{i}",{{x:0}},{{x:{RNG.choice([-1,1])*RNG.randint(80,200)},duration:{S1-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
@@ -614,9 +670,9 @@ for k, c in enumerate(chunks):
     for w in c:
         t = DISPLAY.get(w["t"], w["t"]); plain.append(t)
         parts.append(f'<span class="k">{html.escape(t)}</span>' if norm(w["t"]) in KEY or norm(t) in KEY else html.escape(t))
-    fs = min(62, int(980 / (0.56 * max(len(" ".join(plain)), 1))))
+    fs = min(60, int(760 / (0.56 * max(len(" ".join(plain)), 1))))
     sid = f"sub{k}"
-    subs.append(f'<div id="{sid}" class="clip sub" data-start="{s:.3f}" data-duration="{e-s:.3f}" data-track-index="9" style="font-size:{fs}px">{" ".join(parts)}</div>')
+    subs.append(f'<div id="{sid}" class="clip sub" data-start="{s:.3f}" data-duration="{e-s:.3f}" data-track-index="9" style="font-size:{fs}px"><span class="box">{" ".join(parts)}</span></div>')
     tw(f'tl.fromTo("#{sid}",{{y:14,opacity:0}},{{y:0,opacity:1,duration:.16,ease:"power2.out"}},{s:.3f});')
 
 
@@ -694,10 +750,12 @@ doc = f'''<!doctype html>
       .scene, .ov {{ position: absolute; inset: 0; }}
       .ov {{ pointer-events: none; }}
       .scene svg {{ display: block; }}
-      .sub {{
-        position: absolute; left: 40px; right: 40px; top: 960px; margin-top: -0.6em; text-align: center;
-        color: var(--ink); font-weight: 600; line-height: 1.15; white-space: nowrap; z-index: 20;
-        -webkit-text-stroke: 7px rgba(0,0,0,.85); paint-order: stroke fill; text-shadow: 0 3px 10px rgba(0,0,0,.6);
+      .sub {{ position: absolute; left: 0; right: 0; top: 1385px; text-align: center; z-index: 20; }}
+      .sub .box {{
+        display: inline-block; max-width: 820px; padding: 10px 28px 14px; border-radius: 24px;
+        background: rgba(8,9,26,.78); box-shadow: 0 6px 24px rgba(0,0,0,.45);
+        color: var(--ink); font-weight: 600; line-height: 1.2; white-space: nowrap;
+        text-shadow: 0 2px 6px rgba(0,0,0,.5);
       }}
       .sub .k {{ color: var(--accent); }}
     </style>

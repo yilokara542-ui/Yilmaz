@@ -45,7 +45,11 @@ creak(C["t_griff"], .3); vib(C["t_vibriert"])
 whoosh(C["t_wer"], 1.5, .3); boom(C["t_vor_tuer"], .8)
 for k in range(4): noise(C["t_du_musst"]+.4+k*.25, .2, .08, 1, .25)
 creak(C["t_dach"]+.3, .4); boom(C["t_dach"]+.5, .6)
-tone(C["t_teil2"], 110, 55, 2.0, .2, 1.0); boom(C["t_teil2"], .9)
+whoosh(C["t_luke"]-.3, .5, .3); whoosh(C["t_112b"]-.6, .5, .3)
+step = max(.45, (C["t_folge"] - .3 - C["t_luke"] - .5)/4)
+for k in range(4): click(C["t_luke"]+.4+k*step+step*.5, .45); tone(C["t_luke"]+.4+k*step+step*.5, 990, 1320, .12, .08, .06)
+for k in range(int((C["t_folge"]-C["t_luke"])/.5)): tone(C["t_luke"]+.2+k*.5, 1600, 1600, .03, .04, .01)   # Timer-Ticken
+tone(C["t_folge"]-.3, 110, 55, 2.0, .2, 1.0); boom(C["t_folge"]-.3, .9)
 out = out/np.max(np.abs(out))*.6
 with wave.open(os.path.join(HERE, "assets/sfx_bed.wav"), "wb") as w:
     w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes((out*32767).astype(np.int16).tobytes())
