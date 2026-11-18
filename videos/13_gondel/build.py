@@ -342,7 +342,7 @@ for i in range(3):
 
 # E Zweifel → Fenster → Kabine kippt
 S0, S1 = t_bestimmt, t_tief
-scene("se", S0, S1, f'<g id="se-tilt">{interior("se", dark=True)}{figure("se-fig", 360, 1450, 1.15, eyes="n")}</g>', drift=False)
+scene("se", S0, S1, f'<g transform="translate(540,960) scale(1.18) translate(-540,-960)"><g id="se-tilt">{interior("se", dark=True)}{figure("se-fig", 360, 1450, 1.15, eyes="n")}</g></g>', drift=False)
 walk_cycle("se-fig", t_fenster - 0.2, t_kippt - 0.1)
 tw(f'tl.to("#se-fig",{{x:-120,duration:{max(0.6, t_kippt - t_fenster):.3f},ease:"sine.inOut"}},{t_fenster - 0.2:.3f});')
 tw(f'tl.to("#se-tilt",{{rotation:-8,svgOrigin:"540 -400",duration:.6,ease:"power2.out"}},{t_kippt:.3f});')
