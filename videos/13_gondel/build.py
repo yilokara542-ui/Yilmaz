@@ -16,7 +16,7 @@ RNG = random.Random(9)
 # ---------- Farben: Nacht-Palette (Format B) ----------
 SKY1 = "#0b0d26"; SKY2 = "#1d1d4f"; VIO = "#2a2360"; BLD = "#141634"; BLD2 = "#1b1d44"
 WIN = "#ffd98a"; LAMP = "#ffd98a"; MOON = "#f4e3a1"; STREET = "#191a33"; WALK = "#25264a"
-FIG = "#d9dde3"; INK = "#151a21"; RED = "#ff3b3b"; LIME = "#c8f031"; BLUE = "#3b6cff"; WHITE = "#ffffff"
+FIG = "#e2a982"; SKIN2 = "#c98a66"; HAIR = "#3a2a20"; LIP = "#a85a4a"; INK = "#151a21"; RED = "#ff3b3b"; LIME = "#c8f031"; BLUE = "#3b6cff"; WHITE = "#ffffff"
 TEAL = "#3fd1c4"; CARD_BG = "#0b0d22"
 
 T = []
@@ -80,22 +80,35 @@ def figure(fid, x, y, s=1.0, eyes="n", outfit="hoodie", back=False):
     def eye(name, op, body):
         return f'<g id="{fid}-eyes-{name}" opacity="{op}">{body}</g>'
     E = INK
+    E = INK
+    brow = lambda x, y, r: f'<rect x="{x}" y="{y}" width="26" height="7" rx="3.5" fill="{HAIR}" transform="rotate({r} {x+13} {y+3})"/>'
     eyes_svg = "" if back else (
         eye("n", 1 if eyes == "n" else 0,
-            f'<circle cx="-22" cy="-322" r="9" fill="{E}"/><circle cx="22" cy="-322" r="9" fill="{E}"/>'
-            f'<rect x="-36" y="-346" width="26" height="6" rx="3" fill="{E}"/><rect x="10" y="-346" width="26" height="6" rx="3" fill="{E}"/>'
-            f'<rect x="-12" y="-290" width="24" height="5" rx="2.5" fill="{E}"/>')
+            f'<ellipse cx="-22" cy="-326" rx="12" ry="9" fill="#fff"/><ellipse cx="22" cy="-326" rx="12" ry="9" fill="#fff"/>'
+            f'<circle cx="-20" cy="-326" r="6" fill="#4a3426"/><circle cx="24" cy="-326" r="6" fill="#4a3426"/><circle cx="-20" cy="-326" r="2.6" fill="{E}"/><circle cx="24" cy="-326" r="2.6" fill="{E}"/>'
+            + brow(-36, -348, -4) + brow(10, -348, 4)
+            + f'<path d="M -13 -284 Q 0 -277 13 -284" stroke="{LIP}" stroke-width="5" fill="none" stroke-linecap="round"/>')
         + eye("w", 1 if eyes == "w" else 0,
-              f'<circle cx="-24" cy="-322" r="17" fill="none" stroke="{E}" stroke-width="5"/><circle cx="24" cy="-322" r="17" fill="none" stroke="{E}" stroke-width="5"/>'
-              f'<circle cx="-24" cy="-322" r="5" fill="{E}"/><circle cx="24" cy="-322" r="5" fill="{E}"/>'
-              f'<rect x="-42" y="-356" width="28" height="6" rx="3" fill="{E}" transform="rotate(-12 -28 -353)"/>'
-              f'<rect x="14" y="-356" width="28" height="6" rx="3" fill="{E}" transform="rotate(12 28 -353)"/>'
-              f'<ellipse cx="0" cy="-284" rx="9" ry="12" fill="{E}"/>')
+              f'<ellipse cx="-22" cy="-326" rx="15" ry="13" fill="#fff"/><ellipse cx="22" cy="-326" rx="15" ry="13" fill="#fff"/>'
+              f'<circle cx="-22" cy="-326" r="5.5" fill="#4a3426"/><circle cx="22" cy="-326" r="5.5" fill="#4a3426"/><circle cx="-22" cy="-326" r="2.4" fill="{E}"/><circle cx="22" cy="-326" r="2.4" fill="{E}"/>'
+              + brow(-38, -360, -12) + brow(12, -360, 12)
+              + f'<ellipse cx="0" cy="-282" rx="9" ry="12" fill="#5a2a24"/><ellipse cx="0" cy="-276" rx="5" ry="4" fill="#c46a6a"/>')
         + eye("f", 1 if eyes == "f" else 0,
-              f'<circle cx="-22" cy="-322" r="9" fill="{E}"/><circle cx="22" cy="-322" r="9" fill="{E}"/>'
-              f'<rect x="-38" y="-350" width="28" height="6" rx="3" fill="{E}" transform="rotate(14 -24 -347)"/>'
-              f'<rect x="10" y="-350" width="28" height="6" rx="3" fill="{E}" transform="rotate(-14 24 -347)"/>'
-              f'<rect x="-14" y="-290" width="28" height="6" rx="3" fill="{E}"/>'))
+              f'<ellipse cx="-22" cy="-325" rx="12" ry="6" fill="#fff"/><ellipse cx="22" cy="-325" rx="12" ry="6" fill="#fff"/>'
+              f'<circle cx="-21" cy="-325" r="5" fill="#4a3426"/><circle cx="23" cy="-325" r="5" fill="#4a3426"/>'
+              + brow(-38, -346, 14) + brow(12, -346, -14)
+              + f'<path d="M -13 -282 L 13 -282" stroke="{LIP}" stroke-width="5" stroke-linecap="round"/>')
+        + eye("s", 1 if eyes == "s" else 0,
+              f'<path d="M -34 -324 Q -22 -316 -10 -324" stroke="#5a3a2a" stroke-width="5" fill="none" stroke-linecap="round"/>'
+              f'<path d="M 10 -324 Q 22 -316 34 -324" stroke="#5a3a2a" stroke-width="5" fill="none" stroke-linecap="round"/>'
+              + brow(-36, -346, 0) + brow(10, -346, 0)
+              + f'<path d="M -8 -284 Q 0 -280 8 -284" stroke="{LIP}" stroke-width="5" fill="none" stroke-linecap="round"/>'))
+    face = "" if back else (
+        f'<path d="M 2 -320 Q 10 -302 -2 -296" stroke="{SKIN2}" stroke-width="5" fill="none" stroke-linecap="round"/>'
+        f'<circle cx="-34" cy="-300" r="11" fill="#e98f7a" opacity=".35"/><circle cx="34" cy="-300" r="11" fill="#e98f7a" opacity=".35"/>')
+    hair = (f'<path d="M -60 -322 Q -70 -398 0 -404 Q 70 -400 60 -322 Q 56 -356 30 -366 Q 10 -352 -20 -370 Q -48 -360 -60 -322 Z" fill="{HAIR}"/>'
+            f'<path d="M -20 -370 Q -6 -352 18 -360" stroke="#4d382b" stroke-width="5" fill="none"/>') if not back else \
+           f'<ellipse cx="0" cy="-330" rx="60" ry="66" fill="{HAIR}"/>'
     return f'''<g id="{fid}"><g transform="translate({x},{y}) scale({s})">
   <ellipse cx="0" cy="4" rx="78" ry="15" fill="#000" opacity=".4"/>
   <g id="{fid}-body">
@@ -107,9 +120,14 @@ def figure(fid, x, y, s=1.0, eyes="n", outfit="hoodie", back=False):
   <rect x="-88" y="-248" width="28" height="112" rx="13" fill="{H}"/>
   <rect x="60" y="-248" width="28" height="112" rx="13" fill="{H}"/>
   <rect x="-88" y="-150" width="28" height="14" rx="6" fill="{H2}"/><rect x="60" y="-150" width="28" height="14" rx="6" fill="{H2}"/>
-  <circle cx="-74" cy="-126" r="13" fill="{FIG}"/><circle cx="74" cy="-126" r="13" fill="{FIG}"/>
-  <rect x="-12" y="-278" width="24" height="26" rx="8" fill="{FIG}"/>
-  <circle cx="0" cy="-320" r="64" fill="{FIG}"/>
+  <rect x="40" y="-258" width="22" height="150" rx="10" fill="#000" opacity=".12"/>
+  <circle cx="-74" cy="-126" r="14" fill="{FIG}"/><circle cx="74" cy="-126" r="14" fill="{FIG}"/>
+  <circle cx="-80" cy="-122" r="6" fill="{SKIN2}" opacity=".5"/><circle cx="80" cy="-122" r="6" fill="{SKIN2}" opacity=".5"/>
+  <rect x="-14" y="-280" width="28" height="30" rx="8" fill="{SKIN2}"/>
+  <ellipse cx="-56" cy="-318" rx="10" ry="16" fill="{SKIN2}"/><ellipse cx="56" cy="-318" rx="10" ry="16" fill="{SKIN2}"/>
+  <ellipse cx="0" cy="-322" rx="56" ry="66" fill="{FIG}"/>
+  <path d="M 30 -380 Q 62 -330 34 -266 Q 56 -300 56 -330 Q 54 -370 30 -380 Z" fill="{SKIN2}" opacity=".35"/>
+  {hair}{face}
   {eyes_svg}
   </g>
 </g></g>'''
@@ -290,9 +308,9 @@ def creature(cid, x, y, s=1.0):
 # ================= SZENEN =================
 # A Hook: du wachst in der Kabine auf
 S0, S1 = 0.0, t_tausend - 0.1
-scene("sa", S0, S1, interior("sa", dark=True) + figure("sa-fig", 360, 1420, 1.15, eyes="n"))
-tw(f'tl.set("#sa-fig-eyes-n",{{opacity:0}},{t_drei0:.3f});')
-tw(f'tl.set("#sa-fig-eyes-w",{{opacity:1}},{t_drei0:.3f});')
+scene("sa", S0, S1, interior("sa", dark=True) + figure("sa-fig", 360, 1420, 1.15, eyes="s"))
+tw(f'tl.set("#sa-fig-eyes-s",{{opacity:0}},{ws("wachst"):.3f});')
+tw(f'tl.set("#sa-fig-eyes-w",{{opacity:1}},{ws("wachst"):.3f});')
 tw(f'tl.fromTo("#sa-fig",{{y:30}},{{y:0,duration:.5,ease:"power2.out"}},{t_drei0 - 0.3:.3f});')
 
 # B Außen: 1000 Meter Luft unter dir (Überblick: neuer Ort)

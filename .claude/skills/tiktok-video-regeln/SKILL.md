@@ -49,7 +49,7 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Was gesagt wird, erscheint im selben Moment im Bild.**
 
 ## 6. Bildsprache / Animation
-- **Einfache, gesichtslose Hauptfigur** (Gliederpuppe, Strichfigur oder Flat-Cartoon) – Emotion nur über Augen und Augenbrauen. Immer dieselbe Figur → Wiedererkennung.
+- **Hauptfigur = lebendiger Flat-Cartoon-Mensch** (aus Feedback 18.11., ersetzt „gesichtslose Puppe“): **Hautfarbe** (warmer Ton, z. B. #e2a982 mit Schatten #c98a66), **Haare** (dunkelbraun, Pony), **Ohren, Nase, Mund, Wangen-Rouge**, Augen mit Weiß + Iris + Pupille, Augenbrauen in Haarfarbe; leichte Schattierung an Gesicht, Hals und Kleidung. Mimik je Situation wechseln (schlafend/geschlossen, neutral, erschrocken mit offenem Mund, angespannt). Hände in Hautfarbe. Immer dieselbe Figur → Wiedererkennung.
 - **Figur ist angezogen** (Feedback 15.11.): nie nackte Puppe. Standard-Outfit: Kapuzenpulli in gedecktem Petrol mit hellen Kordeln, dunkle Jeans, helle Sneaker. Historische/andere Personen bekommen passende Kleidung (z. B. Liftführerin 1945: Uniformjacke mit Messingknöpfen + Mütze). Kleidung nie in der Signalfarbe Rot.
 - **Einheitlicher Stil pro Account** (einen wählen und beibehalten: 3D-Puppe, 2D-Flat oder Isometrie).
 - **Dunkle/ruhige Grundpalette + eine Signal-Farbe** (Rot oder Orange) für Gefahr, Zahlen und Kernbegriffe.
@@ -196,3 +196,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-18 | Video 12: „Straße nicht in das Haus rein“ | Abschnitt 6a: keine Überschneidungen – Straßen führen am Haus vorbei, Weg zur Tür + Checkliste |
 | 2026-11-18 | Video 13: „Untertitel so, dass sie nicht im Weg stehen und man auf dem Handy alles lesen kann; ‚Was machst du‘ am Ende so animieren, als könnten die Zuschauer entscheiden“ | Abschnitt 7 (feste Untertitel-Leiste unten-mittig über der TikTok-UI, dunkle Box, Leiste freihalten – ersetzt „Mitte“), 11a (Wahl als interaktive A/B-Abstimmung) + Checklisten |
 | 2026-11-18 | Video 13: „Untertitel besser zum Voiceover anpassen“ | Abschnitt 7: wortgenaue Zeitstempel aus Scribe-Transkription statt Schätzung |
+| 2026-11-18 | Video 13: „Dem Menschen eine Hautfarbe geben und realistischer machen, damit es nicht langweilig rüberkommt“ | Abschnitt 6: Hauptfigur mit Hautfarbe, Haaren, Gesicht (Augen mit Iris, Nase, Mund), Schattierung, mehr Mimik – ersetzt „gesichtslose Puppe“ |
