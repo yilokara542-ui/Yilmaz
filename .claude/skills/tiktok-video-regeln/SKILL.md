@@ -166,6 +166,11 @@ Länge: **80–90 s**. Jede Regel muss später in der Story **benutzt** werden (
 ### Brücke zu unserer Nische (Alltagstechnik)
 Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Rolle spielt und korrekt erklärt wird – z. B. Warn-Apps/Cell Broadcast (warum das Handy auch lautlos schreit), Türspion vs. Video-Klingel, Sicherungskasten/Stromausfall, Rauchmelder, Notstrom/Powerbank, Funkempfang ohne Netz. Die Regeln sind dann **sinnvolle echte Verhaltensregeln** oder klar als Fiktion markierte Story-Regeln; echte Warnmeldungen (z. B. NINA, Cell Broadcast) nie täuschend echt nachbauen, sondern erkennbar fiktiven Absender verwenden.
 
+### Grusel statt Unterricht (aus Feedback 19.11.)
+- In Format B **keine Physik-/Formel-Erklärungen** (kein „Hebelgesetz“, keine Erklär-Grafik, kein „die Physik arbeitet für dich“). Technik/Physik darf nur **still in der Handlung** passieren (Stange durch den Griff → Hebel stoppt), ohne sie zu benennen.
+- **Gruseliger erzählen:** Sinneseindrücke statt Fakten – Kratzen „wie Fingernägel“, jemand **atmet** in den Lautsprecher, **Handabdrücke von außen**, die immer höher wandern, Augen, die **nicht blinzeln**, die eigene Stimme flüstert. Kurze Sätze, Pausen, langsamer Aufbau, letzte Zeile persönlich und bedrohlich („Ich will dich sehen.“).
+- **Sauberere Animation:** weiche Einblendungen (Fade + leichtes Gleiten) statt Aufploppen, Kamerafahrten langsam (sine.inOut), Gegenstände bewegen sich mit klarer Bahn (z. B. Stange gleitet in den Griff), keine harten Kreise/Glows – Lichtpunkte mit weichem Verlauf, max. 1 Wackler pro Schock-Moment.
+
 ### Checkliste Format B
 - [ ] Hook mit Uhrzeit in 0–3 s, Warnung bis Sekunde 10
 - [ ] Serien-Branding + rote Uhr + Ort oben links durchgehend, Uhrzeit springt mit
@@ -199,3 +204,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-18 | Video 13: „Untertitel besser zum Voiceover anpassen“ | Abschnitt 7: wortgenaue Zeitstempel aus Scribe-Transkription statt Schätzung |
 | 2026-11-18 | Video 13: „Dem Menschen eine Hautfarbe geben und realistischer machen, damit es nicht langweilig rüberkommt“ | Abschnitt 6: Hauptfigur mit Hautfarbe, Haaren, Gesicht (Augen mit Iris, Nase, Mund), Schattierung, mehr Mimik – ersetzt „gesichtslose Puppe“ |
 | 2026-11-18 | Video 13: „Gondel muss zur anderen Seite kippen, wenn er nach rechts läuft (Gewicht), Animation sauberer“ | Abschnitt 6a: Gewicht & Gleichgewicht – Neigung zur Gewichtsseite, Drehpunkt an der Aufhängung, gedämpftes Auspendeln, Figur bleibt senkrecht |
+| 2026-11-19 | Video 14: „Physik nicht erwähnen, Story gruseliger, Animation sauberer“ | Abschnitt 11a: „Grusel statt Unterricht“ – keine Physik-Erklärungen in Format B, Sinnes-Grusel, weiche saubere Animationen |

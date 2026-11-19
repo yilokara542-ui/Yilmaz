@@ -40,7 +40,8 @@ def toggle(sel, t_on, t_off=None):
 
 
 def pop(sel, t, dur=0.32, frm=0.88):
-    tw(f'tl.fromTo("{sel}",{{opacity:0,scale:{frm},transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:{dur},ease:"power3.out"}},{t:.3f});')
+    # sauberer: nur leichtes Skalieren + weiches Einblenden (Skill 11a „sauberere Animation“)
+    tw(f'tl.fromTo("{sel}",{{opacity:0,scale:{max(frm, .94)},transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:{max(dur, .4)},ease:"sine.out"}},{t:.3f});')
 
 
 def fade_out(sel, t, dur=0.25):
@@ -188,20 +189,19 @@ def scene(sid, t0, t1, inner, drift=True):
 
 
 # ================= CUES =================
-t_entsch = ws("entschieden"); t_luke = ws("Dachluke"); t_342 = ws("Drei"); t_kratzt = ws("kratzt")
+t_entsch = ws("entschieden"); t_luke = ws("Dachluke"); t_342 = ws("Drei"); t_kratzt = ws("kratzt"); t_finger = ws("Fingernägel")
 t_drueckst = ws("drückst"); t_dreht = ws("dreht"); t_zenti = ws("Zentimeter")
-t_siehst = ws("siehst"); t_stange = ws("Notfall"); t_steckst = ws("steckst")
-t_physik = ws("Physik"); t_doppelt = ws("doppelt"); t_halb = ws("halb")
-t_stoppt = ws("stoppt"); t_kratzen = ws("Kratzen")
-t_stille = ws("Stille"); t_akku = ws("Akku"); t_23 = ws("dreiundzwanzig")
-t_knackt = ws("knackt"); t_fahrgast = ws("Fahrgast"); t_kamera = ws("Kamera"); t_links_f = ws("linken")
+t_rammst = ws("rammst"); t_stoppt = ws("stoppt"); t_kratzen = ws("Kratzen")
+t_stille = ws("Stille"); t_atem = ws("Atem"); t_akku = ws("Akku"); t_23 = ws("dreiundzwanzig")
+t_knackt = ws("knackt"); t_atmet = ws("atmet"); t_ruhig = ws("ruhig")
+t_fahrgast = ws("Fahrgast"); t_links_f = ws("linken")
 t_regel = ws("Regel"); t_mitte = ws("Mitte"); t_ruehrst = ws("rührst")
-t_vibriert = ws("vibriert"); t_berg = ws("Bergwacht"); t_strom = ws("Strom"); t_keine = ws("Keine")
-t_wer = ws("Wer"); t_kippt = ws("kippt"); t_aber = ws("Aber", t_kippt); t_heisst = ws("heißt"); t_schwer = ws("Schweres")
-t_410 = ws("Vier"); t_beschlaegt = ws("beschlägt"); t_aussen = ws("außen")
-t_punkte = ws("Punkte"); t_scheibe = ws("Scheibe")
-t_fluestert = ws("flüstert"); t_stimme = ws("Stimme"); t_licht = ws("Licht", t_stimme); t_besser = ws("besser")
-t_was = ws("Was", t_besser); t_lampe = ws("Taschenlampe"); t_dunkel = ws("dunkel", t_lampe)
+t_vibriert = ws("vibriert"); t_berg = ws("Bergwacht"); t_strom = ws("Strom")
+t_wer = ws("Wer"); t_kippt = ws("kippt"); t_haengen = ws("hängen")
+t_410 = ws("Vier"); t_hand1 = ws("Handabdruck"); t_aussen = ws("außen"); t_noch1 = ws("noch", t_aussen); t_noch2 = ws("noch", t_noch1 + 0.05); t_hoeher = ws("höher")
+t_punkte = ws("Punkte"); t_blinzeln = ws("blinzeln")
+t_fluestert = ws("flüstert"); t_stimme = ws("Stimme"); t_licht = ws("Licht", t_stimme); t_sehen = ws("sehen", t_licht)
+t_was = ws("Was", t_sehen); t_lampe = ws("Taschenlampe"); t_dunkel = ws("dunkel", t_lampe)
 t_teil3 = ws("Teil", t_dunkel); t_folge = ws("Folge", t_teil3)
 
 ROCK = "#151735"; ROCK2 = "#1e2148"; CABLE = "#9aa0c8"; CAB = "#d8dbe8"; CAB2 = "#b9bdd2"; STEEL = "#5a5f86"; FROST = "#cfe6ff"
@@ -308,8 +308,12 @@ def card_bg(cid):
             + "".join(f'<rect x="0" y="{y}" width="1080" height="2" fill="#fff" opacity=".025"/>' for y in range(0, 1920, 60)))
 
 
+def fadein(sel, t, dur=0.45, dy=16):
+    """Saubere Einblendung: weiches Einblenden + leichtes Hochgleiten (kein Aufploppen)."""
+    tw(f'tl.fromTo("{sel}",{{opacity:0,y:{dy}}},{{opacity:1,y:0,duration:{dur},ease:"sine.out"}},{t:.3f});')
+
+
 def hands(hid):
-    """Zwei Hände (Hautfarbe) mit Ärmeln, die von unten nach oben drücken."""
     one = lambda dx: (f'<rect x="{dx-55}" y="300" width="110" height="420" rx="50" fill="#2f6f73"/><rect x="{dx-58}" y="300" width="116" height="40" rx="18" fill="#265b5e"/>'
                       f'<rect x="{dx-52}" y="190" width="104" height="130" rx="44" fill="{FIG}"/>'
                       + "".join(f'<rect x="{dx-50+k*26}" y="140" width="24" height="80" rx="12" fill="{FIG}"/>' for k in range(4))
@@ -318,9 +322,8 @@ def hands(hid):
 
 
 def hatch_close(hid, with_bar=False):
-    """Dachluke von unten, groß: Rahmen, Deckel, Hebel (dreht um Achse 540/760)."""
-    bar = (f'<g id="{hid}-bar"><rect x="560" y="738" width="430" height="44" rx="10" fill="#e9c46a"/>'
-           + "".join(f'<rect x="{600+k*80}" y="738" width="34" height="44" fill="#1a1d22" opacity=".8"/>' for k in range(5)) + '</g>') if with_bar else ""
+    bar = (f'<g id="{hid}-bar"><rect x="560" y="738" width="560" height="44" rx="10" fill="#e9c46a"/>'
+           + "".join(f'<rect x="{600+k*80}" y="738" width="34" height="44" fill="#1a1d22" opacity=".8"/>' for k in range(7)) + '</g>') if with_bar else ""
     return (f'<rect width="1080" height="1920" fill="#4d527a"/><rect x="0" y="1300" width="1080" height="620" fill="#3d4268"/>'
             f'<rect x="160" y="420" width="760" height="680" rx="40" fill="#2f3358" stroke="#20244f" stroke-width="24"/>'
             f'<rect x="210" y="470" width="660" height="580" rx="24" fill="#6f7499"/>'
@@ -328,123 +331,95 @@ def hatch_close(hid, with_bar=False):
             + f'<g id="{hid}-lever"><rect x="520" y="735" width="340" height="50" rx="25" fill="#2c3157"/>{bar}<circle cx="540" cy="760" r="56" fill="#20244f"/><circle cx="540" cy="760" r="22" fill="#9aa0c8"/></g>')
 
 
-def scratches(sid, n=5, x0=300, y0=480):
-    return "".join(f'<path id="{sid}{i}" d="M {x0+i*90} {y0} l 40 200" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity="0"/>' for i in range(n))
+def claw_marks(sid, x0, y0, n=4, length=220):
+    """Kratzspuren wie Fingernägel – werden langsam gezogen (stroke-dashoffset)."""
+    out = ""
+    for i in range(n):
+        out += (f'<path id="{sid}{i}" d="M {x0+i*34} {y0} q 14 {length*0.5:.0f} 6 {length}" stroke="#e6e9ff" stroke-width="5" stroke-linecap="round" fill="none" '
+                f'stroke-dasharray="{length+20}" stroke-dashoffset="{length+20}" opacity=".75"/>')
+    return out
 
 
-# A Hook: du hast entschieden – Dachluke zuhalten
+def draw(sel, t, dur, length):
+    tw(f'tl.fromTo("{sel}",{{attr:{{"stroke-dashoffset":{length+20}}}}},{{attr:{{"stroke-dashoffset":0}},duration:{dur:.3f},ease:"sine.inOut"}},{t:.3f});')
+
+
+# A Hook: du hast entschieden – über dir kratzt etwas, wie Fingernägel
 S0, S1 = 0.0, t_drueckst - 0.05
-scene("sa", S0, S1, interior("sa", frost=True, dark=True) + scratches("sa-s", 4, 500, 120)
+scene("sa", S0, S1, interior("sa", frost=True, dark=True) + claw_marks("sa-c", 520, 125, 4, 150)
       + figure("sa-fig", 610, 1440, 1.15, eyes="w")
       + f'<g id="sa-badge" opacity="0"><rect x="300" y="560" width="480" height="64" rx="32" fill="{LIME}"/>'
         f'<text x="540" y="604" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="32" fill="#0b0d22" letter-spacing="2">DU HAST GEWÄHLT</text></g>'
-      + pill("sa-p", 540, 760, "A · DACHLUKE ZUHALTEN", RED))
-pop("#sa-badge", S0 + 0.05); pop("#sa-p", t_luke, 0.35, 0.7)
-tw(f'tl.to("#sa-badge, #sa-p",{{opacity:0,duration:.3}},{t_kratzt - 0.4:.3f});')
+      + pill("sa-p", 540, 760, "A · DACHLUKE ZUHALTEN", RED), drift=False)
+fadein("#sa-badge", S0 + 0.05); fadein("#sa-p", t_luke)
+tw(f'tl.to("#sa-badge, #sa-p",{{opacity:0,duration:.4,ease:"sine.in"}},{t_kratzt - 0.4:.3f});')
 for i in range(4):
-    tw(f'tl.fromTo("#sa-s{i}",{{opacity:0}},{{opacity:.85,duration:.18,yoyo:true,repeat:3}},{t_kratzt + i*0.18:.3f});')
-shake("#sa-hatch", t_kratzt + 0.1, 5, 4)
-tw(f'tl.fromTo("#sa-cam",{{scale:1.12,svgOrigin:"620 200"}},{{scale:1,svgOrigin:"620 200",duration:{S1-S0+0.3:.3f},ease:"sine.out"}},{S0:.3f});')
+    draw(f"#sa-c{i}", t_kratzt + i * 0.25, 1.2, 150)
+tw(f'tl.fromTo("#sa-cam",{{scale:1,svgOrigin:"620 220"}},{{scale:1.18,svgOrigin:"620 220",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+tw(f'tl.set("#sa-fig-eyes-w",{{opacity:1}},0);')
 
 # B Hände gegen den Hebel – er dreht sich trotzdem, Zentimeter für Zentimeter
-S0, S1 = t_drueckst - 0.05, t_siehst
-scene("sb", S0, S1, hatch_close("sb") + scratches("sb-s", 5, 260, 480) + f'<g transform="translate(700,600)">{hands("sb-h")}</g>', drift=False)
-tw(f'tl.fromTo("#sb-h",{{y:260}},{{y:0,duration:.5,ease:"power2.out"}},{S0:.3f});')
-tw(f'tl.to("#sb-lever",{{rotation:-8,svgOrigin:"540 760",duration:.8,ease:"power1.inOut"}},{t_dreht:.3f});')
-tw(f'tl.to("#sb-lever",{{rotation:-15,svgOrigin:"540 760",duration:.6,ease:"power1.inOut"}},{t_zenti:.3f});')
-tw(f'tl.to("#sb-lever",{{rotation:-22,svgOrigin:"540 760",duration:.7,ease:"power1.inOut"}},{t_zenti + 0.7:.3f});')
-for k, t0 in enumerate((t_dreht, t_zenti, t_zenti + 0.7)):
-    shake("#sb-h", t0, 4, 5)
-for i in range(5):
-    tw(f'tl.fromTo("#sb-s{i}",{{opacity:0}},{{opacity:.7,duration:.15,yoyo:true,repeat:3}},{S0 + 0.3 + i*0.3:.3f});')
+S0, S1 = t_drueckst - 0.05, t_rammst - 0.05
+scene("sb", S0, S1, hatch_close("sb") + claw_marks("sb-c", 330, 500, 4, 300) + f'<g transform="translate(700,600)">{hands("sb-h")}</g>', drift=False)
+tw(f'tl.fromTo("#sb-h",{{y:300}},{{y:0,duration:.6,ease:"sine.out"}},{S0:.3f});')
+for k, (t0, ang) in enumerate(((t_dreht, -7), (t_zenti, -14), (t_zenti + 0.8, -21))):
+    tw(f'tl.to("#sb-lever, #sb-h",{{rotation:{ang},svgOrigin:"540 760",duration:.7,ease:"power1.inOut"}},{t0:.3f});')
+for i in range(4):
+    draw(f"#sb-c{i}", S0 + 0.2 + i * 0.3, 1.4, 300)
+tw(f'tl.fromTo("#sb-cam",{{scale:1,svgOrigin:"540 760"}},{{scale:1.06,svgOrigin:"540 760",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
-# C Notfall-Stange neben der Tür → durch den Griff
-S0, S1 = t_siehst, t_physik
-stange = (f'<g id="sc-st"><rect x="672" y="560" width="36" height="430" rx="10" fill="#e9c46a"/>'
-          + "".join(f'<rect x="672" y="{600+k*80}" width="36" height="30" fill="#1a1d22" opacity=".8"/>' for k in range(5)) + '</g>')
-scene("sc", S0, S1, interior("sc", frost=True, dark=True) + f'<rect x="660" y="540" width="60" height="16" rx="6" fill="#3c4068"/><rect x="660" y="994" width="60" height="16" rx="6" fill="#3c4068"/>'
-      + stange + f'<g id="sc-ring" opacity="0"><circle cx="690" cy="775" r="250" fill="none" stroke="{LIME}" stroke-width="8" stroke-dasharray="26 18"/></g>'
-      + label("sc-l", 690, 1080, "NOTFALL-STANGE", LIME, 36)
-      + figure("sc-fig", 420, 1440, 1.15, eyes="w"))
-pop("#sc-ring", t_stange - 0.1, 0.35, 0.8); pop("#sc-l", t_stange)
-tw(f'tl.to("#sc-ring, #sc-l",{{opacity:0,duration:.3}},{t_steckst - 0.2:.3f});')
-walk_cycle("sc-fig", t_stange + 0.2, t_steckst)
-tw(f'tl.to("#sc-fig",{{x:190,duration:{max(0.5, t_steckst - t_stange - 0.2):.3f},ease:"sine.inOut"}},{t_stange + 0.2:.3f});')
-# Stange wandert von der Wand an den Hebel der Dachluke (Hebel-Achse bei 610/209)
-tw(f'tl.to("#sc-st",{{x:60,y:-566,rotation:-90,svgOrigin:"690 775",duration:1.0,ease:"power2.inOut"}},{t_steckst:.3f});')
+# C Notfall-Stange gleitet in den Griff – Hebel stoppt, Kratzen hört auf
+S0, S1 = t_rammst - 0.05, t_stille
+scene("sc", S0, S1, hatch_close("sc", with_bar=True) + claw_marks("sc-c", 330, 500, 4, 300) + f'<g transform="translate(700,600)">{hands("sc-h")}</g>', drift=False)
+tw(f'tl.set("#sc-lever, #sc-h",{{rotation:-21,svgOrigin:"540 760"}},{S0:.3f});')
+for i in range(4):
+    tw(f'tl.set("#sc-c{i}",{{attr:{{"stroke-dashoffset":0}}}},{S0:.3f});')
+tw(f'tl.fromTo("#sc-bar",{{x:700}},{{x:0,duration:.55,ease:"power3.out"}},{t_rammst + 0.15:.3f});')
+shake("#sc-cam", t_rammst + 0.7, 3, 4)
+tw(f'tl.to("#sc-c0, #sc-c1, #sc-c2, #sc-c3",{{opacity:0,duration:1.0,ease:"sine.inOut"}},{t_kratzen:.3f});')
 
-# D Physik: doppelt so langer Hebel = halbe Kraft
-S0, S1 = t_physik, t_stoppt
-lever = (f'<polygon points="300,1180 340,1250 260,1250" fill="#9aa0c8"/>'
-         f'<rect x="290" y="1160" width="420" height="24" rx="12" fill="#cfd3ff"/>'
-         f'<g id="sd-ext" opacity="0"><rect x="690" y="1160" width="420" height="24" rx="12" fill="#e9c46a"/></g>'
-         f'<g id="sd-a1"><rect x="682" y="980" width="16" height="150" fill="{RED}"/><polygon points="670,1130 710,1130 690,1170" fill="{RED}"/>'
-         f'<text x="690" y="960" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="46" fill="{RED}">2 × KRAFT</text></g>'
-         f'<g id="sd-a2" opacity="0"><rect x="902" y="1060" width="16" height="70" fill="{LIME}"/><polygon points="890,1130 930,1130 910,1170" fill="{LIME}"/>'
-         f'<text x="880" y="1030" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="46" fill="{LIME}">½ KRAFT</text></g>'
-         f'<text x="300" y="1300" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="30" fill="#9aa0c8">Drehpunkt</text>')
-scene("sd", S0, S1, card_bg("sd")
-      + f'<g id="sd-b" opacity="0"><rect x="380" y="380" width="320" height="62" rx="12" fill="{LIME}"/>'
-        f'<text x="540" y="425" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="32" fill="#0b0d22">HEBELGESETZ</text></g>'
-      + f'<g id="sd-h" opacity="0"><text x="540" y="560" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="72" fill="#fff">2 × so lang</text>'
-        f'<text x="540" y="650" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="72" fill="{LIME}">= ½ Kraft</text></g>'
-      + f'<g transform="translate(-60,-60)">{lever}</g>'
-      + f'<g id="sd-f" opacity="0"><text x="540" y="740" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="30" fill="#cfd3ff">Kraft × Hebelarm = gleich</text></g>')
-pop("#sd-b", S0 + 0.05); pop("#sd-h", t_doppelt - 0.2)
-tw(f'tl.fromTo("#sd-ext",{{opacity:0,scaleX:0,transformOrigin:"0% 50%"}},{{opacity:1,scaleX:1,duration:.6,ease:"power2.out"}},{t_doppelt:.3f});')
-tw(f'tl.to("#sd-a1",{{opacity:.25,duration:.4}},{t_halb - 0.2:.3f});')
-pop("#sd-a2", t_halb - 0.1, 0.35, 0.6); pop("#sd-f", t_halb + 0.4)
-
-# E Der Hebel stoppt – das Kratzen auch
-S0, S1 = t_stoppt, t_stille
-scene("se", S0, S1, hatch_close("se", with_bar=True) + scratches("se-s", 5, 260, 480)
-      + f'<g transform="translate(700,600)">{hands("se-h")}</g>'
-      + f'<g id="se-ok" opacity="0"><circle cx="540" cy="300" r="70" fill="{LIME}"/><path d="M 505 300 l 25 25 l 48 -52" stroke="#0b0d22" stroke-width="14" fill="none"/></g>', drift=False)
-tw(f'tl.set("#se-lever",{{rotation:-22,svgOrigin:"540 760"}},{S0:.3f});')
-tw(f'tl.to("#se-lever",{{rotation:-24,svgOrigin:"540 760",duration:.25,ease:"power2.out"}},{S0 + 0.1:.3f});')
-tw(f'tl.to("#se-lever",{{rotation:-23,svgOrigin:"540 760",duration:.3,ease:"sine.out"}},{S0 + 0.35:.3f});')
-for i in range(5):
-    tw(f'tl.fromTo("#se-s{i}",{{opacity:0}},{{opacity:.6,duration:.12,yoyo:true,repeat:1}},{S0 + i*0.08:.3f});')
-pop("#se-ok", t_kratzen + 0.2)
-
-# F Stille – Akku 23 %
+# D Stille – nur dein Atem – Akku 23 %
 S0, S1 = t_stille, t_knackt
-lock = (f'<text x="0" y="-380" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="34" fill="#cfd3ff">Donnerstag, 19. November</text>'
-        f'<text x="0" y="-250" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="170" fill="#fff">3:47</text>'
-        f'<g id="sf-bat" opacity="0"><rect x="-170" y="-110" width="320" height="150" rx="26" fill="none" stroke="#fff" stroke-width="10"/><rect x="156" y="-60" width="22" height="50" rx="6" fill="#fff"/>'
-        f'<rect id="sf-lvl" x="-155" y="-95" width="290" height="120" rx="14" fill="{RED}"/>'
-        f'<text x="0" y="130" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="90" fill="{RED}">23 %</text></g>')
-scene("sf", S0, S1, interior("sf", frost=True, dark=True) + f'<rect width="1080" height="1920" fill="#000" opacity=".55"/>' + phone("sf-ph", lock, 540, 1000, 0.86))
-tw(f'tl.fromTo("#sf-ph",{{y:240,opacity:0}},{{y:0,opacity:1,duration:.5,ease:"power2.out"}},{S0:.3f});')
-pop("#sf-bat", t_akku - 0.1)
-tw(f'tl.fromTo("#sf-lvl",{{scaleX:1,transformOrigin:"0% 50%"}},{{scaleX:.23,transformOrigin:"0% 50%",duration:.9,ease:"power2.inOut"}},{t_akku:.3f});')
+breath = "".join(f'<ellipse id="sd-br{i}" cx="560" cy="1050" rx="44" ry="28" fill="#fff" opacity="0" filter="url(#softblur)"/>' for i in range(3))
+bat = (f'<g id="sd-bat" opacity="0"><rect x="700" y="420" width="300" height="100" rx="24" fill="#0b0d22" opacity=".75"/>'
+       f'<rect x="730" y="448" width="110" height="44" rx="8" fill="none" stroke="#fff" stroke-width="5"/><rect x="842" y="460" width="8" height="20" rx="3" fill="#fff"/>'
+       f'<rect id="sd-lvl" x="736" y="454" width="98" height="32" rx="5" fill="{RED}"/>'
+       f'<text x="930" y="486" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="40" fill="{RED}">23 %</text></g>')
+scene("sd", S0, S1, interior("sd", frost=True, dark=True) + f'<rect width="1080" height="1920" fill="#000" opacity=".3"/>'
+      + figure("sd-fig", 540, 1440, 1.15, eyes="f") + breath + bat, drift=False)
+for i in range(3):
+    tw(f'tl.fromTo("#sd-br{i}",{{opacity:0,x:0,y:0,scale:.6,transformOrigin:"50% 50%"}},{{opacity:.45,x:40,y:-70,scale:1.5,duration:1.3,ease:"sine.out"}},{t_atem - 0.2 + i*0.9:.3f});')
+    tw(f'tl.to("#sd-br{i}",{{opacity:0,duration:.7,ease:"sine.in"}},{t_atem + 1.1 + i*0.9:.3f});')
+fadein("#sd-bat", t_akku - 0.1)
+tw(f'tl.fromTo("#sd-lvl",{{scaleX:1,transformOrigin:"0% 50%"}},{{scaleX:.23,transformOrigin:"0% 50%",duration:1.0,ease:"sine.inOut"}},{t_akku + 0.2:.3f});')
+tw(f'tl.fromTo("#sd-cam",{{scale:1,svgOrigin:"540 1100"}},{{scale:1.08,svgOrigin:"540 1100",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
-# G Lautsprecher: „Gehen Sie zum linken Fenster.“
+# E Lautsprecher: jemand atmet hinein … „Gehen Sie zum linken Fenster.“
 S0, S1 = t_knackt, t_regel
-waves = "".join(f'<path id="sg-w{i}" d="M {1030+i*40} {140-i*24} q {36+i*10} {70+i*24} 0 {140+i*48}" stroke="#fff" stroke-width="8" fill="none" opacity="0"/>' for i in range(2))
-arrow = (f'<g id="sg-arr" opacity="0"><path d="M 470 960 L 300 960" stroke="{RED}" stroke-width="18" stroke-linecap="round"/>'
-         f'<polygon points="300,925 230,960 300,995" fill="{RED}"/></g>')
-scene("sg", S0, S1, interior("sg", frost=True, dark=True) + waves + figure("sg-fig", 540, 1440, 1.15, eyes="w") + arrow
-      + quote("sg-q", ["„Fahrgast in Gondel 7.", "Wir sehen Sie auf der Kamera.", "Gehen Sie zum linken Fenster.“"], y=640, col="#ff8a8a", label_txt="– LAUTSPRECHER –"))
-for i in range(2):
-    tw(f'tl.fromTo("#sg-w{i}",{{opacity:0}},{{opacity:.9,duration:.25,yoyo:true,repeat:9}},{S0 + i*0.1:.3f});')
-pop("#sg-q-lab", t_fahrgast - 0.1); pop("#sg-q-0", t_fahrgast); pop("#sg-q-1", ws("Wir", t_fahrgast)); pop("#sg-q-2", ws("Gehen", t_fahrgast))
-tw(f'tl.fromTo("#sg-arr",{{opacity:0,x:40}},{{opacity:1,x:0,duration:.35,ease:"power2.out"}},{t_links_f:.3f});')
-tw(f'tl.to("#sg-arr",{{x:-20,duration:.4,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_links_f + 0.35:.3f});')
+spk = (f'<g id="se-spk"><circle cx="540" cy="1010" r="260" fill="#2c3157" stroke="#3c4068" stroke-width="22"/>'
+       + "".join(f'<circle cx="{540+dx}" cy="{1010+dy}" r="20" fill="#14163a"/>' for dx in (-130, -65, 0, 65, 130) for dy in (-130, -65, 0, 65, 130) if dx*dx + dy*dy <= 140**2 + 10) + '</g>')
+rings = "".join(f'<circle id="se-r{i}" cx="540" cy="1010" r="270" fill="none" stroke="#cfd3ff" stroke-width="4" opacity="0"/>' for i in range(3))
+scene("se", S0, S1, f'<rect width="1080" height="1920" fill="#3d4268"/><rect width="1080" height="1920" fill="#000" opacity=".5"/>' + rings + spk
+      + quote("se-q", ["„Fahrgast in Gondel 7.", "Gehen Sie zum linken Fenster.“"], y=520, col="#ff8a8a", label_txt="– LAUTSPRECHER –"), drift=False)
+for i in range(3):   # langsames Atmen: Ringe dehnen sich aus
+    tw(f'tl.fromTo("#se-r{i}",{{opacity:.5,scale:1,transformOrigin:"50% 50%"}},{{opacity:0,scale:1.35,duration:1.6,ease:"sine.out"}},{t_atmet + i*0.8:.3f});')
+tw(f'tl.to("#se-spk",{{scale:1.03,transformOrigin:"50% 50%",duration:.8,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_atmet:.3f});')
+fadein("#se-q-lab", t_fahrgast - 0.2); fadein("#se-q-0", t_fahrgast); fadein("#se-q-1", ws("Gehen", t_fahrgast))
+tw(f'tl.fromTo("#se-cam",{{scale:1,svgOrigin:"540 1010"}},{{scale:1.12,svgOrigin:"540 1010",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
-# H Regel 1 – du rührst dich nicht
+# F Regel 1 – du rührst dich nicht
 S0, S1 = t_regel, t_vibriert
 icon = (f'<line x1="200" y1="760" x2="880" y2="760" stroke="{CABLE}" stroke-width="8"/><line x1="540" y1="760" x2="540" y2="880" stroke="{CABLE}" stroke-width="10"/>'
         f'<rect x="330" y="880" width="420" height="330" rx="40" fill="{CAB}"/>' + "".join(f'<rect x="{360+k*130}" y="910" width="100" height="130" rx="14" fill="#2a2f66"/>' for k in range(3))
-        + figure("sh-f", 540, 1190, 0.42)
-        + f'<g id="sh-ok" opacity="0"><circle cx="860" cy="1060" r="60" fill="{LIME}"/><path d="M 830 1060 l 22 22 l 40 -44" stroke="#0b0d22" stroke-width="12" fill="none"/></g>')
-scene("sh", S0, S1, card_bg("sh")
-      + f'<g id="sh-badge" opacity="0"><rect x="430" y="370" width="220" height="62" rx="12" fill="{RED}"/>'
+        + figure("sf-f", 540, 1190, 0.42)
+        + f'<g id="sf-ok" opacity="0"><circle cx="860" cy="1060" r="60" fill="{LIME}"/><path d="M 830 1060 l 22 22 l 40 -44" stroke="#0b0d22" stroke-width="12" fill="none"/></g>')
+scene("sf", S0, S1, card_bg("sf")
+      + f'<g id="sf-badge" opacity="0"><rect x="430" y="370" width="220" height="62" rx="12" fill="{RED}"/>'
         f'<text x="540" y="415" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="34" fill="#fff">REGEL #1</text></g>'
-      + f'<g id="sh-head" opacity="0"><text x="540" y="540" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="80" fill="#fff">BLEIB IN DER MITTE</text></g>' + icon)
-pop("#sh-badge", S0 + 0.05); pop("#sh-head", t_mitte - 0.3); pop("#sh-ok", t_ruehrst)
+      + f'<g id="sf-head" opacity="0"><text x="540" y="540" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="80" fill="#fff">BLEIB IN DER MITTE</text></g>' + icon)
+fadein("#sf-badge", S0 + 0.05); fadein("#sf-head", t_mitte - 0.3); fadein("#sf-ok", t_ruehrst, 0.4, 0)
 
-# I Handy: Bergwacht – Strom aus, keine Kameras
+# G Handy: Bergwacht – Strom aus, kein Lautsprecher
 S0, S1 = t_vibriert, t_wer
 chat = (f'<rect x="-280" y="-580" width="560" height="150" rx="0" fill="#1a1d47"/><circle cx="-200" cy="-490" r="36" fill="#c74545"/>'
         f'<text x="-200" y="-478" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="30" fill="#fff">BW</text>'
@@ -452,64 +427,76 @@ chat = (f'<rect x="-280" y="-580" width="560" height="150" rx="0" fill="#1a1d47"
         f'<text x="0" y="-370" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="24" fill="#8f94c4">Heute 3:41</text>'
         f'<rect x="-250" y="-340" width="440" height="120" rx="26" fill="#262a5e"/><text x="-225" y="-290" font-family="Poppins" font-weight="600" font-size="28" fill="#fff">Wir starten erst</text>'
         f'<text x="-225" y="-250" font-family="Poppins" font-weight="600" font-size="28" fill="#fff">bei Tageslicht.</text>'
-        f'<g id="si-new" opacity="0"><text x="0" y="-150" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="24" fill="#8f94c4">Heute 3:52</text>'
-        f'<rect x="-250" y="-120" width="480" height="260" rx="26" fill="#262a5e" stroke="{LIME}" stroke-width="4"/>'
+        f'<g id="sg-new" opacity="0"><text x="0" y="-150" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="24" fill="#8f94c4">Heute 3:52</text>'
+        f'<rect x="-250" y="-120" width="480" height="210" rx="26" fill="#262a5e" stroke="{LIME}" stroke-width="4"/>'
         f'<text x="-225" y="-66" font-family="Poppins" font-weight="700" font-size="30" fill="#fff">Der Strom ist</text>'
         f'<text x="-225" y="-22" font-family="Poppins" font-weight="700" font-size="30" fill="#fff">komplett aus.</text>'
-        f'<text x="-225" y="40" font-family="Poppins" font-weight="700" font-size="30" fill="{LIME}">Keine Kameras.</text>'
-        f'<text x="-225" y="90" font-family="Poppins" font-weight="700" font-size="30" fill="{LIME}">Kein Lautsprecher.</text></g>')
-scene("si", S0, S1, f'<rect width="1080" height="1920" fill="#0c0d22"/><circle cx="540" cy="900" r="600" fill="url(#cardglow)"/>' + phone("si-ph", chat))
-shake("#si-ph", S0, 6, 5)
-tw(f'tl.fromTo("#si-new",{{opacity:0,y:30}},{{opacity:1,y:0,duration:.4,ease:"power2.out"}},{t_strom - 0.3:.3f});')
+        f'<text x="-225" y="40" font-family="Poppins" font-weight="700" font-size="30" fill="{LIME}">Kein Lautsprecher</text>'
+        f'<text x="-225" y="80" font-family="Poppins" font-weight="700" font-size="30" fill="{LIME}">funktioniert.</text></g>')
+scene("sg", S0, S1, f'<rect width="1080" height="1920" fill="#0c0d22"/><circle cx="540" cy="900" r="600" fill="url(#cardglow)"/>' + phone("sg-ph", chat))
+tw(f'tl.fromTo("#sg-ph",{{y:120,opacity:0}},{{y:0,opacity:1,duration:.5,ease:"sine.out"}},{S0:.3f});')
+fadein("#sg-new", t_strom - 0.3, 0.5, 24)
 
-# J Wer spricht dann mit dir?
+# H Wer spricht dann mit dir?
 S0, S1 = t_wer, t_kippt
-spk = (f'<g id="sj-spk"><circle cx="540" cy="900" r="300" fill="#2c3157" stroke="#3c4068" stroke-width="24"/>'
-       + "".join(f'<circle cx="{540+dx}" cy="{900+dy}" r="22" fill="#14163a"/>' for dx in (-150, -75, 0, 75, 150) for dy in (-150, -75, 0, 75, 150) if dx*dx + dy*dy <= 160**2 + 10) + '</g>')
-scene("sj", S0, S1, f'<rect width="1080" height="1920" fill="#3d4268"/><rect width="1080" height="1920" fill="#000" opacity=".5"/>' + spk
-      + f'<g id="sj-q" opacity="0"><text x="540" y="1350" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="200" fill="{RED}" filter="url(#glow)">?</text></g>', drift=False)
-tw(f'tl.fromTo("#sj-cam",{{scale:1,svgOrigin:"540 900"}},{{scale:1.25,svgOrigin:"540 900",duration:{S1-S0+0.3:.3f},ease:"sine.in"}},{S0:.3f});')
-pop("#sj-q", S0 + 0.4, 0.4, 0.6)
+scene("sh", S0, S1, f'<rect width="1080" height="1920" fill="#3d4268"/><rect width="1080" height="1920" fill="#000" opacity=".6"/>'
+      + spk.replace('id="se-spk"', 'id="sh-spk"')
+      + f'<g id="sh-q" opacity="0"><text x="540" y="560" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="72" fill="#ff8a8a" font-style="italic">Wer spricht da?</text></g>', drift=False)
+tw(f'tl.fromTo("#sh-cam",{{scale:1,svgOrigin:"540 1010"}},{{scale:1.3,svgOrigin:"540 1010",duration:{S1-S0+0.3:.3f},ease:"sine.in"}},{S0:.3f});')
+fadein("#sh-q", S0 + 0.3, 0.8, 0)
 
-# K Gondel kippt nach LINKS – obwohl du in der Mitte sitzt → links hängt etwas Schweres
+# I Gondel kippt langsam nach links – als würde sich etwas an die Seite hängen
 S0, S1 = t_kippt, t_410
-shadow = f'<g id="sk-sh" opacity="0"><ellipse cx="200" cy="760" rx="90" ry="200" fill="#05061a" opacity=".85"/></g>'
-weight = (f'<g id="sk-wt" opacity="0"><rect x="52" y="620" width="16" height="380" fill="{RED}"/><polygon points="30,1000 90,1000 60,1070" fill="{RED}"/>'
-          f'<text x="60" y="590" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="64" fill="{RED}">?</text></g>')
-scene("sk", S0, S1, f'<g transform="translate(540,960) scale(1.18) translate(-540,-960)"><g id="sk-tilt">{interior("sk", frost=True, dark=True)}{shadow}'
-      f'<g id="sk-up">{figure("sk-fig", 540, 1450, 1.15, eyes="w")}</g></g></g>' + weight
-      + label("sk-l", 560, 470, "LINKS: ETWAS SCHWERES", RED, 40), drift=False)
+grip = (f'<g id="si-grip" opacity="0"><g transform="translate(140,1090)">'
+        + "".join(f'<path d="M {dx} 40 Q {dx-6} -10 {dx+10} -40" stroke="#05061a" stroke-width="22" stroke-linecap="round" fill="none"/>' for dx in (0, 36, 72, 108))
+        + f'<rect x="-20" y="30" width="150" height="120" rx="40" fill="#05061a"/></g></g>')
+shadow = f'<g id="si-sh" opacity="0"><ellipse cx="220" cy="780" rx="100" ry="230" fill="#05061a" opacity=".85" filter="url(#softblur)"/></g>'
+scene("si", S0, S1, f'<g transform="translate(540,960) scale(1.18) translate(-540,-960)"><g id="si-tilt">{interior("si", frost=True, dark=True)}{shadow}{grip}'
+      f'<g id="si-up">{figure("si-fig", 540, 1450, 1.15, eyes="w")}</g></g></g>', drift=False)
 PIV = "540 150"; FEET = "540 1450"
-for t0, dd, ang, ez in ((S0, .8, -5.5, "power2.out"), (S0 + .8, 1.0, -2.2, "sine.inOut"), (S0 + 1.8, .9, -4.2, "sine.inOut"), (S0 + 2.7, .9, -3.0, "sine.inOut"), (S0 + 3.6, .9, -3.6, "sine.inOut")):
+for t0, dd, ang in ((S0, 1.6, -5.0), (S0 + 1.6, 1.4, -3.6), (S0 + 3.0, 1.4, -4.4), (S0 + 4.4, 1.4, -4.0)):
     if t0 >= S1 + XF: break
-    tw(f'tl.to("#sk-tilt",{{rotation:{ang},svgOrigin:"{PIV}",duration:{dd:.3f},ease:"{ez}"}},{t0:.3f});')
-    tw(f'tl.to("#sk-up",{{rotation:{-ang},svgOrigin:"{FEET}",duration:{dd:.3f},ease:"{ez}"}},{t0:.3f});')
-tw(f'tl.fromTo("#sk-sh",{{opacity:0,y:-200}},{{opacity:1,y:0,duration:1.2,ease:"sine.out"}},{S0 + 0.2:.3f});')
-pop("#sk-wt", t_heisst); pop("#sk-l", t_schwer - 0.2)
+    tw(f'tl.to("#si-tilt",{{rotation:{ang},svgOrigin:"{PIV}",duration:{dd:.3f},ease:"sine.inOut"}},{t0:.3f});')
+    tw(f'tl.to("#si-up",{{rotation:{-ang},svgOrigin:"{FEET}",duration:{dd:.3f},ease:"sine.inOut"}},{t0:.3f});')
+tw(f'tl.fromTo("#si-sh",{{opacity:0,y:-160}},{{opacity:1,y:0,duration:1.6,ease:"sine.inOut"}},{S0 + 0.2:.3f});')
+tw(f'tl.fromTo("#si-grip",{{opacity:0,y:40}},{{opacity:1,y:0,duration:.9,ease:"sine.out"}},{t_haengen - 0.4:.3f});')
 
-# L 4:10 – linkes Fenster beschlägt von außen, zwei helle Punkte
+# J 4:10 – Handabdrücke von außen, immer höher – zwei helle Punkte, die nicht blinzeln
 S0, S1 = t_410, t_fluestert
-win = (f'<rect width="1080" height="1920" fill="#7a80ad"/><rect x="120" y="300" width="840" height="1200" rx="60" fill="#14163a"/>'
-       f'<g clip-path="url(#sl-clip)"><g transform="translate(-200,-300) scale(1.6)">{night_sky(21)}{gorge(22, y_top=700)}</g>'
-       f'<g id="sl-eyes" opacity="0"><circle cx="470" cy="880" r="16" fill="#f2f0ff"/><circle cx="610" cy="880" r="16" fill="#f2f0ff"/>'
-       f'<circle cx="470" cy="880" r="60" fill="#f2f0ff" opacity=".18"/><circle cx="610" cy="880" r="60" fill="#f2f0ff" opacity=".18"/></g>'
-       f'<g id="sl-fog" opacity="0"><ellipse cx="540" cy="900" rx="330" ry="240" fill="#dfe8ff" opacity=".3" filter="url(#fogblur)"/>'
-       f'<ellipse cx="470" cy="960" rx="200" ry="150" fill="#dfe8ff" opacity=".22" filter="url(#fogblur)"/><ellipse cx="640" cy="840" rx="180" ry="130" fill="#dfe8ff" opacity=".2" filter="url(#fogblur)"/></g></g>'
-       f'<clipPath id="sl-clip"><rect x="120" y="300" width="840" height="1200" rx="60"/></clipPath>'
-       f'<rect x="120" y="300" width="840" height="1200" rx="60" fill="none" stroke="{CAB2}" stroke-width="40"/>')
-scene("sl", S0, S1, win + label("sl-l", 540, 1620, "VON AUSSEN", "#cfe6ff", 40), drift=False)
-tw(f'tl.fromTo("#sl-fog",{{opacity:0,scale:.3,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:1.4,ease:"sine.out"}},{t_beschlaegt:.3f});')
-tw(f'tl.to("#sl-fog",{{scale:1.12,duration:.9,yoyo:true,repeat:3,ease:"sine.inOut",transformOrigin:"50% 50%"}},{t_beschlaegt + 1.4:.3f});')
-pop("#sl-l", t_aussen)
-tw(f'tl.fromTo("#sl-eyes",{{opacity:0}},{{opacity:1,duration:.5,ease:"sine.in"}},{t_punkte - 0.2:.3f});')
-tw(f'tl.fromTo("#sl-cam",{{scale:1,svgOrigin:"540 880"}},{{scale:1.2,svgOrigin:"540 880",duration:{S1-S0+0.3:.3f},ease:"sine.in"}},{S0:.3f});')
 
-# M Lautsprecher flüstert mit deiner Stimme
+
+def handprint(hid, x, y, s=1.0, r=0):
+    return (f'<g id="{hid}" opacity="0"><g transform="translate({x},{y}) rotate({r}) scale({s})" filter="url(#softedge)">'
+            f'<ellipse cx="0" cy="40" rx="62" ry="72" fill="#e6eeff"/>'
+            + "".join(f'<rect x="{fx-12}" y="{fy}" width="24" height="{fh}" rx="12" fill="#e6eeff" transform="rotate({fr} {fx} {fy+fh})"/>' for fx, fy, fh, fr in
+                      ((-48, -60, 70, -18), (-20, -96, 96, -6), (10, -102, 100, 4), (38, -84, 86, 14), (54, 8, 56, 52)))
+            + '</g></g>')
+
+
+prints = [handprint("sj-p0", 400, 1260, 1.0, -8), handprint("sj-p1", 660, 1060, 1.0, 10), handprint("sj-p2", 420, 840, 1.05, -4), handprint("sj-p3", 650, 620, 1.1, 6)]
+eyes = (f'<g id="sj-eyes" opacity="0"><circle cx="470" cy="900" r="70" fill="url(#eyeglow)"/><circle cx="610" cy="900" r="70" fill="url(#eyeglow)"/>'
+        f'<circle cx="470" cy="900" r="13" fill="#f6f4ff"/><circle cx="610" cy="900" r="13" fill="#f6f4ff"/></g>')
+win = (f'<rect width="1080" height="1920" fill="#7a80ad"/><rect x="120" y="300" width="840" height="1200" rx="60" fill="#14163a"/>'
+       f'<clipPath id="sj-clip"><rect x="120" y="300" width="840" height="1200" rx="60"/></clipPath>'
+       f'<g clip-path="url(#sj-clip)"><g transform="translate(-200,-300) scale(1.6)">{night_sky(21)}{gorge(22, y_top=700)}</g>'
+       f'<rect x="120" y="300" width="840" height="1200" fill="#05061a" opacity=".35"/>{eyes}'
+       f'<g id="sj-fog" opacity="0"><ellipse cx="540" cy="900" rx="320" ry="230" fill="#dfe8ff" opacity=".28" filter="url(#fogblur)"/></g>'
+       + "".join(prints) + '</g>'
+       f'<rect x="120" y="300" width="840" height="1200" rx="60" fill="none" stroke="{CAB2}" stroke-width="40"/>')
+scene("sj", S0, S1, win, drift=False)
+for k, t0 in enumerate((t_hand1, t_noch1, t_noch2, t_hoeher)):
+    tw(f'tl.fromTo("#sj-p{k}",{{opacity:0,scale:1.06,transformOrigin:"50% 50%"}},{{opacity:.5,scale:1,duration:.5,ease:"sine.out"}},{t0:.3f});')
+tw(f'tl.fromTo("#sj-fog",{{opacity:0}},{{opacity:1,duration:1.2,ease:"sine.inOut"}},{t_punkte - 0.8:.3f});')
+tw(f'tl.fromTo("#sj-eyes",{{opacity:0}},{{opacity:1,duration:1.0,ease:"sine.in"}},{t_punkte - 0.2:.3f});')
+tw(f'tl.fromTo("#sj-cam",{{scale:1,svgOrigin:"540 900"}},{{scale:1.25,svgOrigin:"540 900",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+
+# K Der Lautsprecher flüstert mit deiner eigenen Stimme
 S0, S1 = t_fluestert, t_was
-scene("sm", S0, S1, interior("sm", frost=True, dark=True) + f'<rect width="1080" height="1920" fill="#000" opacity=".35"/>'
-      + figure("sm-fig", 540, 1440, 1.15, eyes="w")
-      + quote("sm-q", ["„Licht an.", "Dann sehe ich dich besser.“"], y=640, col="#ff8a8a", label_txt="– DEINE EIGENE STIMME –"))
-pop("#sm-q-lab", t_stimme - 0.2); pop("#sm-q-0", t_licht); pop("#sm-q-1", ws("Dann", t_licht))
+scene("sk", S0, S1, interior("sk", frost=True, dark=True) + f'<rect width="1080" height="1920" fill="#2a0008" opacity=".35"/>'
+      + figure("sk-fig", 540, 1440, 1.15, eyes="w")
+      + quote("sk-q", ["„Licht an.", "Ich will dich sehen.“"], y=640, col="#ff8a8a", label_txt="– DEINE EIGENE STIMME –"), drift=False)
+fadein("#sk-q-lab", t_stimme - 0.3); fadein("#sk-q-0", t_licht); fadein("#sk-q-1", ws("Ich", t_licht))
+tw(f'tl.fromTo("#sk-cam",{{scale:1,svgOrigin:"540 1100"}},{{scale:1.15,svgOrigin:"540 1100",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 
 
 # N Wahl als Abstimmung (Skill 11a)
@@ -586,7 +573,7 @@ for i in range(10):
 
 # ================= SERIEN-BRANDING OBEN LINKS (Format B) =================
 BRAND = [  # (start, ende, uhrzeit, ort)
-    (0.0, t_stille, "3:42", "GONDEL 7 · DACHLUKE"), (t_stille, t_knackt, "3:47", "HANDY · AKKU 23 %"), (t_knackt, t_vibriert, "3:51", "LAUTSPRECHER"),
+    (0.0, t_stille, "3:42", "GONDEL 7 · DACHLUKE"), (t_stille, t_knackt, "3:47", "AKKU 23 %"), (t_knackt, t_vibriert, "3:51", "LAUTSPRECHER"),
     (t_vibriert, t_wer, "3:52", "HANDY"), (t_wer, t_410, "3:58", "GONDEL 7"), (t_410, t_teil3, "4:10", "LINKES FENSTER"),
 ]
 BRAND = [(a, b if i + 1 >= len(BRAND) or BRAND[i+1][0] >= b else BRAND[i+1][0], c, d) for i, (a, b, c, d) in enumerate(BRAND)]
@@ -601,9 +588,9 @@ for i, (a, b, clock, place) in enumerate(BRAND):
         f'<text x="2" y="140" font-family="JetBrains Mono, monospace" font-weight="700" font-size="22" fill="#8f94c4" letter-spacing="4">{place}</text></g></svg></div>')
 
 # ================= UNTERTITEL (Skill 7 + Format B: Akzent Neon-Gelbgrün) =================
-KEY = {"DACHLUKE", "ZUHALTEN", "KRATZT", "METALL", "HEBEL", "ZENTIMETER", "NOTFALLSTANGE", "PHYSIK", "DOPPELT", "HALB", "KRAFT", "STOPPT",
-       "STILLE", "AKKU", "23", "LAUTSPRECHER", "KAMERA", "LINKEN", "MITTE", "VIBRIERT", "BERGWACHT", "STROM", "KAMERAS", "WER", "KIPPT",
-       "LINKS", "SCHWERES", "BESCHLÄGT", "AUSSEN", "AUßEN", "PUNKTE", "SCHEIBE", "STIMME", "LICHT", "TASCHENLAMPE", "DUNKEL", "TEIL", "3", "3:42", "4:10", "7."}
+KEY = {"DACHLUKE", "ZUHALTEN", "KRATZT", "FINGERNÄGEL", "HEBEL", "ZENTIMETER", "NOTFALLSTANGE", "STOPPT", "STILLE", "ATEM", "AKKU", "23",
+       "LAUTSPRECHER", "ATMET", "LINKEN", "MITTE", "VIBRIERT", "BERGWACHT", "STROM", "WER", "KIPPT", "LINKS", "HÄNGEN", "HANDABDRUCK", "AUSSEN",
+       "AUßEN", "HÖHER", "PUNKTE", "BLINZELN", "STIMME", "LICHT", "SEHEN", "TASCHENLAMPE", "DUNKEL", "TEIL", "3", "3:42.", "4:10.", "7."}
 DISPLAY = {"dreiundzwanzig": "23", "sieben.": "7.", "drei": "3"}
 SKIP = {"zwölf", "zwölf.", "dreißig.", "vierzig.", "Uhr"}
 
@@ -679,6 +666,9 @@ DEFS = f"""<svg width="0" height="0" style="position:absolute" aria-hidden="true
 <radialGradient id="stationglow" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#fff4c9" stop-opacity=".35"/><stop offset="1" stop-color="#fff4c9" stop-opacity="0"/></radialGradient>
 <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient>
 <radialGradient id="redvig" cx=".5" cy=".5" r=".72"><stop offset=".5" stop-color="{RED}" stop-opacity="0"/><stop offset="1" stop-color="{RED}" stop-opacity=".7"/></radialGradient>
+<filter id="softblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+<filter id="softedge" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
+<radialGradient id="eyeglow"><stop offset="0" stop-color="#f6f4ff" stop-opacity=".45"/><stop offset="1" stop-color="#f6f4ff" stop-opacity="0"/></radialGradient>
 <filter id="fogblur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="40"/></filter>
 <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 <filter id="glowsoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -707,7 +697,7 @@ def danger(did, t0, t1):
     tw(f'tl.fromTo("#{did}-v",{{opacity:.2}},{{opacity:.7,duration:.45,yoyo:true,repeat:{int((t1-t0)/0.45)},ease:"sine.inOut"}},{t0:.3f});')
 
 
-danger("ov-d1", t_kratzt, t_siehst)
+danger("ov-d1", t_kratzt, t_rammst)
 danger("ov-d2", t_wer, t_410)
 danger("ov-d3", t_punkte, t_was)
 
