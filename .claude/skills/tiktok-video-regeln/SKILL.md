@@ -38,6 +38,8 @@ Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo
 - **Alle 10–15 Sekunden ein Wendepunkt-Satz:** „Doch dann …“, „Plötzlich …“, „Aber irgendetwas stimmt nicht.“, „Und genau hier passiert der Trick.“
 - **Nummerierte Punkte** ankündigen („4 Dinge …“) → Zuschauer wartet auf den letzten.
 - Optional **zweiter Strang** im Hintergrund, der im letzten Satz zurückkommt.
+- **Themen-Treue & Vergleich** (aus Feedback 20.11.): Das Video bleibt **beim Thema des Titels**. Bei Vergleichs-/Challenge-Themen („besser als X“, „du vs. X“) **Vergleich statt Technik-Exkurs**: mehrere kurze Disziplinen, je ein harter Fakt zu X gegen eine (gern witzige) Du-Zeile, sichtbarer Spielstand (z. B. 1:0 … 5:0). Technik-Erklärungen höchstens als Nebensatz – kein Erklär-Block. Danach konkrete, umsetzbare Tipps zum Thema.
+- **Tageszeit passend zum Thema** (aus Feedback 20.11.): Nacht nur bei Grusel-/Nacht-Themen. Sport, Alltag, Motivation → **helle Tagesszenen** (blauer Himmel, Sonne, volle Tribünen).
 - **Story vor Erklärung** (Feedback 15.11.): Unterhaltung und Spannung haben Vorrang. Lieber ein weiteres unheimliches Detail, eine Sinneswahrnehmung (Geräusch, Geruch, Wärme) oder ein überraschender Fakt als ein Lehrbuch-Abschnitt. Fiktive „Du“-Szenen dürfen frei zugespitzt werden; der echte Fall bleibt faktentreu.
 - **Ende:** Frage, die zum Kommentieren zwingt („Was würdest du tun?“, „Was glaubst du: A oder B?“) oder Cliffhanger + „Teil 2 kommt morgen – folge, damit du ihn nicht verpasst.“
 
@@ -206,3 +208,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-18 | Video 13: „Gondel muss zur anderen Seite kippen, wenn er nach rechts läuft (Gewicht), Animation sauberer“ | Abschnitt 6a: Gewicht & Gleichgewicht – Neigung zur Gewichtsseite, Drehpunkt an der Aufhängung, gedämpftes Auspendeln, Figur bleibt senkrecht |
 | 2026-11-19 | Video 14: „Physik nicht erwähnen, Story gruseliger, Animation sauberer“ | Abschnitt 11a: „Grusel statt Unterricht“ – keine Physik-Erklärungen in Format B, Sinnes-Grusel, weiche saubere Animationen |
 | 2026-11-20 | „Mir gefällt der Charakter nicht“ → Auswahl Variante C (Anime) + Outfit 1 | Abschnitt 6: neue feste Hauptfigur „C · Anime mit Senf-Hoodie“ aus `branding/figur/figur_c.py` |
+| 2026-11-20 | Video 16: „Stadion tagsüber, Skript ändern, Erklärungen raus, mehr mit Ronaldo vergleichen, mehr aufs Thema eingehen“ | Abschnitt 4: Themen-Treue & Vergleich (Disziplinen + Spielstand statt Technik-Exkurs), Tageszeit passend zum Thema |

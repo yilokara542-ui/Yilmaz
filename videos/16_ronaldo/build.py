@@ -183,247 +183,207 @@ def scroll_street(prefix, t0, t1, speed=1.0):
 
 
 # ================= CUES =================
-t_ronaldo1 = ws("Ronaldo"); t_finden = ws("Finden")
-t_d1 = ws("Erste"); t_sprung = ws("Sprungkraft"); t_kopfball = ws("Kopfball"); t_256 = ws("zwei"); t_latte = ws("Latte")
-t_du_spr = ws("springst"); t_nicht_mal = ws("nicht", t_du_spr)
-t_d2 = ws("Zweite"); t_trainierst = ws("trainierst"); t_er_auch = ws("Er", t_trainierst); t_zwanzig = ws("zwanzig")
-t_doch = ws("Doch"); t_platz = ws("Platz"); t_bett = ws("Bett")
-t_soll = ws("soll"); t_fuenf = ws("fünfmal"); t_warum = ws("Warum"); t_zyklus = ws("Schlafzyklus"); t_wer = ws("Wer", t_zyklus); t_fit = ws("fit")
-t_messen = ws("messen"); t_watch = ws("Smartwatch"); t_spuert = ws("spürt"); t_puls = ws("Puls"); t_gruen = ws("grünem"); t_daraus = ws("Daraus"); t_tief = ws("tief")
-t_wecker = ws("Wecker"); t_woche1 = ws("Woche"); t_wacher = ws("wacher"); t_woche4 = ws("Woche", t_wacher); t_sprintest = ws("sprintest")
-t_soweit = ws("weit"); t_d3 = ws("Dritte"); t_elf = ws("Elfmeter"); t_torwart = ws("Torwart"); t_laeufst = ws("läufst")
-t_wirst = ws("Wirst"); t_ehrlich = ws("Ehrlich"); t_aber = ws("Aber", t_ehrlich); t_schlaefst = ws("schläfst")
-t_was = ws("Was", t_schlaefst); t_schuss = ws("Schuss"); t_schlaf = ws("Schlaf", t_schuss); t_schreib = ws("Schreib")
+t_vergleichen = ws("vergleichen"); t_fuenfd = ws("Fünf")
+t_d1 = ws("Disziplin"); t_sprung = ws("Sprungkraft"); t_256 = ws("zwei"); t_latte1 = ws("Torlatte"); t_kommst = ws("kommst"); t_10 = ws("Eins", t_kommst)
+t_d2 = ws("Disziplin", t_10); t_900 = ws("neunhundert"); t_schaffen = ws("schaffen"); t_jeden = ws("jeden", t_schaffen); t_20 = ws("Zwei", t_jeden + 0.3)
+t_d3 = ws("Disziplin", t_20); t_30 = ws("dreißig"); t_bus = ws("Bus"); t_30b = ws("Drei", t_bus)
+t_d4 = ws("Disziplin", t_30b); t_alk = ws("Alkohol"); t_cola1 = ws("Cola"); t_hand = ws("Hand"); t_40 = ws("Vier", t_hand)
+t_d5 = ws("Disziplin", t_40); t_soll = ws("soll"); t_zockst = ws("zockst"); t_50 = ws("Fünf", t_zockst)
+t_chance = ws("Chance"); t_vierzig = ws("vierzig"); t_juenger = ws("jünger"); t_kopieren = ws("kopieren")
+t_trainiere = ws("Trainiere"); t_keiner = ws("keiner"); t_schlaf2 = ws("Schlaf", t_keiner); t_wasser = ws("Wasser"); t_hoer = ws("hör"); t_17 = ws("siebzehn")
+t_sechzig = ws("sechzig"); t_welcher = ws("welcher"); t_schreib = ws("Schreib")
 
-# ================= SZENEN (Format A „Erklär-Story“) =================
-GRASS1 = "#1f6b3a"; GRASS2 = "#237a42"; NET = "#e8ecff"; GREEN_LED = "#3cff8a"
+# ================= SZENEN (Format A · Vergleich, tagsüber) =================
+GRASS1 = "#2f8a46"; GRASS2 = "#36994f"; NET = "#ffffff"
 
 
 def fadein(sel, t, dur=0.45, dy=16):
     tw(f'tl.fromTo("{sel}",{{opacity:0,y:{dy}}},{{opacity:1,y:0,duration:{dur},ease:"sine.out"}},{t:.3f});')
 
 
+def day_sky():
+    return (f'<rect width="1080" height="1920" fill="url(#daysky)"/><circle cx="880" cy="330" r="80" fill="#fff4c2"/><circle cx="880" cy="330" r="220" fill="url(#sunglow)"/>'
+            + "".join(f'<g id="cl{i}"><ellipse cx="{x}" cy="{y}" rx="{w}" ry="{w*0.35:.0f}" fill="#fff" opacity=".9"/><ellipse cx="{x+w*0.4:.0f}" cy="{y-w*0.18:.0f}" rx="{w*0.55:.0f}" ry="{w*0.3:.0f}" fill="#fff" opacity=".9"/></g>'
+                      for i, (x, y, w) in enumerate(((180, 380, 110), (520, 300, 80), (700, 470, 95)))))
+
+
 def stadium(prefix, goal=True, gx=560, gw=420, ground=1250, ppm=300):
-    """Nachtstadion: Tribünen mit Lichtpunkten, Flutlichter, Rasen mit Streifen, Tor (Latte 2,44 m)."""
-    stands = "".join(f'<rect x="0" y="{560+k*70}" width="1080" height="60" fill="{"#191b3d" if k%2 else "#1d2048"}"/>' for k in range(6))
-    crowd = "".join(f'<circle cx="{(k*53)%1080}" cy="{575+((k*37)%6)*70}" r="{4+(k%3)}" fill="{["#ffd98a","#cfd3ff","#ff8a8a","#9ad0ff"][k%4]}" opacity=".5"/>' for k in range(120))
-    lights = "".join(f'<rect x="{x}" y="300" width="14" height="300" fill="#2a2d55"/><rect x="{x-50}" y="270" width="114" height="44" rx="8" fill="#e8ecff"/>'
-                     f'<polygon points="{x-50},{314} {x+64},{314} {x+260},{900} {x-250},{900}" fill="url(#lampcone)" opacity=".5"/>' for x in (120, 940))
-    pitch = (f'<rect x="0" y="960" width="1080" height="960" fill="{GRASS1}"/>'
-             + "".join(f'<rect x="0" y="{960+k*120}" width="1080" height="60" fill="{GRASS2}"/>' for k in range(8))
-             + f'<rect x="0" y="{ground}" width="1080" height="8" fill="#e8ecff" opacity=".7"/>')
+    """Tagesstadion: Himmel mit Sonne/Wolken, bunte volle Tribünen, Fahnen, Werbebande, gemähter Rasen, Tor."""
+    stands = "".join(f'<rect x="0" y="{560+k*70}" width="1080" height="60" fill="{"#c9ced9" if k%2 else "#b7bdcb"}"/>' for k in range(6))
+    roof = '<rect x="0" y="520" width="1080" height="40" fill="#8a93a8"/><rect x="0" y="512" width="1080" height="10" fill="#e6e9f0"/>'
+    crowd = "".join(f'<circle cx="{(k*41)%1080}" cy="{585+((k*37)%6)*70}" r="{9+(k%3)*2}" fill="{["#e0a83a","#3b6cff","#ff6b6b","#2a9d8f","#f4f1de","#7a5af5"][k%6]}"/>' for k in range(160))
+    flags = "".join(f'<rect x="{x}" y="430" width="6" height="90" fill="#e6e9f0"/><path d="M {x+6} 432 l 60 14 l -60 14 Z" fill="{c}"/>' for x, c in ((60, "#e0a83a"), (330, "#3b6cff"), (640, "#ff6b6b"), (930, "#2a9d8f")))
+    ads = "".join(f'<rect x="{k*270}" y="960" width="262" height="44" fill="{c}"/><text x="{k*270+131}" y="992" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="26" fill="#fff">{t}</text>'
+                  for k, (c, t) in enumerate((("#3b6cff", "SPORT"), ("#e0a83a", "TOR!"), ("#2a9d8f", "FAIRPLAY"), ("#7a5af5", "ARENA"))))
+    pitch = (f'<rect x="0" y="1004" width="1080" height="916" fill="{GRASS1}"/>'
+             + "".join(f'<rect x="0" y="{1004+k*120}" width="1080" height="60" fill="{GRASS2}"/>' for k in range(8))
+             + f'<rect x="0" y="{ground}" width="1080" height="8" fill="#fff" opacity=".8"/>')
     g = ""
     if goal:
         bar_y = ground - 2.44 * ppm
-        g = (f'<g id="{prefix}-goal"><rect x="{gx}" y="{bar_y}" width="{gw}" height="{2.44*ppm}" fill="url(#netpat)" opacity=".55"/>'
+        g = (f'<g id="{prefix}-goal"><rect x="{gx}" y="{bar_y}" width="{gw}" height="{2.44*ppm}" fill="url(#netpat)" opacity=".7"/>'
              f'<rect x="{gx-10}" y="{bar_y-10}" width="{gw+20}" height="16" fill="{NET}"/><rect x="{gx-10}" y="{bar_y}" width="16" height="{2.44*ppm}" fill="{NET}"/>'
              f'<rect x="{gx+gw-6}" y="{bar_y}" width="16" height="{2.44*ppm}" fill="{NET}"/></g>')
-    return f'<rect width="1080" height="1920" fill="url(#skyg)"/>{stands}{crowd}{lights}{pitch}{g}'
+    return day_sky() + roof + stands + crowd + flags + ads + pitch + g
 
 
-def scoreboard(sid, l, r, label="DISZIPLIN"):
-    return (f'<g id="{sid}"><rect x="200" y="150" width="680" height="120" rx="20" fill="#0b0d22" opacity=".9" stroke="#3a3f8a" stroke-width="4"/>'
-            f'<text x="300" y="230" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#e0a83a">DU</text>'
-            f'<text id="{sid}-sc" x="540" y="232" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="60" fill="#fff">{l} : {r}</text>'
-            f'<text x="745" y="228" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="36" fill="#cfd3ff">RONALDO</text>'
-            f'<text x="540" y="300" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="24" fill="#8f94c4" letter-spacing="4">{label}</text></g>')
+def scoreboard(sid, l, r, label="", new=None):
+    s = (f'<g id="{sid}"><rect x="200" y="150" width="680" height="120" rx="20" fill="#0b0d22" opacity=".92" stroke="#3a3f8a" stroke-width="4"/>'
+         f'<text x="300" y="230" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#e0a83a">DU</text>'
+         f'<text id="{sid}-sc" x="540" y="232" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="60" fill="#fff">{l} : {r}</text>'
+         f'<text x="745" y="228" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="36" fill="#cfd3ff">RONALDO</text>'
+         + (f'<text id="{sid}-new" x="540" y="232" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="60" fill="{RED}" opacity="0">{new[0]} : {new[1]}</text>' if new else "")
+         + (f'<rect x="330" y="282" width="420" height="44" rx="22" fill="#0b0d22" opacity=".8"/><text x="540" y="313" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="24" fill="#fff" letter-spacing="3">{label}</text>' if label else "")
+         + '</g>')
+    return s
+
+
+def score_up(sid, t):
+    tw(f'tl.to("#{sid}-sc",{{opacity:0,duration:.15}},{t:.3f});')
+    tw(f'tl.fromTo("#{sid}-new",{{opacity:0,scale:1.4,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:.35,ease:"power2.out"}},{t + 0.1:.3f});')
+
+
+def fact_card(cid, x, y, w, title, value, col=RED, op=0):
+    return (f'<g id="{cid}" opacity="{op}"><rect x="{x}" y="{y}" width="{w}" height="150" rx="24" fill="#0b0d22" opacity=".9" stroke="{col}" stroke-width="5"/>'
+            f'<text x="{x+w/2}" y="{y+52}" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="30" fill="#cfd3ff">{title}</text>'
+            f'<text x="{x+w/2}" y="{y+120}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="56" fill="{col}">{value}</text></g>')
 
 
 def card_bg(cid):
-    return (f'<rect width="1080" height="1920" fill="{CARD_BG}"/><circle cx="540" cy="860" r="560" fill="url(#cardglow)"/>'
-            + "".join(f'<rect x="{x}" y="0" width="2" height="1920" fill="#fff" opacity=".025"/>' for x in range(0, 1080, 60)))
+    return (f'<rect width="1080" height="1920" fill="url(#daysky)"/><rect width="1080" height="1920" fill="#0b1a3a" opacity=".35"/>')
 
 
-def bed(prefix, sleeping_fig=True):
-    """Schlafzimmer bei Nacht: Bett, Nachttisch mit Lampe, Fenster mit Mond, Poster, Pflanze."""
-    room = (f'<rect width="1080" height="1920" fill="#1c1f45"/><rect x="0" y="1240" width="1080" height="680" fill="#2a2440"/>'
-            f'<rect x="620" y="420" width="300" height="360" rx="14" fill="#0b0d26" stroke="#3a3f8a" stroke-width="14"/><circle cx="820" cy="520" r="44" fill="{MOON}"/>'
-            f'<rect x="120" y="440" width="220" height="300" rx="8" fill="#e0a83a" opacity=".8"/><circle cx="230" cy="560" r="60" fill="#fff" opacity=".9"/>'
-            + "".join(f'<path d="M {170+k*30} 560 l 30 -50" stroke="#1e1a2e" stroke-width="6"/>' for k in range(3))
-            + f'<rect x="860" y="1060" width="150" height="190" rx="10" fill="#4a3a5a"/><rect x="905" y="980" width="12" height="80" fill="#888"/><path d="M 870 980 L 950 980 L 935 940 L 885 940 Z" fill="#ffd98a"/>'
-            f'<circle cx="910" cy="960" r="140" fill="url(#moonglow)" opacity=".6"/>'
-            f'<rect x="40" y="1120" width="80" height="120" rx="10" fill="#c26a3d"/><ellipse cx="80" cy="1100" rx="70" ry="40" fill="#3f8f5a"/>')
-    frame = (f'<rect x="140" y="1080" width="700" height="200" rx="20" fill="#5a3a24"/><rect x="140" y="980" width="40" height="300" rx="10" fill="#5a3a24"/>'
-             f'<rect x="170" y="1050" width="660" height="80" rx="20" fill="#e9e6f2"/><rect x="190" y="1010" width="180" height="70" rx="26" fill="#fff"/>')
-    fig = f'<g transform="rotate(-90 490 1050)">{figure(f"{prefix}-fig", 490, 1050 + 30, 0.75, eyes="s")}</g>' if sleeping_fig else ""
-    blanket = f'<path d="M 330 1030 Q 560 990 830 1040 L 830 1130 L 330 1130 Z" fill="#3b6cff"/><path d="M 330 1030 Q 560 990 830 1040" stroke="#5a86ff" stroke-width="10" fill="none"/>'
-    return room + frame + fig + blanket
-
-
-# A Hook: Kannst du besser werden als Ronaldo?
+# A Hook
 S0, S1 = 0.0, t_d1
-scene("sa", S0, S1, stadium("sa") + scoreboard("sa-sb", 0, 0, "DISZIPLIN – / 3") + figure("sa-fig", 380, 1420, 1.4, eyes="n")
-      + f'<g id="sa-q" opacity="0"><circle cx="540" cy="760" r="90" fill="{RED}"/><text x="540" y="800" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="120" fill="#fff">?</text></g>')
-fadein("#sa-sb", 0.05, 0.4, -20); pop("#sa-q", t_ronaldo1, 0.4, 0.8)
-tw(f'tl.set("#sa-fig-eyes-n",{{opacity:0}},{t_finden:.3f});'); tw(f'tl.set("#sa-fig-eyes-f",{{opacity:1}},{t_finden:.3f});')
+scene("sa", S0, S1, stadium("sa") + scoreboard("sa-sb", 0, 0) + figure("sa-fig", 380, 1420, 1.4, eyes="n")
+      + pill("sa-p", 540, 700, "5 DISZIPLINEN", RED, "#fff", 56))
+fadein("#sa-sb", 0.05, 0.4, -20); pop("#sa-p", t_fuenfd, 0.4, 0.9)
+tw(f'tl.set("#sa-fig-eyes-n",{{opacity:0}},{t_vergleichen:.3f});'); tw(f'tl.set("#sa-fig-eyes-f",{{opacity:1}},{t_vergleichen:.3f});')
 
-# B Disziplin 1: Sprungkraft – 2,56 m vs. Latte 2,44 m
+# B Disziplin 1: Sprungkraft
 S0, S1 = t_d1, t_d2
 G, PPM = 1250, 300
-ruler = (f'<rect x="70" y="{G-2.8*PPM}" width="16" height="{2.8*PPM}" fill="#e8ecff" opacity=".8"/>'
-         + "".join(f'<rect x="70" y="{G-m*PPM:.0f}" width="44" height="6" fill="#e8ecff"/><text x="124" y="{G-m*PPM+10:.0f}" font-family="JetBrains Mono" font-weight="700" font-size="28" fill="#e8ecff">{m:.1f} m</text>'
+ruler = (f'<rect x="70" y="{G-2.8*PPM}" width="16" height="{2.8*PPM}" fill="#fff" opacity=".9"/>'
+         + "".join(f'<rect x="70" y="{G-m*PPM:.0f}" width="44" height="6" fill="#fff"/><text x="124" y="{G-m*PPM+10:.0f}" font-family="JetBrains Mono" font-weight="700" font-size="28" fill="#0b0d22">{m:.1f} m</text>'
                    for m in (0.5, 1.0, 1.5, 2.0, 2.5)))
 r_line = (f'<g id="sb-r" opacity="0"><rect x="60" y="{G-2.56*PPM-3}" width="960" height="6" fill="{RED}"/>'
           f'<rect x="590" y="{G-2.56*PPM-74}" width="400" height="58" rx="12" fill="{RED}"/>'
           f'<text x="790" y="{G-2.56*PPM-33}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="34" fill="#fff">RONALDO 2,56 m</text></g>')
-bar_lbl = label("sb-bl", 780, G - 2.44 * PPM + 70, "LATTE 2,44 m", "#e8ecff", 30)
 du_line = (f'<g id="sb-du" opacity="0"><rect x="60" y="{G-2.12*PPM-3}" width="560" height="6" fill="#e0a83a"/>'
            f'<rect x="200" y="{G-2.12*PPM+14}" width="260" height="54" rx="12" fill="#e0a83a"/>'
            f'<text x="330" y="{G-2.12*PPM+52}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="32" fill="#0b0d22">DU 2,12 m</text></g>')
-scene("sb", S0, S1, stadium("sb", gx=560, gw=420, ground=G, ppm=PPM) + ruler + scoreboard("sb-sb", 0, 0, "DISZIPLIN 1 / 3 · SPRUNG")
-      + figure("sb-fig", 380, G, 1.4, eyes="f") + bar_lbl + r_line + du_line
-      + f'<text id="sb-s2" x="540" y="232" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="60" fill="{RED}" opacity="0">0 : 1</text>', drift=False)
-fadein("#sb-bl", t_latte - 0.2, 0.4, 0)
+scene("sb", S0, S1, stadium("sb", gx=560, gw=420, ground=G, ppm=PPM) + ruler + scoreboard("sb-sb", 0, 0, "1 · SPRUNGKRAFT", (0, 1))
+      + figure("sb-fig", 380, G, 1.4, eyes="f") + label("sb-bl", 780, G - 2.44 * PPM + 70, "LATTE 2,44 m", "#0b0d22", 30, fill="#ffffff") + r_line + du_line, drift=False)
 tw(f'tl.fromTo("#sb-r",{{opacity:0,scaleX:0,transformOrigin:"0% 50%"}},{{opacity:1,scaleX:1,duration:.6,ease:"power2.out"}},{t_256:.3f});')
-tw(f'tl.to("#sb-fig",{{y:-12,scaleY:.94,transformOrigin:"50% 100%",duration:.18,ease:"sine.in"}},{t_du_spr - 0.15:.3f});')
-tw(f'tl.to("#sb-fig",{{y:-140,scaleY:1.03,duration:.38,ease:"power2.out"}},{t_du_spr + 0.03:.3f});')
-tw(f'tl.to("#sb-fig",{{y:0,scaleY:1,duration:.38,ease:"power2.in"}},{t_du_spr + 0.41:.3f});')
-tw(f'tl.set("#sb-fig-eyes-f",{{opacity:0}},{t_du_spr:.3f});'); tw(f'tl.set("#sb-fig-eyes-w",{{opacity:1}},{t_du_spr:.3f});')
-fadein("#sb-du", t_du_spr + 0.4, 0.4, 0)
-tw(f'tl.to("#sb-sb-sc",{{opacity:0,duration:.15}},{t_nicht_mal:.3f});')
-fadein("#sb-s2", t_nicht_mal + 0.15, 0.3, 0)
-SCORE_SWAP = []
+fadein("#sb-bl", t_latte1 - 0.2, 0.4, 0)
+tw(f'tl.to("#sb-fig",{{y:-12,scaleY:.94,transformOrigin:"50% 100%",duration:.18,ease:"sine.in"}},{t_kommst - 0.35:.3f});')
+tw(f'tl.to("#sb-fig",{{y:-140,scaleY:1.03,duration:.38,ease:"power2.out"}},{t_kommst - 0.17:.3f});')
+tw(f'tl.to("#sb-fig",{{y:0,scaleY:1,duration:.38,ease:"power2.in"}},{t_kommst + 0.21:.3f});')
+tw(f'tl.set("#sb-fig-eyes-f",{{opacity:0}},{t_kommst + 0.2:.3f});'); tw(f'tl.set("#sb-fig-eyes-w",{{opacity:1}},{t_kommst + 0.2:.3f});')
+fadein("#sb-du", t_kommst + 0.3, 0.4, 0)
+score_up("sb-sb", t_10)
 
-# C Disziplin 2: Training – jeden Tag, er seit über 20 Jahren
-S0, S1 = t_d2, t_doch
-cal = (f'<g id="sc-cal"><rect x="700" y="420" width="260" height="280" rx="18" fill="#fff"/><rect x="700" y="420" width="260" height="70" rx="18" fill="{RED}"/>'
-       + "".join(f'<text id="sc-d{k}" x="830" y="640" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="120" fill="#1e1a2e" opacity="0">{d}</text>' for k, d in enumerate((1, 2, 3, 4, 5, 6, 7)))
-       + '</g>')
-yrs = (f'<g id="sc-y" opacity="0"><rect x="560" y="760" width="440" height="120" rx="20" fill="#0b0d22" opacity=".9" stroke="#cfd3ff" stroke-width="4"/>'
-       f'<text x="780" y="840" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="52" fill="#cfd3ff">RONALDO: 20+ J.</text></g>')
-scene("sc", S0, S1, stadium("sc", goal=False) + scoreboard("sc-sb", 0, 1, "DISZIPLIN 2 / 3 · TRAINING") + cal + yrs
-      + f'<g id="sc-cones">' + "".join(f'<polygon points="{x},1300 {x+30},1240 {x+60},1300" fill="#ff8a3d"/>' for x in range(-100, 2200, 260)) + '</g>'
-      + figure("sc-fig", 420, 1420, 1.3, eyes="f"), drift=False)
-walk_cycle("sc-fig", S0, S1 + 0.3, period=0.36, bob=12)
-tw(f'tl.to("#sc-cones",{{x:-900,duration:{S1-S0+0.3:.3f},ease:"none"}},{S0:.3f});')
-for k in range(7):
-    a = t_trainierst + k * max(0.25, (t_er_auch - t_trainierst) / 7)
-    tw(f'tl.set("#sc-d{k}",{{opacity:1}},{a:.3f});')
-    if k < 6:
-        tw(f'tl.set("#sc-d{k}",{{opacity:0}},{a + max(0.25, (t_er_auch - t_trainierst) / 7):.3f});')
-fadein("#sc-y", t_zwanzig - 0.2, 0.45, 20)
+# C Disziplin 2: Tore – 900+ vs. 2,5 Jahre jeden Tag
+S0, S1 = t_d2, t_d3
+balls = "".join(f'<circle id="sc-b{k}" cx="{140+(k%10)*88}" cy="{1060+(k//10)*80}" r="26" fill="#fff" stroke="#0b0d22" stroke-width="4" opacity="0"/>' for k in range(30))
+counter = "".join(f'<text id="sc-c{k}" x="540" y="620" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="150" fill="{RED}" opacity="0">{n}</text>' for k, n in enumerate((0, 150, 380, 610, 800, "900+")))
+scene("sc", S0, S1, stadium("sc", gx=330, gw=420) + scoreboard("sc-sb", 0, 1, "2 · TORE", (0, 2))
+      + f'<rect x="240" y="470" width="600" height="190" rx="30" fill="#0b0d22" opacity=".88"/>' + counter
+      + f'<text x="540" y="700" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="34" fill="#0b0d22">RONALDO · TORE IN DER KARRIERE</text>'
+      + fact_card("sc-f", 220, 1050, 640, "DU · 1 TOR JEDEN TAG", "≈ 2,5 JAHRE", "#e0a83a") + balls, drift=False)
+steps_n = 6
+for k in range(steps_n):
+    a = t_900 - 0.4 + k * 0.16
+    tw(f'tl.set("#sc-c{k}",{{opacity:1}},{a:.3f});')
+    if k < steps_n - 1:
+        tw(f'tl.set("#sc-c{k}",{{opacity:0}},{a + 0.16:.3f});')
+fadein("#sc-f", t_jeden - 0.3, 0.45, 20)
+score_up("sc-sb", t_20)
 
-# D Wendung: nicht auf dem Platz – im Bett
-S0, S1 = t_doch, t_soll
-scene("sd", S0, S1, bed("sd") + f'<g id="sd-x" opacity="0"><rect x="250" y="250" width="580" height="90" rx="20" fill="#0b0d22" opacity=".9"/>'
-      f'<text x="540" y="312" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#8f94c4">NICHT AUF DEM PLATZ</text>'
-      f'<rect x="270" y="290" width="540" height="10" fill="{RED}"/></g>'
-      + pill("sd-p", 540, 450, "SONDERN IM BETT", RED, "#fff", 54))
-fadein("#sd-x", t_platz - 0.3); pop("#sd-p", t_bett, 0.4, 0.9)
-tw(f'tl.fromTo("#sd-cam",{{scale:1.15,svgOrigin:"500 1060"}},{{scale:1,svgOrigin:"500 1060",duration:{S1-S0+0.3:.3f},ease:"sine.out"}},{S0:.3f});')
+# D Disziplin 3: Tempo – Ronaldo 30+ km/h, du wirst vom Bus überholt
+S0, S1 = t_d3, t_d4
+bus = (f'<g id="sd-bus"><rect x="-520" y="1110" width="480" height="230" rx="30" fill="#e0a83a"/>'
+       + "".join(f'<rect x="{-500+k*92}" y="1140" width="74" height="80" rx="8" fill="#bfe4ff"/>' for k in range(5))
+       + f'<rect x="-520" y="1260" width="480" height="18" fill="#b8862a"/><circle cx="-440" cy="1345" r="38" fill="#1b1d25"/><circle cx="-130" cy="1345" r="38" fill="#1b1d25"/>'
+       f'<text x="-280" y="1310" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="34" fill="#0b0d22">LINIE 7</text></g>')
+bars = (f'<g id="sd-bars"><rect x="140" y="470" width="800" height="70" rx="35" fill="#0b0d22" opacity=".85"/><rect id="sd-rb" x="140" y="470" width="800" height="70" rx="35" fill="{RED}"/>'
+        f'<text x="160" y="518" font-family="Poppins" font-weight="800" font-size="34" fill="#fff">RONALDO · 30+ km/h</text>'
+        f'<rect x="140" y="570" width="800" height="70" rx="35" fill="#0b0d22" opacity=".85"/><rect id="sd-db" x="140" y="570" width="800" height="70" rx="35" fill="#e0a83a"/>'
+        f'<text x="160" y="618" font-family="Poppins" font-weight="800" font-size="34" fill="#0b0d22">DU</text></g>')
+scene("sd", S0, S1, stadium("sd", goal=False) + f'<rect x="0" y="1270" width="1080" height="110" fill="#5a5f6e"/>'
+      + "".join(f'<rect x="{x}" y="1320" width="80" height="10" fill="#fff"/>' for x in range(0, 1080, 160))
+      + scoreboard("sd-sb", 0, 2, "3 · TEMPO", (0, 3)) + bars + bus + figure("sd-fig", 420, 1440, 1.2, eyes="f"), drift=False)
+tw(f'tl.fromTo("#sd-rb",{{scaleX:.05,transformOrigin:"0% 50%"}},{{scaleX:1,duration:.8,ease:"power2.out"}},{t_30 - 0.2:.3f});')
+tw(f'tl.fromTo("#sd-db",{{scaleX:.05,transformOrigin:"0% 50%"}},{{scaleX:.62,duration:.8,ease:"power2.out"}},{t_30 + 0.3:.3f});')
+walk_cycle("sd-fig", S0, S1 + 0.3, period=0.34, bob=12)
+tw(f'tl.to("#sd-bus",{{x:1700,duration:1.6,ease:"none"}},{t_bus - 0.6:.3f});')
+tw(f'tl.set("#sd-fig-eyes-f",{{opacity:0}},{t_bus:.3f});'); tw(f'tl.set("#sd-fig-eyes-w",{{opacity:1}},{t_bus:.3f});')
+score_up("sd-sb", t_30b)
 
-# E 5 × 90 Minuten – Schlafzyklen
-S0, S1 = t_soll, t_messen
-R0 = 300; CXE, CYE = 540, 760
-import math as _m
-def arc(a0, a1, r=R0):
-    x0, y0 = CXE + r*_m.sin(a0), CYE - r*_m.cos(a0); x1, y1 = CXE + r*_m.sin(a1), CYE - r*_m.cos(a1)
-    return f'M {x0:.1f} {y0:.1f} A {r} {r} 0 {1 if a1-a0>_m.pi else 0} 1 {x1:.1f} {y1:.1f}'
-segs = [(22.5, 24.0), (3.0, 4.5), (7.5, 9.0), (13.0, 14.5), (17.0, 18.5)]
-ring = (f'<circle cx="{CXE}" cy="{CYE}" r="{R0}" fill="none" stroke="#262a5e" stroke-width="60"/>'
-        + "".join(f'<path id="se-s{k}" d="{arc(a/24*2*_m.pi, b/24*2*_m.pi)}" stroke="#7a8aff" stroke-width="60" fill="none" opacity="0"/>' for k, (a, b) in enumerate(segs))
-        + "".join(f'<text x="{CXE + 390*_m.sin(h/24*2*_m.pi):.0f}" y="{CYE - 390*_m.cos(h/24*2*_m.pi) + 12:.0f}" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="30" fill="#8f94c4">{h}</text>' for h in (0, 6, 12, 18))
-        + f'<text id="se-n" x="{CXE}" y="{CYE+30}" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="110" fill="#fff" opacity="0">5 × 90</text>'
-        + f'<text x="{CXE}" y="{CYE+90}" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="34" fill="#9aa0d0">Minuten Schlaf</text>')
-hyp_pts = []
-for c in range(4):
-    for i, d in enumerate((0, 1, 2, 3, 2, 1, 0)):
-        hyp_pts.append((120 + c*210 + i*35, 1150 + d*45))
-hyp = (f'<g id="se-h" opacity="0"><polyline points="{" ".join(f"{x},{y}" for x, y in hyp_pts)}" fill="none" stroke="#7a8aff" stroke-width="8" stroke-linejoin="round"/>'
-       + "".join(f'<rect x="{120+c*210-2}" y="1110" width="4" height="190" fill="#3a3f8a"/><text x="{225+c*210}" y="1340" text-anchor="middle" font-family="JetBrains Mono" font-size="24" fill="#8f94c4">90 min</text>' for c in range(4))
-       + f'<text x="100" y="1140" font-family="Poppins" font-weight="600" font-size="24" fill="#9aa0d0">wach</text><text x="100" y="1310" font-family="Poppins" font-weight="600" font-size="24" fill="#9aa0d0">tief</text></g>'
-       + f'<g id="se-ok" opacity="0">' + "".join(f'<circle cx="{330+c*210}" cy="1150" r="22" fill="{LIME}"/>' for c in range(4)) + '</g>')
-scene("se", S0, S1, card_bg("se") + ring + hyp)
+# E Disziplin 4: Ernährung – kein Alkohol, Cola stehen lassen vs. du mit Cola
+S0, S1 = t_d4, t_d5
+ron_card = (f'<g id="se-r" opacity="0"><rect x="70" y="420" width="420" height="560" rx="30" fill="#0b0d22" opacity=".9" stroke="{RED}" stroke-width="5"/>'
+            f'<text x="280" y="490" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="38" fill="#fff">RONALDO</text>'
+            f'<rect x="245" y="530" width="70" height="170" rx="20" fill="#bfe4ff"/><rect x="262" y="508" width="36" height="28" rx="6" fill="#3b6cff"/>'
+            f'<circle cx="400" cy="590" r="34" fill="{LIME}"/><path d="M 384 590 l 12 12 l 22 -24" stroke="#0b0d22" stroke-width="8" fill="none"/>'
+            f'<rect x="140" y="760" width="60" height="120" rx="12" fill="#8b1e1e"/><rect x="330" y="760" width="40" height="130" rx="10" fill="#4a7a3a"/>'
+            + xmark("se-x1", 170, 820, 60, 1) + xmark("se-x2", 350, 825, 60, 1)
+            + f'<text x="280" y="950" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="28" fill="#cfd3ff">Wasser · kein Alkohol</text></g>')
+can = (f'<g id="se-can" opacity="0"><rect x="808" y="1130" width="56" height="96" rx="12" fill="#c8102e"/><rect x="808" y="1160" width="56" height="16" fill="#fff" opacity=".9"/>'
+       f'<rect x="814" y="1122" width="44" height="10" rx="4" fill="#c0c0c0"/></g>')
+scene("se", S0, S1, stadium("se", goal=False) + scoreboard("se-sb", 0, 3, "4 · ERNÄHRUNG", (0, 4)) + ron_card
+      + figure("se-fig", 740, 1420, 1.4, eyes="n") + can, drift=False)
+fadein("#se-r", t_alk - 0.4, 0.45, 20)
+fadein("#se-can", t_hand - 0.5, 0.4, 10)
+tw(f'tl.set("#se-fig-eyes-n",{{opacity:0}},{t_hand:.3f});'); tw(f'tl.set("#se-fig-eyes-f",{{opacity:1}},{t_hand:.3f});')
+score_up("se-sb", t_40)
+
+# F Disziplin 5: Schlaf – 5 × 90 min vs. Zocken bis 3 Uhr
+S0, S1 = t_d5, t_chance
+room = (f'<rect x="0" y="380" width="1080" height="1540" fill="#1c1f45"/><rect x="0" y="1250" width="1080" height="670" fill="#2a2440"/>'
+        f'<rect x="560" y="820" width="420" height="250" rx="16" fill="#0b0d22" stroke="#3a3f8a" stroke-width="10"/><rect x="580" y="840" width="380" height="210" fill="#3b6cff" opacity=".85"/>'
+        f'<circle cx="770" cy="945" r="200" fill="#3b6cff" opacity=".18"/><rect x="560" y="1070" width="420" height="40" fill="#4a3a5a"/>'
+        f'<rect x="80" y="840" width="230" height="110" rx="20" fill="#0b0d22" stroke="#cfd3ff" stroke-width="4"/>'
+        f'<text x="195" y="918" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="64" fill="{RED}">3:00</text>')
+pad = f'<g id="sf-pad"><rect x="300" y="1150" width="130" height="62" rx="28" fill="#1b1d25"/><circle cx="335" cy="1180" r="9" fill="#e0a83a"/><circle cx="398" cy="1180" r="9" fill="#3b6cff"/></g>'
+ron5 = (f'<g id="sf-r" opacity="0"><rect x="60" y="420" width="560" height="170" rx="30" fill="#0b0d22" opacity=".92" stroke="#7a8aff" stroke-width="5"/>'
+        f'<text x="340" y="485" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="34" fill="#fff">RONALDO · 5 × 90 MIN</text>'
+        + "".join(f'<circle cx="{160+k*90}" cy="545" r="26" fill="{MOON}"/><circle cx="{172+k*90}" cy="537" r="22" fill="#0b0d22"/>' for k in range(5)) + '</g>')
+scene("sf", S0, S1, card_bg("sf") + room + scoreboard("sf-sb", 0, 4, "5 · SCHLAF", (0, 5)) + ron5 + figure("sf-fig", 365, 1420, 1.3, eyes="f") + pad, drift=False)
+fadein("#sf-r", t_soll - 0.2, 0.45, 20)
+tw(f'tl.to("#sf-pad",{{x:6,duration:.12,yoyo:true,repeat:15,ease:"sine.inOut"}},{t_zockst:.3f});')
+score_up("sf-sb", t_50)
+
+# G Wendung: deine Chance – Ronaldo über 40, du bist jünger
+S0, S1 = t_chance, t_trainiere
+scene("sg", S0, S1, stadium("sg", goal=False) + scoreboard("sg-sb", 0, 5, "ENDSTAND?")
+      + fact_card("sg-a", 120, 470, 400, "RONALDO", "40+", RED) + fact_card("sg-b", 560, 470, 400, "DU", "JÜNGER", "#e0a83a")
+      + pill("sg-p", 540, 760, "SEINE REGELN KOPIEREN", "#0b0d22", "#fff", 46) + figure("sg-fig", 540, 1420, 1.4, eyes="n"))
+fadein("#sg-a", t_vierzig - 0.3); fadein("#sg-b", t_juenger - 0.2); pop("#sg-p", t_kopieren - 0.2)
+
+# H Tipps zum Thema: jeden Tag trainieren · Schlaf + Wasser · nie aufhören (Profi mit 17)
+S0, S1 = t_trainiere, t_sechzig
+tips = (fact_card("sh-t1", 120, 370, 840, "AUCH WENN KEINER ZUSCHAUT", "JEDEN TAG TRAINIEREN", "#e0a83a")
+        + fact_card("sh-t2", 120, 535, 840, "WIE EIN PROFI", "SCHLAF + WASSER", "#3b6cff")
+        + fact_card("sh-t3", 120, 700, 840, "PROFI MIT 17", "NIE AUFHÖREN", RED))
+ball = f'<g id="sh-ball"><circle cx="600" cy="1350" r="30" fill="#fff" stroke="#0b0d22" stroke-width="4"/></g>'
+scene("sh", S0, S1, stadium("sh", goal=False) + f'<g transform="translate(0,-20)">' + scoreboard("sh-sb", 0, 5) + '</g>' + tips + figure("sh-fig", 520, 1420, 1.3, eyes="n") + ball, drift=False)
+fadein("#sh-t1", t_trainiere, 0.4, 20); fadein("#sh-t2", t_schlaf2 - 0.1, 0.4, 20); fadein("#sh-t3", t_hoer - 0.1, 0.4, 20)
+tw(f'tl.to("#sh-ball",{{y:-110,duration:.32,yoyo:true,repeat:{int((S1-S0)/0.32)},ease:"power1.out"}},{S0:.3f});')
+
+# I Ende: Wenn er 60 ist … – in welcher Disziplin schlägst du ihn zuerst?
+S0, S1 = t_sechzig, TOTAL
+pills = "".join(pill(f"si-p{k}", x, y, t, c, fg, 36) for k, (x, y, t, c, fg) in enumerate(
+    ((290, 620, "SPRUNG", "#e0a83a", "#0b0d22"), (790, 620, "TORE", RED, "#fff"), (290, 750, "TEMPO", "#3b6cff", "#fff"),
+     (790, 750, "ERNÄHRUNG", "#2a9d8f", "#fff"), (540, 880, "SCHLAF", "#7a5af5", "#fff"))))
+scene("si", S0, S1, stadium("si") + scoreboard("si-sb", "?", 5, "IN 20 JAHREN?")
+      + f'<g id="si-q" opacity="0"><rect x="100" y="420" width="880" height="110" rx="24" fill="#0b0d22" opacity=".9"/>'
+        f'<text x="540" y="495" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="46" fill="#fff">Wo schlägst du ihn zuerst?</text></g>'
+      + pills + figure("si-fig", 360, 1420, 1.4, eyes="n"))
+fadein("#si-q", t_welcher - 0.2)
 for k in range(5):
-    tw(f'tl.fromTo("#se-s{k}",{{opacity:0}},{{opacity:1,duration:.3,ease:"sine.out"}},{t_fuenf - 0.3 + k*0.18:.3f});')
-fadein("#se-n", t_fuenf, 0.4, 10)
-fadein("#se-h", t_zyklus - 0.2, 0.5, 20)
-tw(f'tl.to("#se-n",{{opacity:.15,duration:.4}},{t_zyklus - 0.2:.3f});')
-fadein("#se-ok", t_fit - 0.3, 0.4, 0)
-
-# F Smartwatch: Bewegung + Puls mit grünem Licht durch die Haut
-S0, S1 = t_messen, t_wecker
-watch = (f'<g id="sf-w"><rect x="300" y="430" width="480" height="560" rx="110" fill="#14163a" stroke="#3a3f8a" stroke-width="16"/>'
-         f'<rect x="340" y="470" width="400" height="480" rx="80" fill="#0b0d22"/>'
-         f'<text x="540" y="560" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="34" fill="#9aa0d0">SCHLAF</text>'
-         f'<g id="sf-hr"><path d="M 380 700 L 450 700 L 475 640 L 505 770 L 530 680 L 555 700 L 700 700" stroke="{RED}" stroke-width="8" fill="none"/></g>'
-         f'<text id="sf-bpm" x="540" y="830" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="60" fill="#fff">52 bpm</text>'
-         f'<g id="sf-deep" opacity="0"><rect x="380" y="860" width="320" height="56" rx="28" fill="#7a8aff"/><text x="540" y="899" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="30" fill="#0b0d22">TIEFSCHLAF</text></g></g>')
-strap = f'<rect x="380" y="0" width="320" height="440" fill="#262a5e"/><rect x="380" y="980" width="320" height="380" fill="#262a5e"/>'
-xsec = (f'<g id="sf-x" opacity="0"><rect x="120" y="1000" width="840" height="300" rx="30" fill="{FIG}"/><rect x="120" y="1000" width="840" height="40" fill="#c98a66"/>'
-        f'<path id="sf-vein" d="M 120 1180 Q 540 1140 960 1190" stroke="#b03030" stroke-width="34" fill="none"/>'
-        + "".join(f'<rect x="{430+k*110}" y="980" width="40" height="22" rx="6" fill="{GREEN_LED}"/>'
-                  f'<polygon id="sf-b{k}" points="{432+k*110},1000 {468+k*110},1000 {500+k*110},1170 {400+k*110},1170" fill="{GREEN_LED}" opacity=".25"/>' for k in range(3))
-        + f'<text x="540" y="1260" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="30" fill="#5a2a24">grünes Licht · Blut schluckt es im Pulsschlag</text></g>')
-move_ic = (f'<g id="sf-acc" opacity="0"><rect x="800" y="560" width="200" height="120" rx="20" fill="#0b0d22" stroke="#cfd3ff" stroke-width="4"/>'
-           f'<text x="900" y="610" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="26" fill="#cfd3ff">BEWEGUNG</text>'
-           f'<path d="M 830 650 q 20 -20 40 0 t 40 0 t 40 0 t 40 0" stroke="#e0a83a" stroke-width="6" fill="none"/></g>')
-scene("sf", S0, S1, f'<rect width="1080" height="1920" fill="#0c0d22"/><circle cx="540" cy="700" r="600" fill="url(#cardglow)"/>' + strap + watch + move_ic + xsec)
-tw(f'tl.fromTo("#sf-w",{{scale:.9,opacity:0,transformOrigin:"50% 50%"}},{{scale:1,opacity:1,duration:.5,ease:"sine.out"}},{S0:.3f});')
-fadein("#sf-acc", t_spuert, 0.4, 10)
-tw(f'tl.to("#sf-hr",{{x:-20,duration:.4,yoyo:true,repeat:9,ease:"sine.inOut"}},{t_puls:.3f});')
-fadein("#sf-x", t_gruen - 0.2, 0.5, 30)
-for k in range(3):
-    tw(f'tl.fromTo("#sf-b{k}",{{opacity:.1}},{{opacity:.55,duration:.4,yoyo:true,repeat:7,ease:"sine.inOut"}},{t_gruen + k*0.1:.3f});')
-tw(f'tl.fromTo("#sf-vein",{{attr:{{"stroke-width":30}}}},{{attr:{{"stroke-width":40}},duration:.45,yoyo:true,repeat:7,ease:"sine.inOut"}},{t_puls:.3f});')
-fadein("#sf-deep", t_tief - 0.2, 0.4, 10)
-
-# G Smart-Wecker am Ende eines Zyklus
-S0, S1 = t_wecker, t_woche1
-alarm = (f'<g id="sg-al" opacity="0"><rect x="560" y="300" width="420" height="200" rx="30" fill="#0b0d22" opacity=".92" stroke="{LIME}" stroke-width="5"/>'
-         f'<text x="770" y="370" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="30" fill="{LIME}">SMART-WECKER</text>'
-         f'<text x="770" y="455" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="64" fill="#fff">6:58</text></g>')
-scene("sg", S0, S1, bed("sg") + alarm, drift=False)
-fadein("#sg-al", S0 + 0.2, 0.4, -16)
-shake("#sg-al", t_zyklus if False else S0 + 0.9, 4, 4)
-tw(f'tl.set("#sg-fig-eyes-s",{{opacity:0}},{S0 + 1.2:.3f});'); tw(f'tl.set("#sg-fig-eyes-n",{{opacity:1}},{S0 + 1.2:.3f});')
-
-# H Woche 1 → Woche 4: wacher, schneller
-S0, S1 = t_woche1, t_soweit
-meter = (f'<g id="sh-m"><rect x="140" y="420" width="800" height="70" rx="35" fill="#262a5e"/><rect id="sh-bar" x="140" y="420" width="800" height="70" rx="35" fill="#e0a83a"/>'
-         f'<text x="540" y="400" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="40" fill="#fff">ENERGIE</text></g>'
-         f'<g id="sh-w1" opacity="0">{pill("sh-p1", 300, 600, "WOCHE 1 · WACHER", "#3b6cff", "#fff", 36).replace("opacity=\"0\"", "")}</g>'
-         f'<g id="sh-w4" opacity="0">{pill("sh-p4", 760, 600, "WOCHE 4 · SCHNELLER", RED, "#fff", 36).replace("opacity=\"0\"", "")}</g>')
-speed = "".join(f'<rect id="sh-l{k}" x="{-200}" y="{1150+k*60}" width="{160+k*40}" height="8" rx="4" fill="#e8ecff" opacity=".6"/>' for k in range(4))
-scene("sh", S0, S1, stadium("sh", goal=False) + meter + speed + figure("sh-fig", 560, 1420, 1.3, eyes="n"), drift=False)
-tw(f'tl.fromTo("#sh-bar",{{scaleX:.3,transformOrigin:"0% 50%"}},{{scaleX:.6,transformOrigin:"0% 50%",duration:.8,ease:"sine.out"}},{t_woche1:.3f});')
-fadein("#sh-w1", t_wacher - 0.3)
-tw(f'tl.to("#sh-bar",{{scaleX:.95,duration:.8,ease:"sine.out"}},{t_woche4:.3f});')
-fadein("#sh-w4", t_sprintest - 0.3)
-walk_cycle("sh-fig", t_woche4, S1 + 0.3, period=0.28, bob=14)
-for k in range(4):
-    tw(f'tl.fromTo("#sh-l{k}",{{x:1300}},{{x:-300,duration:.5,repeat:5,ease:"none"}},{t_sprintest - 0.3 + k*0.08:.3f});')
-
-# I Disziplin 3: Elfmeter – du läufst an
-S0, S1 = t_soweit, t_wirst
-keeper = (f'<g id="si-k"><rect x="505" y="760" width="70" height="120" rx="20" fill="#3cff8a"/><circle cx="540" cy="730" r="34" fill="{FIG}"/>'
-          f'<rect x="460" y="770" width="40" height="22" rx="10" fill="#3cff8a"/><rect x="580" y="770" width="40" height="22" rx="10" fill="#3cff8a"/>'
-          f'<circle cx="452" cy="780" r="16" fill="#fff"/><circle cx="628" cy="780" r="16" fill="#fff"/><rect x="515" y="880" width="20" height="60" fill="#1b1d25"/><rect x="545" y="880" width="20" height="60" fill="#1b1d25"/></g>')
-goalI = (f'<rect x="300" y="640" width="480" height="300" fill="url(#netpat)" opacity=".55"/><rect x="290" y="630" width="500" height="14" fill="{NET}"/>'
-         f'<rect x="290" y="630" width="14" height="310" fill="{NET}"/><rect x="776" y="630" width="14" height="310" fill="{NET}"/>')
-ball = f'<g id="si-ball"><circle cx="540" cy="1230" r="34" fill="#fff"/><path d="M 528 1220 l 12 -8 l 12 8 l -5 14 l -14 0 Z" fill="#1e1a2e"/></g>'
-scene("si", S0, S1, f'<rect width="1080" height="1920" fill="url(#skyg)"/><rect x="0" y="940" width="1080" height="980" fill="{GRASS1}"/>'
-      + "".join(f'<rect x="0" y="{940+k*120}" width="1080" height="60" fill="{GRASS2}"/>' for k in range(8))
-      + f'<rect x="200" y="940" width="680" height="8" fill="#e8ecff" opacity=".6"/><ellipse cx="540" cy="1250" rx="14" ry="5" fill="#e8ecff"/>'
-      + goalI + keeper + ball + figure("si-fig", 430, 1560, 1.2, back=True) + scoreboard("si-sb", 0, 1, "DISZIPLIN 3 / 3 · ELFMETER"), drift=False)
-tw(f'tl.to("#si-k",{{x:-30,duration:.5,yoyo:true,repeat:7,ease:"sine.inOut"}},{t_torwart:.3f});')
-walk_cycle("si-fig", t_laeufst, t_laeufst + 1.0, period=0.32, bob=10)
-tw(f'tl.to("#si-fig",{{x:60,y:-180,scale:.85,transformOrigin:"50% 100%",duration:1.0,ease:"power1.in"}},{t_laeufst:.3f});')
-tw(f'tl.to("#si-cam",{{scale:1.12,svgOrigin:"540 1000",duration:1.2,ease:"sine.in"}},{t_laeufst:.3f});')
-
-# J Auflösung + Frage
-S0, S1 = t_wirst, TOTAL
-scene("sj", S0, S1, bed("sj", sleeping_fig=True)
-      + f'<g id="sj-q" opacity="0"><rect x="160" y="250" width="760" height="110" rx="24" fill="#0b0d22" opacity=".9"/>'
-        f'<text x="540" y="325" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="50" fill="#fff">Was trainierst du zuerst?</text></g>'
-      + pill("sj-p1", 290, 480, "SPRUNGKRAFT", "#e0a83a", "#0b0d22", 40) + pill("sj-p2", 700, 480, "SCHUSS", RED, "#fff", 40)
-      + pill("sj-p3", 540, 620, "SCHLAF", "#7a8aff", "#0b0d22", 46)
-      + f'<g id="sj-z">' + "".join(f'<text id="sj-z{k}" x="{380+k*40}" y="{900-k*50}" font-family="Poppins" font-weight="800" font-size="{40+k*14}" fill="#cfd3ff" opacity="0">z</text>' for k in range(3)) + '</g>')
-for k in range(3):
-    tw(f'tl.fromTo("#sj-z{k}",{{opacity:0,y:0}},{{opacity:.8,y:-60,duration:1.4,repeat:4,ease:"sine.out"}},{S0 + 0.3 + k*0.4:.3f});')
-fadein("#sj-q", t_was - 0.2)
-pop("#sj-p1", ws("Sprungkraft", t_was)); pop("#sj-p2", t_schuss); pop("#sj-p3", t_schlaf)
-tw(f'tl.to("#sj-p3",{{scale:1.08,transformOrigin:"50% 50%",duration:.4,yoyo:true,repeat:5,ease:"sine.inOut"}},{t_schreib:.3f});')
+    pop(f"#si-p{k}", t_welcher + 0.15 + k * 0.18, 0.35, 0.9)
+tw(f'tl.to("#si-p4",{{scale:1.08,transformOrigin:"50% 50%",duration:.4,yoyo:true,repeat:5,ease:"sine.inOut"}},{t_schreib:.3f});')
 
 # ================= SERIEN-BRANDING OBEN LINKS (Format B) =================
 BRAND = []
@@ -439,10 +399,10 @@ for i, (a, b, clock, place) in enumerate(BRAND):
         f'<text x="2" y="140" font-family="JetBrains Mono, monospace" font-weight="700" font-size="22" fill="#8f94c4" letter-spacing="4">{place}</text></g></svg></div>')
 
 # ================= UNTERTITEL (Skill 7 + Format B: Akzent Neon-Gelbgrün) =================
-KEY = {"RONALDO", "SPRUNGKRAFT", "KOPFBALL", "2,56", "LATTE", "TRAINING", "ZWANZIG", "20", "VERRÜCKT", "BETT", "SCHLAFEN", "5×", "90",
-       "SCHLAFZYKLUS", "FIT", "SMARTWATCH", "BEWEGUNG", "PULS", "GRÜNEM", "LICHT", "TIEF", "WECKER", "ZYKLUS", "WACHER", "SCHNELLER",
-       "ELFMETER", "TORWART", "WAHRSCHEINLICH", "SCHLÄFST", "SCHUSS", "SCHLAF", "KOMMENTARE"}
-DISPLAY = {"fünfmal": "5×", "neunzig": "90", "neunzig?": "90?", "zwanzig": "20"}
+KEY = {"RONALDO", "FÜNF", "DISZIPLINEN", "SPRUNGKRAFT", "2,56", "TORLATTE", "LATTE", "1:0", "2:0", "3:0", "4:0", "5:0", "TORE", "900",
+       "2,5", "TEMPO", "30", "BUS", "ERNÄHRUNG", "ALKOHOL", "COLA", "SCHLAF", "5×", "90", "ZOCKST", "CHANCE", "40.", "JÜNGER", "KOPIEREN",
+       "TRAINIERE", "KEINER", "WASSER", "AUFHÖREN", "HÖR", "17", "PROFI", "60", "KOMMENTARE"}
+DISPLAY = {"neunhundert": "900", "dreißig": "30", "zweieinhalb": "2,5", "fünfmal": "5×", "neunzig": "90", "vierzig.": "40.", "siebzehn": "17", "sechzig": "60"}
 SKIP = {"zwölf", "zwölf.", "dreißig.", "vierzig.", "Uhr"}
 
 
@@ -451,11 +411,15 @@ def norm(t):
 
 
 words = []
+NUMW = {"eins": "1", "zwei": "2", "drei": "3", "vier": "4", "fünf": "5"}
+skip = 0
 for k, w in enumerate(W):
+    if skip: skip -= 1; continue
     nxt2 = " ".join(x["t"] for x in W[k:k+3]).lower()
-    if nxt2.startswith("zwei meter sechsundfünfzig"): words.append({"t": "2,56 m", "s": w["s"], "e": W[k+2]["e"]}); continue
-    if k >= 1 and W[k-1]["t"].lower() == "zwei" and w["t"] == "Meter": continue
-    if k >= 2 and W[k-1]["t"] == "Meter" and w["t"].lower().startswith("sechsundfünfzig"): continue
+    if nxt2.startswith("zwei meter sechsundfünfzig"): words.append({"t": "2,56 m.", "s": w["s"], "e": W[k+2]["e"]}); skip = 2; continue
+    if nxt2.startswith("drei uhr nachts"): words.append({"t": "3 Uhr nachts.", "s": w["s"], "e": W[k+2]["e"]}); skip = 2; continue
+    m = nxt2.split(" ")
+    if len(m) == 3 and m[0] in NUMW and m[1] == "zu" and m[2].startswith("null"): words.append({"t": f"{NUMW[m[0]]}:0" + ("." if W[k+2]["t"].endswith(".") else ""), "s": w["s"], "e": W[k+2]["e"]}); skip = 2; continue
     words.append(dict(w))
 # „A M L“ zu einem Wort
 merged = []
@@ -517,7 +481,9 @@ DEFS = f"""<svg width="0" height="0" style="position:absolute" aria-hidden="true
 <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient>
 <radialGradient id="redvig" cx=".5" cy=".5" r=".72"><stop offset=".5" stop-color="{RED}" stop-opacity="0"/><stop offset="1" stop-color="{RED}" stop-opacity=".7"/></radialGradient>
 <radialGradient id="yelglow"><stop offset="0" stop-color="#ffd23f" stop-opacity=".55"/><stop offset="1" stop-color="#ffd23f" stop-opacity="0"/></radialGradient>
-{FIGC_DEFS}<pattern id="netpat" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 0 0 L 30 30 M 30 0 L 0 30" stroke="#e8ecff" stroke-width="2"/></pattern>
+{FIGC_DEFS}<linearGradient id="daysky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f8fe0"/><stop offset=".55" stop-color="#8cc6f5"/><stop offset="1" stop-color="#d9efff"/></linearGradient>
+<radialGradient id="sunglow"><stop offset="0" stop-color="#fff4c2" stop-opacity=".6"/><stop offset="1" stop-color="#fff4c2" stop-opacity="0"/></radialGradient>
+<pattern id="netpat" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 0 0 L 30 30 M 30 0 L 0 30" stroke="#e8ecff" stroke-width="2"/></pattern>
 <filter id="softblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
 <filter id="softedge" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
 <radialGradient id="eyeglow"><stop offset="0" stop-color="#f6f4ff" stop-opacity=".45"/><stop offset="1" stop-color="#f6f4ff" stop-opacity="0"/></radialGradient>
@@ -549,9 +515,7 @@ def danger(did, t0, t1):
     tw(f'tl.fromTo("#{did}-v",{{opacity:.2}},{{opacity:.7,duration:.45,yoyo:true,repeat:{int((t1-t0)/0.45)},ease:"sine.inOut"}},{t0:.3f});')
 
 
-danger("ov-d1", t_laeufst, t_wirst)
-
-for sbid, tt, txt in SCORE_SWAP:
+for sbid, tt, txt in []:
     pass
 for fid in FIGS:
     tw(f'tl.fromTo("#{fid}-body",{{scaleY:1}},{{scaleY:1.02,transformOrigin:"50% 100%",duration:1.3,yoyo:true,repeat:{int(TOTAL/1.3)},ease:"sine.inOut"}},0);')

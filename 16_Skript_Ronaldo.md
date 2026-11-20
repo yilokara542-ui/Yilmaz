@@ -1,24 +1,26 @@
-# 16 – Skript: „So wirst du besser als Ronaldo“
+# 16 – Skript (Version 2): „So wirst du besser als Ronaldo“
 
-**Format A „Erklär-Story“** · Stimme ElevenLabs „Mark“ (energiegeladen) · VO 72,7 s, Video 76 s · neue Hauptfigur (Anime, Senf-Hoodie)
-**Technik:** Smartwatch-Schlaftracking – Beschleunigungssensor (Bewegung) + optischer Pulssensor (grüne LEDs, Photoplethysmografie) → Schlafphasen; Smart-Wecker am Zyklusende.
-**Anker:** Anzeigetafel „DU : RONALDO“ + „DISZIPLIN 1/3 → 3/3“ (keine Darstellung der realen Person, nur Name auf der Tafel).
+**Format A · Vergleich** · Stadion **tagsüber** · Stimme „Mark“ (energiegeladen) · VO 71,6 s, Video 75 s · Hauptfigur Anime/Senf-Hoodie
+**Anker:** Anzeigetafel „DU : RONALDO“, Spielstand 0:0 → 5:0, am Ende „? : 5 – in 20 Jahren?“. Ronaldo wird nicht gezeichnet.
 
 | Phase | Voiceover | Bild |
 |---|---|---|
-| Hook | Kannst du wirklich besser werden als Ronaldo? | Nachtstadion, Anzeigetafel 0:0, Fragezeichen |
-| Disziplin 1 | Kopfball: Kopf 2,56 m hoch – höher als die Latte (2,44 m). Du springst … nicht mal an die Latte. | Messlatte, rote Linie 2,56 m, Sprung mit Schwerkraft, DU 2,12 m, Tafel 0:1 |
-| Disziplin 2 | Du trainierst jeden Tag. Er auch. Seit über 20 Jahren. | Lauf mit Hütchen, Kalender blättert, „Ronaldo: 20+ J.“ |
-| Wendung (~22 s) | Der größte Unterschied passiert nicht auf dem Platz. Sondern im Bett. | Schlafzimmer, „Nicht auf dem Platz“ durchgestrichen |
-| Erklären | Bis zu 5 × 90 Minuten Schlaf; Schlafzyklus ≈ 90 min; Smartwatch spürt Bewegung + misst Puls mit grünem Licht | 24-h-Ring, Hypnogramm, Uhr mit Puls, Querschnitt Haut mit grünen LEDs |
-| Anwendung | Wecker am Zyklusende → Woche 1 wacher, Woche 4 schneller | Smart-Wecker, Energiebalken, Sprint |
-| Eskalation | Disziplin 3: Elfmeter. Du läufst an. | Rückansicht vor dem Tor, Torwart |
-| Ende | Wahrscheinlich nicht – aber du schläfst bald wie er. Was trainierst du zuerst? | Figur schläft, 3 Pillen |
+| Hook | Kannst du wirklich besser werden als Ronaldo? Wir vergleichen dich mit ihm. Fünf Disziplinen! | Tagesstadion, Tafel 0:0, „5 DISZIPLINEN“ |
+| 1 Sprungkraft | Kopfball 2,56 m, höher als die Torlatte. Du kommst nicht mal an die Latte. 1:0 | Messlatte, Sprung, 2,12 m |
+| 2 Tore | Über 900 Tore. Du müsstest ~2,5 Jahre jeden Tag treffen. 2:0 | Zähler 0 → 900+, Karte „≈ 2,5 Jahre“ |
+| 3 Tempo | Über 30 km/h. Du wirst vom Bus überholt. 3:0 | Tempobalken, Bus fährt vorbei |
+| 4 Ernährung | Kein Alkohol, Cola stehen lassen. Du: Cola in der Hand. 4:0 | Ronaldo-Karte Wasser ✓, Figur mit Dose |
+| 5 Schlaf | Bis zu 5 × 90 Minuten. Du zockst bis 3 Uhr nachts. 5:0 | Zimmer, Uhr 3:00, Controller |
+| Wendung | Ronaldo ist über 40. Du bist jünger. Seine Regeln kannst du kopieren. | 40+ vs. „Jünger“ |
+| Tipps | Jeden Tag trainieren · Schlaf + Wasser · nie aufhören (Profi mit 17) | 3 Tipp-Karten, Figur jongliert |
+| Ende | Wenn er 60 ist … In welcher Disziplin schlägst du ihn zuerst? | Tafel „? : 5“, 5 Pillen |
 
 ## Faktencheck
-- Kopfball-Treffer gegen Sampdoria (Dez. 2019): Kopf laut Berichten auf ca. 2,56 m Höhe. Fußballtor-Latte: 2,44 m.
-- Ronaldo arbeitet laut seinem früheren Schlafcoach Nick Littlehales mit bis zu fünf Schlafphasen à 90 Minuten (berichtet, daher „soll“).
-- Schlafzyklus dauert im Mittel ca. 90 Minuten (individuell ca. 70–120).
-- Smartwatches schätzen Schlafphasen aus Bewegung (Beschleunigungssensor) und Puls (grüne LEDs; Blut absorbiert grünes Licht im Pulsrhythmus).
+- Kopfball gegen Sampdoria (Dez. 2019): Kopf laut Berichten ca. 2,56 m hoch; Torlatte 2,44 m.
+- Über 900 Pflichtspieltore (Marke im Sept. 2024 erreicht). 900 ÷ 365 ≈ 2,5 Jahre.
+- Sprintspitzen von über 30 km/h (z. B. WM 2018 laut FIFA-Daten ~34 km/h).
+- Trinkt laut eigenen Aussagen keinen Alkohol; schob 2021 bei der EM-Pressekonferenz Cola-Flaschen weg.
+- Bis zu fünf 90-Minuten-Schlafphasen laut seinem früheren Schlafcoach (daher „soll“).
+- Geboren Feb. 1985 → über 40; Profidebüt bei Sporting Lissabon mit 17 (2002).
 
-**Caption:** Besser als Ronaldo? Fang beim Schlaf an 😴⚽ #fußball #ronaldo #wusstestdu #technik #fyp
+**Caption:** 0:5 gegen Ronaldo 😅 Wo schlägst du ihn zuerst? #fußball #ronaldo #motivation #fyp
