@@ -204,6 +204,7 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 ### Bildsprache Format C
 - **Block-Avatar-Stil** (eckige Köpfe/Körper, leichte 3D-Seiten, kräftige Farben), helle **Tagesstadt** mit Häusern, Straße mit gelben Mittelstreifen, Wiese, Bäume, Laternen, Fahnen – viele bunte Bewohner.
 - Kameras: Straßen-Totale, **Draufsicht auf den Bewohner-Kreis**, Gesichts-Großaufnahmen mit offenem Mund, Leuchttafel mit Glühbirnen-Rahmen, riesiger Daumen von oben, Zoom-in durch Handy-Rahmen.
+- **Maßstab Figuren ↔ Häuser (aus Feedback 22.11.):** In Szenen mit Häusern sind Block-Figuren **höchstens so groß wie die Haustür** (≈ ⅓–½ der Wandhöhe, z. B. `block(..., s=.38)` bei Häusern von 280–360 px + Tür 185 px). Figuren stehen auf dem Gehweg vor den Häusern, nie gleich groß wie ein Haus. Damit man Gesichter trotzdem erkennt, **zoomt die Kamera näher heran** (scale 1,4–1,9) – die Figuren werden nicht aufgeblasen. Große Figuren nur in reinen Nah-/Gesichtsaufnahmen ohne Häuser daneben. Schilder, Kartons usw. im selben Maßstab.
 - Hauptfigur des Accounts erscheint als **Block-Avatar** (Senf-Hoodie, `branding/roblox/`) – z. B. als „Papa“/Tafelbauer.
 
 ### Untertitel Format C (Abweichung von Abschnitt 7)
@@ -215,6 +216,7 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 - [ ] Zuschauer wird direkt angesprochen, 3–4 Bewohner mit Namen + ertappende Alltagsmomente
 - [ ] Tafel mit echter Videozeit, Daumen-Moment, Reinziehen mit Namen
 - [ ] Ein-Wort-Untertitel groß in Gelbgrün, Block-Stil, eigene Designs ohne Marken
+- [ ] Figuren neben Häusern höchstens türhoch – Nähe über Kamera-Zoom, nicht über Figurengröße
 
 ## 12. Feedback-Log (wird laufend erweitert)
 
@@ -244,3 +246,4 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 | 2026-11-20 | „Mir gefällt der Charakter nicht“ → Auswahl Variante C (Anime) + Outfit 1 | Abschnitt 6: neue feste Hauptfigur „C · Anime mit Senf-Hoodie“ aus `branding/figur/figur_c.py` |
 | 2026-11-20 | Video 16: „Stadion tagsüber, Skript ändern, Erklärungen raus, mehr mit Ronaldo vergleichen, mehr aufs Thema eingehen“ | Abschnitt 4: Themen-Treue & Vergleich (Disziplinen + Spielstand statt Technik-Exkurs), Tageszeit passend zum Thema |
 | 2026-11-22 | Neues Referenzvideo (Block-Stadt, 67 s): „Nimm dieses Video als Skill auf und erstelle das nächste Video nach diesem Schema“ | Neues Format C „Block-Stadt schaut dich an“ (Abschnitt 11b) mit Aufbau, Bildsprache, Ein-Wort-Untertiteln, Loop-Ende, Checkliste |
+| 2026-11-22 | Video 18: „Mache die Charaktere etwas kleiner, sodass es nicht so aussieht, als wären sie genauso groß wie die Häuser“ | Abschnitt 11b: Maßstab Figuren ↔ Häuser – Figuren höchstens türhoch, auf dem Gehweg, Nähe per Kamera-Zoom; Checkliste ergänzt |

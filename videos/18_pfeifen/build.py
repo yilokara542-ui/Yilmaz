@@ -170,7 +170,7 @@ def town(prefix, mode="night", behind="", lit=True, stars=True):
         cc = shade(c, f)
         out += (box(x, top, w, h, cc, shade(cc, .8), shade(cc, 1.08))
                 + f'<polygon points="{x-20},{top} {x+w/2},{top-110} {x+w+20},{top}" fill="{shade(roof, f)}"/>'
-                + f'<rect x="{x+w/2-35}" y="{1000-120}" width="70" height="120" fill="{shade("#6b4a32", f)}"/>')
+                + f'<rect x="{x+w/2-45}" y="{1000-185}" width="90" height="185" fill="{shade("#6b4a32", f)}"/><circle cx="{x+w/2+28}" cy="{1000-90}" r="6" fill="{shade(GOLD, f)}"/>')
         for r in range(2):
             for j in range(2):
                 wx = x + 20 + j * (w - 90); wy = top + 40 + r * 120
@@ -192,11 +192,11 @@ def town(prefix, mode="night", behind="", lit=True, stars=True):
     return out
 
 
-def sign(gid, cx, top, s=1.0, op=1):
+def sign(gid, cx, top, s=1.0, op=1, post=330):
     """Verbotsschild: NACH 22 UHR – NICHT PFEIFEN (durchgestrichene Note)."""
     w, h = 440, 300
     return (f'<g id="{gid}" opacity="{op}"><g transform="translate({cx},{top}) scale({s})">'
-            f'<rect x="-14" y="{h-10}" width="28" height="330" fill="#5a5f6e"/>'
+            f'<rect x="-14" y="{h-10}" width="28" height="{post}" fill="#5a5f6e"/>'
             f'<rect x="{-w/2}" y="0" width="{w}" height="{h}" rx="22" fill="#f4f1e6" stroke="#c62828" stroke-width="14"/>'
             f'<text x="0" y="62" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="44" fill="#0b0d22">NACH 22 UHR</text>'
             f'<circle cx="-110" cy="180" r="70" fill="#fff" stroke="#c62828" stroke-width="12"/>'
@@ -218,11 +218,11 @@ def playground(gid, x, y):
 
 
 # ================= SZENEN =================
-CROWD = ((130, 1160, .85), (330, 1170, .85), (760, 1170, .85), (950, 1160, .85))
+CROWD = ((250, 1066, .38), (370, 1068, .38), (720, 1068, .38), (840, 1066, .38))
 
 
 def hook_scene(sid, t0, t1, loop=False):
-    inner = town(sid, "dusk") + sign(f"{sid}-sg", 540, 560, 1.0)
+    inner = town(sid, "dusk") + sign(f"{sid}-sg", 540, 760, .62, post=225)
     inner += "".join(person(i, f"{sid}-p{i}", x, y, s, "n") for i, (x, y, s) in enumerate(CROWD))
     inner += f'<g id="{sid}-shock" opacity="0">' + "".join(person(i, f"{sid}-q{i}", x, y, s, "shock") for i, (x, y, s) in enumerate(CROWD)) + '</g>'
     if not loop:
@@ -236,11 +236,11 @@ def hook_scene(sid, t0, t1, loop=False):
 
 # A Hook: Dämmerung, Verbotsschild, alle erschrecken bei „pfeifen“
 hook_scene("sa", 0.0, t_um)
-tw(f'tl.fromTo("#sa-cam",{{scale:1,svgOrigin:"540 900"}},{{scale:1.12,svgOrigin:"540 900",duration:{t_schild:.3f},ease:"sine.inOut"}},0);')
+tw(f'tl.fromTo("#sa-cam",{{scale:1.45,svgOrigin:"540 980"}},{{scale:1.55,svgOrigin:"540 980",duration:{t_schild:.3f},ease:"sine.inOut"}},0);')
 tw(f'tl.set("#sa-shock",{{opacity:1}},{t_pf0:.3f});')
 shake("#sa-sg", t_pf0, 5, 6)
-tw(f'tl.to("#sa-cam",{{scale:1.55,svgOrigin:"540 720",duration:.45,ease:"power2.inOut"}},{t_schild - 0.25:.3f});')
-tw(f'tl.to("#sa-cam",{{scale:1.12,svgOrigin:"540 900",duration:.4,ease:"power2.inOut"}},{t_spiel - 0.2:.3f});')
+tw(f'tl.to("#sa-cam",{{scale:2.4,x:0,y:168,duration:.45,ease:"power2.inOut"}},{t_schild - 0.25:.3f});')
+tw(f'tl.to("#sa-cam",{{scale:1,x:0,y:0,duration:.4,ease:"power2.inOut"}},{t_spiel - 0.2:.3f});')
 pop("#sa-ins", t_spiel - 0.1, 0.35, 0.6)
 
 # B 21:59 – alle machen die Fenster zu
@@ -295,12 +295,11 @@ shake("#sc-pn", t_pfeif1 + 0.25, 4, 5)
 
 # D Aber du bist neu hier – und findest das lächerlich
 S0, S1 = t_aber, t_also
-boxes = (box(90, 1000, 220, 190, "#c89a5e", "#a57a44", "#d8b07a") + f'<rect x="90" y="1080" width="220" height="16" fill="#e8d9b5"/>'
-         + f'<text x="200" y="1160" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="38" fill="#5a3a1a">UMZUG</text>'
-         + box(120, 830, 170, 170, "#c89a5e", "#a57a44", "#d8b07a"))
-scene("sd", S0, S1, town("sd", "dusk") + boxes + me("sd-me", 600, 1180, 1.45, "happy")
-      + pill("sd-neu", 600, 300, "NEU HIER", CYAN, "#0b0d22", 64), drift=False)
-tw(f'tl.fromTo("#sd-cam",{{scale:1,svgOrigin:"600 900"}},{{scale:1.12,svgOrigin:"600 900",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
+boxes = (box(400, 1000, 90, 66, "#c89a5e", "#a57a44", "#d8b07a") + f'<text x="445" y="1042" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="17" fill="#5a3a1a">UMZUG</text>'
+         + box(412, 944, 66, 56, "#c89a5e", "#a57a44", "#d8b07a"))
+scene("sd", S0, S1, town("sd", "dusk") + boxes + me("sd-me", 580, 1066, .38, "happy")
+      + pill("sd-neu", 560, 700, "NEU HIER", CYAN, "#0b0d22", 40), drift=False)
+tw(f'tl.fromTo("#sd-cam",{{scale:1.75,svgOrigin:"520 960"}},{{scale:1.9,svgOrigin:"520 960",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 pop("#sd-neu", t_neu - 0.1, 0.35, 0.7)
 tw(f'tl.to("#sd-me-b",{{rotation:4,y:-14,svgOrigin:"0 0",duration:.12,yoyo:true,repeat:7,ease:"sine.inOut"}},{t_laech:.3f});')
 
@@ -312,20 +311,20 @@ tower = (box(800, 120, 200, 900, "#3a3550", "#2a2640", "#4a4566") + f'<polygon p
          + f'<g id="se-hh"><rect x="895" y="252" width="10" height="52" rx="5" fill="#1a1730"/></g>'
          f'<g id="se-mh"><rect x="897" y="228" width="7" height="76" rx="3" fill="#1a1730"/></g><circle cx="900" cy="300" r="9" fill="#1a1730"/>')
 dig = f'<g id="se-22" opacity="0"><rect x="700" y="420" width="260" height="100" rx="18" fill="#0b0d22" stroke="{RED}" stroke-width="5"/><text x="830" y="495" text-anchor="middle" font-family="JetBrains Mono" font-weight="800" font-size="70" fill="{RED}">22:00</text></g>'
-scene("se", S0, S1, town("se", "night", tower) + me("se-me", -120, 1068, .9, "n") + dig
+scene("se", S0, S1, town("se", "night", tower) + me("se-me", -60, 1066, .38, "n") + dig
       + f'<rect id="se-fl" width="1080" height="1920" fill="#fff" opacity="0"/>', drift=False)
 tw(f'tl.set("#se-hh",{{rotation:-60.5,svgOrigin:"900 300"}},0);')
 tw(f'tl.set("#se-mh",{{rotation:-6,svgOrigin:"900 300"}},0);')
-move("#se-me", S0, t_turm - S0, "sine.out", x=520)
+move("#se-me", S0, t_turm - S0, "sine.out", x=440)
 tw(f'tl.fromTo("#se-me-b",{{y:0}},{{y:-10,duration:.2,yoyo:true,repeat:{int((t_turm-S0)/0.2)},ease:"sine.inOut"}},{S0:.3f});')
-tw(f'tl.fromTo("#se-cam",{{scale:1,svgOrigin:"540 900"}},{{scale:1.05,svgOrigin:"540 900",duration:{t_turm-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
-tw(f'tl.to("#se-cam",{{scale:1.6,svgOrigin:"900 330",duration:.6,ease:"power2.inOut"}},{t_turm - 0.1:.3f});')
+tw(f'tl.fromTo("#se-cam",{{scale:1.35,svgOrigin:"400 940"}},{{scale:1.45,svgOrigin:"400 940",duration:{t_turm-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
+tw(f'tl.to("#se-cam",{{scale:1.6,x:-300,y:366,duration:.6,ease:"power2.inOut"}},{t_turm - 0.1:.3f});')
 tw(f'tl.to("#se-mh",{{rotation:0,svgOrigin:"900 300",duration:.12,ease:"back.out(3)"}},{t_22:.3f});')
 tw(f'tl.to("#se-hh",{{rotation:-60,svgOrigin:"900 300",duration:.12,ease:"back.out(3)"}},{t_22:.3f});')
 tw(f'tl.set("#se-fl",{{opacity:.5}},{t_22:.3f});')
 tw(f'tl.to("#se-fl",{{opacity:0,duration:.35}},{t_22+0.01:.3f});')
 pop("#se-22", t_22 + 0.05, 0.3, 0.6)
-shake("#se-cam", t_22, 6, 7)
+shake("#se", t_22, 6, 7)
 
 # F Du pfeifst – Stille. Kein Wind. Kein Hund. Gar nichts.
 S0, S1 = t_und_pf, t_dann1
@@ -395,8 +394,9 @@ strip = ""
 for k in range(3):
     strip += f'<g transform="translate({k*1080},0)">{town(f"si{k}", "night", stars=False)}</g>'
 scene("si", S0, S1, f'<rect width="1080" height="1920" fill="url(#skyg)"/><g id="si-bg">{strip}</g>'
-      + "".join(f'<rect id="si-l{k}" x="{900 + k*40}" y="{820 + k*70}" width="160" height="6" rx="3" fill="#cfd3ff" opacity=".6"/>' for k in range(4))
-      + f'<g transform="rotate(8 420 1068)">{me("si-me", 420, 1068, 1.0, "shock")}</g>', drift=False)
+      + "".join(f'<rect id="si-l{k}" x="{560 + k*30}" y="{900 + k*40}" width="160" height="6" rx="3" fill="#cfd3ff" opacity=".6"/>' for k in range(4))
+      + f'<g transform="rotate(8 420 1066)">{me("si-me", 420, 1066, .42, "shock")}</g>', drift=False)
+tw(f'tl.set("#si-cam",{{scale:1.6,svgOrigin:"420 960"}},{S0:.3f});')
 move("#si-bg", S0, S1 - S0 + 0.3, "none", x=-900)
 tw(f'tl.fromTo("#si-me-b",{{y:0}},{{y:-22,duration:.12,yoyo:true,repeat:{int((S1-S0+0.3)/0.12)},ease:"sine.inOut"}},{S0:.3f});')
 for k in range(4):
@@ -479,7 +479,7 @@ rh = (box(200, 430, 680, 570, "#efe4cc", "#d4c6a8", "#fbf3e0") + f'<polygon poin
 birds = "".join(f'<g id="sm-b{k}"><path d="M {x} {y} q 18 -16 36 0 q 18 -16 36 0" stroke="#2a2a3a" stroke-width="5" fill="none"/></g>' for k, (x, y) in enumerate(((140, 240), (240, 200), (700, 170))))
 scene("sm", S0, S1, f'<rect width="1080" height="1920" fill="url(#daysky)"/><circle cx="900" cy="260" r="70" fill="#fff4c2"/>' + birds
       + f'<rect x="0" y="1000" width="1080" height="920" fill="#5cc65a"/><rect x="0" y="1000" width="1080" height="70" fill="#d9d4c7"/>' + rh
-      + "".join(person(i, f"sm-p{i}", x, 1180, .8, "happy") for i, x in ((0, 120), (2, 960), (5, 700))), drift=False)
+      + "".join(person(i, f"sm-p{i}", x, 1066, .38, "happy") for i, x in ((0, 130), (2, 950), (5, 700))), drift=False)
 for k in range(3):
     move(f"#sm-b{k}", S0, S1 - S0 + 0.3, "none", x=160)
 tw(f'tl.fromTo("#sm-cam",{{scale:1,svgOrigin:"375 855"}},{{scale:1.08,svgOrigin:"375 855",duration:{t_schild2-S0:.3f},ease:"sine.inOut"}},{S0:.3f});')
@@ -519,7 +519,7 @@ tw(f'tl.to("#so-p-b",{{rotation:3,svgOrigin:"0 -300",duration:.18,yoyo:true,repe
 
 # P Loop: zurück an den Anfang – „Denn in dieser Stadt …“
 hook_scene("sp", t_denn, TOTAL, loop=True)
-tw(f'tl.fromTo("#sp-cam",{{scale:1.18,svgOrigin:"540 900"}},{{scale:1,svgOrigin:"540 900",duration:{TOTAL-t_denn:.3f},ease:"sine.out"}},{t_denn:.3f});')
+tw(f'tl.fromTo("#sp-cam",{{scale:1.7,svgOrigin:"540 980"}},{{scale:1.45,svgOrigin:"540 980",duration:{TOTAL-t_denn:.3f},ease:"sine.out"}},{t_denn:.3f});')
 
 # ================= UNTERTITEL (Format C: ein Wort, groß, Gelbgrün) =================
 KEY = {"DU", "DIR", "DEIN", "DEINE", "DEINER", "DEINS"}
