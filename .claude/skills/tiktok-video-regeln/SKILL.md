@@ -182,6 +182,40 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 - [ ] Ende: interaktive A/B-Abstimmung (Karten, Timer, Balken, Tipp-Finger, „Schreib A oder B“) + Teil-2-Karte, Länge 80–90 s
 - [ ] Untertitel in der Leiste y ≈ 1385 mit dunkler Box, nichts Wichtiges darunter
 
+## 11b. Format C – „Block-Stadt schaut dich an“ (Referenz: Block-Avatar-Video, 67 s, hochgeladen 22.11.)
+
+Drittes Format. **Wann nutzen:** wenn der User „Format C“, „Block-Stadt“, „Roblox-Stil“, „wie das Stadt-Video“ verlangt, oder für Meta-/Mitmach-Storys, die den Zuschauer selbst zum Thema machen.
+
+**Kern-Idee:** Eine bunte Block-Stadt (eigener Block-Avatar-Stil, keine Marken/Logos) **beobachtet den Zuschauer**. Der Erzähler spricht den Zuschauer direkt als den an, der gerade dieses Video schaut. Die Bewohner „sehen“ nacheinander typische, ertappende Alltagsmomente des Zuschauers. Eine Tafel zählt live, wie lange der Zuschauer schon zuschaut. Ein riesiger Daumen droht wegzuwischen – der Zuschauer bleibt – und wird zum Schluss **in die Stadt hineingezogen** (eigenes Haus/Stuhl mit seinem Namen). Das Ende geht nahtlos in den ersten Satz über (**Loop**).
+
+### Aufbau (Zeitanteile wie im Original)
+| Phase | Zeit | Inhalt |
+|---|---|---|
+| 1. Hook | 0–4 s | Ein Satz über die Stadt („In dieser Stadt schaut jeder zu.“) + sofortige Mini-Spannung („Warte. Er schaut schon wieder.“). Straße voller Block-Figuren, die sich zur Kamera drehen. |
+| 2. Enthüllung | 4–12 s | „Keiner weiß: Wir schauen **dich**.“ Draufsicht: Bewohner stehen im **Kreis** um den Zuschauer-Punkt und schauen nach oben in die Kamera. |
+| 3. Ertappt-Momente | 12–30 s | 3–4 Bewohner mit Namen (Oma, Bäcker, Hausmeister, Freundin …), je **ein relatable Moment** (nachts noch wach, Chips aus der Tüte, unterm Tisch scrollen, fast weggewischt). Großaufnahme Gesicht + passendes Mini-Bild. |
+| 4. Zuschauer-Tafel | 30–40 s | Leuchttafel mit Glühbirnen „ZUSCHAUER JETZT“: frühere Zuschauer „0:03 WEG“, „0:08 WEG“ (rot ✕), „**DU** 0:xx“ (grün) – die Zeit zeigt die **echte** Videozeit. |
+| 5. Daumen-Moment | 40–48 s | „Nicht bewegen.“ Riesiger Daumen senkt sich vom Himmel, alle halten sich fest – „Er bleibt.“ |
+| 6. Reinziehen | 48–62 s | Zoom ins Handy → ins Zimmer → in die Stadt; am Ende der Straße ein Haus/Stuhl mit **deinem Namen**. „Du wohnst jetzt hier.“ |
+| 7. Loop | letzte 2–3 s | Letzter Satz endet halb („Und in dieser Stadt …“) und passt exakt an den ersten Satz. Keine Teil-2-Karte, keine Abschlussfrage. |
+
+Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neues Bild).
+
+### Bildsprache Format C
+- **Block-Avatar-Stil** (eckige Köpfe/Körper, leichte 3D-Seiten, kräftige Farben), helle **Tagesstadt** mit Häusern, Straße mit gelben Mittelstreifen, Wiese, Bäume, Laternen, Fahnen – viele bunte Bewohner.
+- Kameras: Straßen-Totale, **Draufsicht auf den Bewohner-Kreis**, Gesichts-Großaufnahmen mit offenem Mund, Leuchttafel mit Glühbirnen-Rahmen, riesiger Daumen von oben, Zoom-in durch Handy-Rahmen.
+- Hauptfigur des Accounts erscheint als **Block-Avatar** (Senf-Hoodie, `branding/roblox/`) – z. B. als „Papa“/Tafelbauer.
+
+### Untertitel Format C (Abweichung von Abschnitt 7)
+- **Ein Wort pro Einblendung**, sehr groß (≈ 100–120 px), **GROSSBUCHSTABEN**, Gelbgrün **#d8f53c** mit dicker schwarzer Kontur, keine Box, im sicheren Bereich unten-mittig (y ≈ 1385). Schlüsselwörter anders gefärbt: **DU/DEIN** grün-cyan, **WEG** rot.
+- Wortgenau aus der Scribe-Transkription (wie Abschnitt 7).
+
+### Checkliste Format C
+- [ ] Erster Satz = Stadt + „schaut zu“, Loop-Schluss passt exakt an den Anfang
+- [ ] Zuschauer wird direkt angesprochen, 3–4 Bewohner mit Namen + ertappende Alltagsmomente
+- [ ] Tafel mit echter Videozeit, Daumen-Moment, Reinziehen mit Namen
+- [ ] Ein-Wort-Untertitel groß in Gelbgrün, Block-Stil, eigene Designs ohne Marken
+
 ## 12. Feedback-Log (wird laufend erweitert)
 
 **Pflege-Anweisung für Claude:** Wenn der User Feedback zu einem Video, Skript, Hook oder Stil gibt:
@@ -209,3 +243,4 @@ Format B wird bei uns mit **echter Technik** gefüllt, die im Szenario eine Roll
 | 2026-11-19 | Video 14: „Physik nicht erwähnen, Story gruseliger, Animation sauberer“ | Abschnitt 11a: „Grusel statt Unterricht“ – keine Physik-Erklärungen in Format B, Sinnes-Grusel, weiche saubere Animationen |
 | 2026-11-20 | „Mir gefällt der Charakter nicht“ → Auswahl Variante C (Anime) + Outfit 1 | Abschnitt 6: neue feste Hauptfigur „C · Anime mit Senf-Hoodie“ aus `branding/figur/figur_c.py` |
 | 2026-11-20 | Video 16: „Stadion tagsüber, Skript ändern, Erklärungen raus, mehr mit Ronaldo vergleichen, mehr aufs Thema eingehen“ | Abschnitt 4: Themen-Treue & Vergleich (Disziplinen + Spielstand statt Technik-Exkurs), Tageszeit passend zum Thema |
+| 2026-11-22 | Neues Referenzvideo (Block-Stadt, 67 s): „Nimm dieses Video als Skill auf und erstelle das nächste Video nach diesem Schema“ | Neues Format C „Block-Stadt schaut dich an“ (Abschnitt 11b) mit Aufbau, Bildsprache, Ein-Wort-Untertiteln, Loop-Ende, Checkliste |
