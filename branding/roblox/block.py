@@ -33,7 +33,7 @@ def face(cx, cy, mood, U):
     return f'<g class="bf">{e}{m}</g>'
 
 
-HAIRS = ("spike", "flat", "bun", "cap", "bald", "long", "chef")
+HAIRS = ("spike", "flat", "bun", "cap", "bald", "long", "chef", "fringe")
 
 
 def block(bid, x, y, s=1.0, shirt="#e0a83a", pants="#23252e", skin="#e8b08a", hair="#1e1a2e", hstyle="spike", mood="n",
@@ -67,6 +67,16 @@ def block(bid, x, y, s=1.0, shirt="#e0a83a", pants="#23252e", skin="#e8b08a", ha
         o += box(hx - 6, hy - 0.25*U, hw + 12, 0.45*U, hair, H2, shade(hair, 1.2)) + f'<rect x="{hx-0.35*U}" y="{hy+0.12*U}" width="{0.6*U}" height="{0.12*U}" fill="{H2}"/>'
     elif hstyle == "long":
         o += box(hx - 8, hy - 0.2*U, hw + 16, 0.45*U, hair, H2, shade(hair, 1.2)) + f'<rect x="{hx-8}" y="{hy}" width="{0.22*U}" height="{1.5*U}" fill="{hair}"/><rect x="{hx+hw-0.22*U+8}" y="{hy}" width="{0.22*U}" height="{1.5*U}" fill="{hair}"/>'
+    elif hstyle == "fringe":
+        # Hauptfigur: lockerer Pony (Fransen schräg in die Stirn) + Volumen oben + Seitensträhne
+        H3 = shade(hair, 1.35)
+        o += box(hx - 6, hy - 0.28*U, hw + 12, 0.42*U, hair, H2, shade(hair, 1.2))
+        top = [(0.05, -0.28), (0.25, -0.58), (0.45, -0.36), (0.7, -0.66), (0.92, -0.4), (1.18, -0.6), (1.38, -0.28)]
+        o += '<polygon points="' + " ".join(f"{hx + a*U:.0f},{hy + b*U:.0f}" for a, b in top) + f'" fill="{hair}"/>'
+        fr = [(-0.08, -0.05), (1.48, -0.05), (1.48, 0.28), (1.3, 0.2), (1.12, 0.42), (0.95, 0.22), (0.72, 0.46), (0.55, 0.24), (0.32, 0.44), (0.18, 0.22), (-0.08, 0.5)]
+        o += '<polygon points="' + " ".join(f"{hx + a*U:.0f},{hy + b*U:.0f}" for a, b in fr) + f'" fill="{hair}"/>'
+        o += f'<polygon points="{hx+hw},{hy-0.1*U:.0f} {hx+hw+DX},{hy+DY-0.1*U:.0f} {hx+hw+DX},{hy+DY+0.55*U:.0f} {hx+hw},{hy+0.75*U:.0f}" fill="{H2}"/>'
+        o += f'<path d="M {hx+0.3*U:.0f} {hy-0.2*U:.0f} Q {hx+0.7*U:.0f} {hy-0.4*U:.0f} {hx+1.1*U:.0f} {hy-0.2*U:.0f}" stroke="{H3}" stroke-width="{0.07*U:.1f}" fill="none" stroke-linecap="round" opacity=".7"/>'
     elif hstyle == "chef":
         o += box(hx - 4, hy - 0.7*U, hw + 8, 0.85*U, "#ffffff", "#d9dde6", "#ffffff")
     if back:

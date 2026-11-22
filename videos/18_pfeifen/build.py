@@ -132,7 +132,7 @@ def person(i, bid, x, y, s=1.0, mood="n", back=False, p=None):
 
 def me(bid, x, y, s=1.0, mood="happy", back=False):
     """Hauptfigur des Accounts als Block-Avatar (Senf-Hoodie)."""
-    return block(bid, x, y, s, "#e0a83a", "#23252e", "#e8b08a", "#1e1a2e", "spike", mood, back)
+    return block(bid, x, y, s, "#e0a83a", "#23252e", "#e8b08a", "#3a2418", "fringe", mood, back)
 
 
 def fadein(sel, t, dur=0.35, dy=14):
@@ -255,7 +255,10 @@ for k, (wx, wy, name, pi, tc) in enumerate(WINS):
     else:
         who = (person(4, f"sb-p{k}a", wx + 120, wy + H_ + 250, 1.0, "shock", p=("#ff8a3d", "#2c3a52", "#f0c09a", "#c98a3a", "flat"))
                + person(0, f"sb-p{k}b", wx + 290, wy + H_ + 250, 1.0, "shock", p=("#5cc65a", "#2c3a52", "#8d5a3b", "#1a1210", "spike"))
-               + f'<g id="sb-hand" opacity="0"><rect x="{wx+92}" y="{wy+130}" width="70" height="40" rx="10" fill="#f0c09a"/><rect x="{wx+262}" y="{wy+130}" width="70" height="40" rx="10" fill="#8d5a3b"/></g>')
+               + "<g id=\"sb-hand\" opacity=\"0\">" + "".join(
+                   f'<rect x="{hx-22}" y="{1118}" width="44" height="80" fill="{sh}"/>' + box(hx - 32, 1076, 64, 44, sk, shade(sk, .8), shade(sk, 1.1))
+                   + f'<line x1="{hx-12}" y1="1080" x2="{hx-12}" y2="1112" stroke="{shade(sk, .75)}" stroke-width="3"/><line x1="{hx+8}" y1="1080" x2="{hx+8}" y2="1112" stroke="{shade(sk, .75)}" stroke-width="3"/>'
+                   for hx, sk, sh in ((wx + 120, "#f0c09a", "#ff8a3d"), (wx + 290, "#8d5a3b", "#5cc65a"))) + "</g>")
     wins += (f'<clipPath id="sb-cl{k}"><rect x="{wx}" y="{wy}" width="{W_}" height="{H_}"/></clipPath>'
              f'<rect x="{wx-14}" y="{wy-14}" width="{W_+28}" height="{H_+28}" fill="#f4f1e6"/><rect x="{wx}" y="{wy}" width="{W_}" height="{H_}" fill="{WIN}"/>'
              f'<g clip-path="url(#sb-cl{k})">{who}</g>'
@@ -273,10 +276,10 @@ for k, (wx, wy, name, pi, tc) in enumerate(WINS):
     pop(f"#sb-n{k}", tc - 0.15, 0.3, 0.8)
     tw(f'tl.set("#sb-sl{k}",{{scaleX:0,transformOrigin:"0% 50%"}},0);')
     tw(f'tl.set("#sb-sr{k}",{{scaleX:0,transformOrigin:"100% 50%"}},0);')
-    tc2 = tc + 0.35 if k < 3 else tc + 0.15
+    tc2 = tc + 0.35 if k < 3 else tc + 0.6
     tw(f'tl.to("#sb-sl{k}",{{scaleX:1,duration:.22,ease:"power3.in"}},{tc2:.3f});')
     tw(f'tl.to("#sb-sr{k}",{{scaleX:1,duration:.22,ease:"power3.in"}},{tc2:.3f});')
-tw(f'tl.to("#sb-hand",{{opacity:1,duration:.15}},{t_kinder + 0.2:.3f});')
+tw(f'tl.fromTo("#sb-hand",{{opacity:1,y:120}},{{opacity:1,y:0,duration:.3,ease:"back.out(1.6)"}},{t_kinder + 0.25:.3f});')
 
 # C Oma Hilde flüstert: Pfeif nicht.
 S0, S1 = t_oma, t_aber
