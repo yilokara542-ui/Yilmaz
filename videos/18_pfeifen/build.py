@@ -353,6 +353,53 @@ tw(f'tl.to("#sf-cam",{{scale:1.18,svgOrigin:"540 820",duration:{S1-t_stille+0.3:
 for k, tt in enumerate((t_wind, t_hund, t_gar)):
     pop(f"#sf-i{k}", tt - 0.05, 0.3, 0.7)
 
+# ---------- Das Wesen: Schattengestalt mit glühenden Schlitzaugen (eigenes Design) ----------
+def m_eyes(eid, cx, cy, s=1.0, op=0):
+    """Asymmetrische, schräg stehende Glutaugen mit Schlitzpupillen."""
+    L = '<path d="M -82 8 Q -50 -26 -14 -8 Q -46 18 -82 8 Z" fill="url(#meye)" stroke="#2a0600" stroke-width="3"/><ellipse class="pup" cx="-46" cy="-1" rx="3" ry="13" fill="#000"/>'
+    R = '<g transform="translate(0,-8) scale(.86)"><path d="M 82 8 Q 50 -26 14 -8 Q 46 18 82 8 Z" fill="url(#meye)" stroke="#2a0600" stroke-width="3"/><ellipse class="pup" cx="46" cy="-1" rx="3" ry="13" fill="#000"/></g>'
+    return (f'<g id="{eid}" opacity="{op}"><g transform="translate({cx},{cy}) scale({s})"><circle r="150" fill="url(#mglow)"/>'
+            f'<g id="{eid}-lid">{L}{R}</g></g></g>')
+
+
+def shadow_fig(fid, x, y, s=1.0, op=0):
+    """Sehr große, dünne Schattengestalt: Kopf zu lang, Arme bis unter die Knie, lange Finger."""
+    C = "#03050a"; RIM = "#2c3160"
+    fingers = ""
+    for sx in (-1, 1):
+        hx, hy = sx * 104, -110
+        for k, (dx, dy) in enumerate(((-26, 110), (-10, 128), (6, 122), (20, 100))):
+            fingers += f'<path d="M {hx} {hy} Q {hx + sx*dx*0.4:.0f} {hy + dy*0.5:.0f} {hx + sx*dx} {hy + dy}" stroke="{C}" stroke-width="7" fill="none" stroke-linecap="round"/>'
+    arms = "".join(f'<path d="M {sx*58} -640 Q {sx*120} -420 {sx*104} -110" stroke="{C}" stroke-width="20" fill="none" stroke-linecap="round"/>' for sx in (-1, 1))
+    return (f'<g id="{fid}" opacity="{op}"><g transform="translate({x},{y}) scale({s})">'
+            f'<g stroke="{RIM}" stroke-width="5" opacity=".9">'
+            f'<path d="M -42 -630 Q -72 -400 -48 -170 L -34 0 L -12 0 L 0 -220 L 12 0 L 34 0 L 48 -170 Q 72 -400 42 -630 Z" fill="{C}"/></g>'
+            f'<path d="M -66 -642 Q 0 -690 66 -642 L 44 -598 L -44 -598 Z" fill="{C}"/>{arms}{fingers}'
+            f'<rect x="-10" y="-735" width="20" height="100" fill="{C}"/>'
+            f'<g id="{fid}-head"><ellipse cx="0" cy="-800" rx="50" ry="84" fill="{C}" stroke="{RIM}" stroke-width="4"/>{m_eyes(f"{fid}-e", 0, -812, .5, 1)}</g>'
+            f'</g></g>')
+
+
+def qpt(p0, c, p1, t):
+    return tuple((1-t)**2*a + 2*(1-t)*t*b + t*t*d for a, b, d in zip(p0, c, p1))
+
+
+def teeth_mouth(gid, op=0):
+    """Breiter Mund mit zwei Reihen spitzer Zähne (für das Schlüsselloch)."""
+    A, B = (300, 860), (780, 860)
+    up, lo = (540, 930), (540, 1060)
+    out = f'<g id="{gid}" opacity="{op}"><path d="M 300 860 Q 540 930 780 860 Q 540 1060 300 860 Z" fill="#0a0000"/>'
+    n = 16
+    for i in range(n):
+        t0, t1 = i/n, (i+1)/n
+        a, b = qpt(A, up, B, t0), qpt(A, up, B, t1); m = qpt(A, up, B, (t0+t1)/2)
+        h = 30 * (1 - abs((t0+t1)/2 - .5) * 1.2)
+        out += f'<polygon points="{a[0]:.0f},{a[1]:.0f} {b[0]:.0f},{b[1]:.0f} {m[0]:.0f},{m[1]+h:.0f}" fill="#ece6cf"/>'
+        a, b = qpt(A, lo, B, t0), qpt(A, lo, B, t1); m = qpt(A, lo, B, (t0+t1)/2)
+        out += f'<polygon points="{a[0]:.0f},{a[1]:.0f} {b[0]:.0f},{b[1]:.0f} {m[0]:.0f},{m[1]-h*.8:.0f}" fill="#d9d2b8"/>'
+    return out + '</g>'
+
+
 # G Jemand pfeift zurück – aus dem Wald
 S0, S1 = t_dann1, t_ueber
 trees = ""
@@ -363,20 +410,23 @@ for row, (col, y0, sc) in enumerate((("#0a1610", 900, 1.0), ("#0f2018", 1000, 1.
         hh = 420 * sc + RNG.randint(-40, 40)
         trees += f'<polygon points="{x},{y0-hh} {x-90*sc},{y0} {x+90*sc},{y0}" fill="{col}"/><rect x="{x-10*sc}" y="{y0}" width="{20*sc}" height="{60*sc}" fill="{col}"/>'
 fog = "".join(f'<ellipse cx="{x}" cy="{y}" rx="320" ry="60" fill="#8f94c4" opacity=".18" filter="url(#fogblur)"/>' for x, y in ((200, 1080), (800, 1150), (500, 1220)))
-eyes = (f'<g id="sg-eyes" opacity="0"><circle cx="540" cy="930" r="110" fill="url(#yelglow)"/>'
-        f'<g id="sg-eb"><ellipse cx="505" cy="930" rx="18" ry="12" fill="{GOLD}"/><ellipse cx="575" cy="930" rx="18" ry="12" fill="{GOLD}"/>'
-        f'<ellipse cx="505" cy="930" rx="4" ry="10" fill="#111"/><ellipse cx="575" cy="930" rx="4" ry="10" fill="#111"/></g></g>')
+eyes = ""
+fig_g = shadow_fig("sg-f", 560, 1150, .62)
 notes2 = "".join(note(f"sg-n{k}", 540, 940, .7, "#cfd3ff") for k in range(5))
 ground = f'<rect x="0" y="1180" width="1080" height="740" fill="#0d1a14"/>'
 scene("sg", S0, S1, f'<rect width="1080" height="1920" fill="url(#skyg)"/><circle cx="820" cy="300" r="60" fill="{MOON}"/><circle cx="820" cy="300" r="150" fill="url(#moonglow)"/>'
-      + trees + ground + fog + eyes + notes2 + me("sg-me", 540, 1880, 1.6, "n", back=True), drift=False)
+      + trees + fig_g + ground + fog + notes2 + me("sg-me", 540, 1880, 1.6, "n", back=True), drift=False)
 tw(f'tl.fromTo("#sg-cam",{{scale:1,svgOrigin:"540 930"}},{{scale:1.3,svgOrigin:"540 930",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
 for k in range(5):
     tt = t_pfeift2 + k * 0.3
     tw(f'tl.fromTo("#sg-n{k}",{{opacity:0,x:0,y:0,scale:.5,transformOrigin:"50% 50%"}},{{opacity:.9,x:{(-260, 200, -120, 280, -20)[k]},y:{(-200, -260, 180, 120, -340)[k]},scale:1.6,duration:1.6,ease:"sine.out"}},{tt:.3f});')
     tw(f'tl.to("#sg-n{k}",{{opacity:0,duration:.4}},{tt + 1.6:.3f});')
-tw(f'tl.to("#sg-eyes",{{opacity:1,duration:.3}},{t_wald:.3f});')
-tw(f'tl.to("#sg-eb",{{scaleY:.1,transformOrigin:"50% 50%",duration:.08,yoyo:true,repeat:1}},{t_wald + 0.5:.3f});')
+tw(f'tl.to("#sg-f",{{opacity:.35,duration:1.2,ease:"sine.in"}},{t_pfeift2:.3f});')
+tw(f'tl.set("#sg-f-e",{{opacity:0}},0);')
+tw(f'tl.to("#sg-f",{{opacity:1,duration:.4}},{t_wald - 0.1:.3f});')
+tw(f'tl.to("#sg-f-e",{{opacity:1,duration:.12}},{t_wald:.3f});')
+tw(f'tl.to("#sg-f-head",{{rotation:16,transformOrigin:"50% 100%",duration:.7,ease:"power2.inOut"}},{t_wald + 0.25:.3f});')
+tw(f'tl.to("#sg-f-e-lid",{{scaleY:.08,transformOrigin:"50% 50%",duration:.06,yoyo:true,repeat:1}},{t_wald + 0.15:.3f});')
 tw(f'tl.to("#sg-me-b",{{y:-12,duration:.1,yoyo:true,repeat:1}},{t_pfeift2:.3f});')
 
 # H Überall gehen die Lichter aus – nur deins nicht
@@ -438,7 +488,11 @@ doorK = (f'<rect width="1080" height="{gapY}" fill="#6b4a32"/><rect x="60" y="12
          f'<rect x="0" y="{gapY}" width="1080" height="30" fill="#8fa0ff" opacity=".55"/><rect x="0" y="{gapY+30}" width="1080" height="800" fill="#3a2a22"/>'
          f'<polygon points="0,{gapY+30} 1080,{gapY+30} 1180,{gapY+400} -100,{gapY+400}" fill="#8fa0ff" opacity=".12"/>'
          + "".join(f'<rect x="0" y="{y}" width="1080" height="4" fill="#2a1d17"/>' for y in range(gapY + 110, 1920, 90)))
-feet = f'<g id="sk-ft" opacity="0"><rect x="380" y="{gapY}" width="110" height="30" fill="#000"/><rect x="590" y="{gapY}" width="110" height="30" fill="#000"/></g>'
+feet = f'<g id="sk-ft" opacity="0"><rect x="400" y="{gapY}" width="60" height="30" fill="#000"/><rect x="620" y="{gapY}" width="60" height="30" fill="#000"/></g>'
+claws = '<g id="sk-cl" opacity="0">' + "".join(
+    f'<path d="M {x0 + k*30} {gapY+28} Q {x0 + k*30 + (k-1.5)*14} {gapY+140} {x0 + k*30 + (k-1.5)*34} {gapY+250}" stroke="#000" stroke-width="13" fill="none" stroke-linecap="round" opacity=".85"/>'
+    for x0 in (380, 600) for k in range(4)) + '</g>'
+feet += claws
 notes3 = "".join(note(f"sk-n{k}", 300 + k * 120, gapY + 20, .8, "#cfd3ff") for k in range(5))
 scene("sk", S0, S1, doorK + feet + notes3, drift=False)
 tw(f'tl.fromTo("#sk-cam",{{scale:1,svgOrigin:"540 {gapY}"}},{{scale:1.25,svgOrigin:"540 {gapY}",duration:{S1-S0+0.3:.3f},ease:"sine.inOut"}},{S0:.3f});')
@@ -446,24 +500,25 @@ tw(f'tl.to("#sk-ft",{{opacity:1,duration:.4}},{t_tuer - 0.1:.3f});')
 for k in range(5):
     tt = t_pfeift3 + k * 0.35
     tw(f'tl.fromTo("#sk-n{k}",{{opacity:0,y:-10,x:0}},{{opacity:.9,y:{200 + (k%2)*80},x:{(k-2)*60},duration:1.4,ease:"sine.out"}},{tt:.3f});')
-tw(f'tl.to("#sk-ft",{{x:-30,duration:.6,yoyo:true,repeat:1,ease:"sine.inOut"}},{t_melodie2:.3f});')
+tw(f'tl.set("#sk-cl",{{opacity:1}},{t_leise - 0.2:.3f});')
+tw(f'tl.fromTo("#sk-cl",{{scaleY:0,transformOrigin:"50% 0%"}},{{scaleY:1,duration:1.6,ease:"sine.inOut"}},{t_leise - 0.2:.3f});')
+tw(f'tl.to("#sk-cl",{{scaleY:.15,duration:.25,ease:"power3.in"}},{t_durch - 0.3:.3f});')
 
 # L Durchs Schlüsselloch: zwei gelbe Augen – ein Lächeln, viel zu breit
 S0, S1 = t_durch, t_am
 kh = "M 540 560 m -150 0 a 150 150 0 1 0 300 0 a 150 150 0 1 0 -300 0 Z M 470 660 L 610 660 L 680 1150 L 400 1150 Z"
-grin = (f'<g id="sl-gr" opacity="0"><path d="M 300 880 Q 540 1080 780 880 Q 540 990 300 880 Z" fill="#f4f0d8"/>'
-        + "".join(f'<line x1="{x}" y1="{900 + abs(x-540)*-0.05 + 20}" x2="{x}" y2="{975 - abs(x-540)*0.35}" stroke="#2a2a2a" stroke-width="5"/>' for x in range(340, 760, 40)) + '</g>')
-eyesL = (f'<g id="sl-ey" opacity="0"><circle cx="540" cy="600" r="220" fill="url(#yelglow)"/>'
-         f'<g id="sl-eb"><ellipse cx="465" cy="600" rx="46" ry="30" fill="{GOLD}"/><ellipse cx="615" cy="600" rx="46" ry="30" fill="{GOLD}"/>'
-         f'<ellipse cx="465" cy="600" rx="9" ry="26" fill="#111"/><ellipse cx="615" cy="600" rx="9" ry="26" fill="#111"/></g></g>')
+grin = teeth_mouth("sl-gr")
+eyesL = m_eyes("sl-ey", 540, 575, 1.55)
 scene("sl", S0, S1, f'<rect width="1080" height="1920" fill="#3a2618"/>'
       + "".join(f'<rect x="0" y="{y}" width="1080" height="6" fill="#2e1d12"/>' for y in range(0, 1920, 70))
       + f'<clipPath id="sl-kh"><path d="{kh}"/></clipPath>'
       + f'<path d="{kh}" fill="#04050d" stroke="#1a0f08" stroke-width="18"/>'
-      + f'<g clip-path="url(#sl-kh)"><rect width="1080" height="1920" fill="#070a1e"/>{eyesL}{grin}</g>', drift=False)
+      + f'<g clip-path="url(#sl-kh)"><rect width="1080" height="1920" fill="#070a1e"/><g id="sl-hd"><ellipse cx="540" cy="760" rx="330" ry="470" fill="#0d1024"/>{eyesL}{grin}</g></g>', drift=False)
 tw(f'tl.fromTo("#sl-cam",{{scale:1,svgOrigin:"540 760"}},{{scale:1.45,svgOrigin:"540 760",duration:{S1-S0+0.3:.3f},ease:"sine.in"}},{S0:.3f});')
 tw(f'tl.to("#sl-ey",{{opacity:1,duration:.35}},{t_gelbe - 0.1:.3f});')
-tw(f'tl.to("#sl-eb",{{scaleY:.1,transformOrigin:"50% 50%",duration:.07,yoyo:true,repeat:1}},{t_gelbe + 0.7:.3f});')
+tw(f'tl.to("#sl-ey-lid",{{scaleY:.08,transformOrigin:"50% 50%",duration:.07,yoyo:true,repeat:1}},{t_gelbe + 0.7:.3f});')
+tw(f'tl.fromTo("#sl-hd",{{rotation:0}},{{rotation:-14,svgOrigin:"540 760",duration:{t_am - t_gelbe:.3f},ease:"sine.inOut"}},{t_gelbe:.3f});')
+tw(f'tl.to("#sl-ey .pup",{{scaleX:.35,transformOrigin:"50% 50%",duration:.2}},{t_breit:.3f});')
 tw(f'tl.fromTo("#sl-gr",{{opacity:0,scaleX:.3,transformOrigin:"50% 50%"}},{{opacity:1,scaleX:1,duration:.45,ease:"power2.out"}},{t_laecheln:.3f});')
 tw(f'tl.to("#sl-gr",{{scaleX:1.7,scaleY:1.15,transformOrigin:"50% 50%",duration:.5,ease:"power2.in"}},{t_breit - 0.1:.3f});')
 shake("#sl-cam", t_breit + 0.3, 7, 9)
@@ -510,7 +565,7 @@ shake("#sn-cam", t_gepf + 0.1, 6, 10)
 # O Oma Hilde schaut zum Wald: Ich hab's dir gesagt.
 S0, S1 = t_oma2, t_denn
 forest = "".join(f'<polygon points="{x},{1000-h} {x-80},1000 {x+80},1000" fill="#1d3324"/>' for x, h in ((640, 420), (760, 520), (880, 460), (1000, 540), (1100, 480)))
-eyesO = (f'<g id="so-ey" opacity="0"><ellipse cx="840" cy="880" rx="12" ry="8" fill="{GOLD}"/><ellipse cx="882" cy="880" rx="12" ry="8" fill="{GOLD}"/></g>')
+eyesO = shadow_fig("so-ey", 860, 1010, .42)
 scene("so", S0, S1, f'<rect width="1080" height="1920" fill="url(#daysky)"/><circle cx="160" cy="260" r="70" fill="#fff4c2"/>'
       + f'<rect x="0" y="1000" width="1080" height="920" fill="#5cc65a"/>' + forest + eyesO
       + f'<rect x="560" y="990" width="520" height="40" fill="#3f6b3f" opacity=".6"/>'
@@ -575,6 +630,8 @@ DEFS = f"""<svg width="0" height="0" style="position:absolute" aria-hidden="true
 <radialGradient id="namglow"><stop offset="0" stop-color="#fff4c2" stop-opacity=".7"/><stop offset="1" stop-color="#fff4c2" stop-opacity="0"/></radialGradient>
 <pattern id="netpat" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 0 0 L 30 30 M 30 0 L 0 30" stroke="#e8ecff" stroke-width="2"/></pattern>
 <linearGradient id="dusksky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1f4f"/><stop offset=".55" stop-color="#9a4a78"/><stop offset="1" stop-color="#f0a060"/></linearGradient>
+<radialGradient id="meye"><stop offset="0" stop-color="#fff6c0"/><stop offset=".45" stop-color="#ffc21a"/><stop offset="1" stop-color="#d63a00"/></radialGradient>
+<radialGradient id="mglow"><stop offset="0" stop-color="#ff7a1a" stop-opacity=".45"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
 <filter id="softblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
 <filter id="softedge" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
 <radialGradient id="eyeglow"><stop offset="0" stop-color="#f6f4ff" stop-opacity=".45"/><stop offset="1" stop-color="#f6f4ff" stop-opacity="0"/></radialGradient>

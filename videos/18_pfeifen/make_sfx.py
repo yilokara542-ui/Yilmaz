@@ -92,6 +92,13 @@ pop_(C["t_name"]-.2, 880); stamp(C["t_gepf"])
 # O/P
 whistle(C["t_wald2"], .03, .9, echo=True)
 whoosh(C["t_denn"]-.2, .5, .3)
+def breath(t0, dur=1.6, g=.12):
+    L = int(dur*SR); x = np.arange(L)/SR
+    add(t0, g*lp(rng.standard_normal(L), 40)*np.sin(np.pi*x/dur)**2*(.6+.4*np.sin(2*np.pi*1.3*x)))
+def growl(t0, dur=1.4, g=.18):
+    L = int(dur*SR); x = np.arange(L)/SR
+    add(t0, g*np.sin(2*np.pi*np.cumsum(55+8*np.sin(2*np.pi*7*x))/SR)*(1+.5*lp(rng.standard_normal(L), 30))*np.sin(np.pi*x/dur))
+growl(C["t_wald"], 1.6, .2); breath(C["t_leise"]-.2, 2.0, .1); breath(C["t_gelbe"]-.3, 1.8, .12); growl(C["t_breit"], 1.4, .22)
 out = out/np.max(np.abs(out))*.6
 with wave.open(os.path.join(HERE, "assets/sfx_bed.wav"), "wb") as w:
     w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes((out*32767).astype(np.int16).tobytes())

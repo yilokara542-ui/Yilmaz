@@ -207,6 +207,12 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 - **Maßstab Figuren ↔ Häuser (aus Feedback 22.11.):** In Szenen mit Häusern sind Block-Figuren **höchstens so groß wie die Haustür** (≈ ⅓–½ der Wandhöhe, z. B. `block(..., s=.38)` bei Häusern von 280–360 px + Tür 185 px). Figuren stehen auf dem Gehweg vor den Häusern, nie gleich groß wie ein Haus. Damit man Gesichter trotzdem erkennt, **zoomt die Kamera näher heran** (scale 1,4–1,9) – die Figuren werden nicht aufgeblasen. Große Figuren nur in reinen Nah-/Gesichtsaufnahmen ohne Häuser daneben. Schilder, Kartons usw. im selben Maßstab.
 - Hauptfigur des Accounts erscheint als **Block-Avatar** (Senf-Hoodie, Frisur **`fringe`** = lockerer dunkelbrauner Pony `#3a2418` mit Volumen oben – nicht mehr `spike`, aus Feedback 22.11.; `branding/roblox/`) – z. B. als „Papa“/Tafelbauer.
 
+### Grusel-Wesen in Format C (aus Feedback 22.11.)
+- Das Wesen nie komplett zeigen – **mysteriös statt deutlich**: große, viel zu dünne Schattengestalt (Kopf zu lang, Arme bis unter die Knie, lange Finger), nur mit schwachem Randlicht, halb im Nebel/zwischen Bäumen. Vorher nur als Andeutung (Schatten, Finger unter der Tür, kurz aufblitzende Augen am helllichten Tag).
+- **Augen:** asymmetrisch, schräg stehend, glühend (gelb → orange → rot), Schlitzpupillen, roter Glow; langsames Blinzeln, Pupillen ziehen sich beim Schreckmoment zusammen. Keine runden „freundlichen“ Augen.
+- **Grinsen:** breiter Mund mit zwei Reihen spitzer Zähne, angeschnitten (wirkt „zu breit“). Kopf neigt sich langsam zur Seite. Kein Blut/Gore.
+- Ton: tiefes Knurren beim Erscheinen, Atmen hinter der Tür. Bausteine: `m_eyes()`, `shadow_fig()`, `teeth_mouth()` in `videos/18_pfeifen/build.py`.
+
 ### Untertitel Format C (Abweichung von Abschnitt 7)
 - **Ein Wort pro Einblendung**, sehr groß (≈ 100–120 px), **GROSSBUCHSTABEN**, Gelbgrün **#d8f53c** mit dicker schwarzer Kontur, keine Box, im sicheren Bereich unten-mittig (y ≈ 1385). Schlüsselwörter anders gefärbt: **DU/DEIN** grün-cyan, **WEG** rot.
 - Wortgenau aus der Scribe-Transkription (wie Abschnitt 7).
@@ -249,3 +255,4 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 | 2026-11-22 | Neues Referenzvideo (Block-Stadt, 67 s): „Nimm dieses Video als Skill auf und erstelle das nächste Video nach diesem Schema“ | Neues Format C „Block-Stadt schaut dich an“ (Abschnitt 11b) mit Aufbau, Bildsprache, Ein-Wort-Untertiteln, Loop-Ende, Checkliste |
 | 2026-11-22 | Video 18: „Mache die Charaktere etwas kleiner, sodass es nicht so aussieht, als wären sie genauso groß wie die Häuser“ | Abschnitt 11b: Maßstab Figuren ↔ Häuser – Figuren höchstens türhoch, auf dem Gehweg, Nähe per Kamera-Zoom; Checkliste ergänzt |
 | 2026-11-22 | Video 18: „Überarbeite die Animation – die Kinder halten sich den Mund falsch zu (Animationsfehler). Ändere die Frisur von unserem Charakter“ | Hände + Ärmel kommen von unten vor den Mund, Fensterladen schließt erst danach; Block-Hauptfigur bekommt Frisur `fringe`; Checkliste: Gesten anatomisch per Snapshot prüfen |
+| 2026-11-22 | Video 18: „Mache das Monster gruseliger, sowohl die Augen als auch das Erscheinungsbild, und mache ihn mysteriöser“ | Abschnitt 11b: „Grusel-Wesen“ – Schattengestalt nur angedeutet, asymmetrische Glut-Schlitzaugen, Zahn-Grinsen, Kopfneigen, Knurren/Atmen |
