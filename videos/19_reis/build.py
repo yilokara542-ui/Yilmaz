@@ -58,14 +58,14 @@ def scene(sid, t0, t1, inner, dark=False):
 
 # ================= CUES =================
 t_klo = ws("Klo"); t_legst = ws("legst"); t_reis0 = ws("Reis")
-t_gag = 4.08; t_saugt = ws("saugt"); t_beruehrt = ws("berührt")
+t_du_f = ws("Du", t_reis0 + 0.3); t_ha = [w for w in W if w["s"] == t_reis0][0]["e"] + 0.15; t_gag = t_du_f - 0.3; t_saugt = ws("saugt"); t_beruehrt = ws("berührt")
 t_das_w = ws("Das", t_beruehrt); t_im = ws("im", t_das_w); t_zwischen = ws("Zwischen")
 t_der = ws("Der", t_zwischen); t_wartet = ws("wartet")
 t_genau = ws("Genau"); t_antwort = ws("Antwort")
 t_reis_ist = ws("Reis", t_antwort); t_handtuch = ws("Handtuch"); t_jacke = ws("Jacke"); t_drunter = ws("drunter")
 t_und_w = ws("Und", t_drunter); t_rosten = ws("rosten")
 t_dazu = ws("Dazu"); t_kruemeln = ws("krümeln"); t_lade = ws("Ladeanschluss")
-t_genie_du = ws("Du", t_lade); t_das_wurde = ws("Das", t_genie_du); t_2014 = ws("zweitausendvierzehn"); t_sieben = ws("Sieben")
+t_das_wurde = ws("Das", t_lade); t_2014 = ws("zweitausendvierzehn"); t_sieben = ws("Sieben")
 t_ergebnis = ws("Ergebnis"); t_reis_war = ws("Reis", t_ergebnis); t_schlecht = ws("schlechtesten"); t_sogar = ws("Sogar", t_schlecht)
 t_besser = ws("besser"); t_apple = ws("Und", t_besser); t_bitte = ws("Bitte")
 t_warum = ws("Und", t_bitte); t_funkt = ws("funktioniert")
@@ -92,10 +92,10 @@ A2 = (ground(1290) + bowl(640, 1060, 400, 190, inside=rice_pile(640, 1080, 380, 
       + stick("a2", 270, 1290, 1.25, "smug", "both", moods=("laugh",))
       + g("a2-ha", text(770, 560, "HA", 120, RED, 900) + text(900, 470, "HA", 80, RED, 900)))
 scene("a2", t_legst, t_gag, A2)
-pop("#a2-ha", 3.44, .5, .2)
+pop("#a2-ha", t_ha, .5, .2)
 
-# A3 Gag: Zeigefinger (ohne Untertitel)
-A3 = ground(1290) + stick("a3", 330, 1290, 1.25, "shock", "down") + g("a3-fg", finger(470, 760, 1.0), 1)
+# A3 Gag: Zeigefinger – „Du fetter Bastard.“
+A3 = ground(1290) + stick("a3", 330, 1290, 1.25, "shock", "down", stubble=True) + g("a3-fg", finger(470, 760, 1.0), 1)
 scene("a3", t_gag, t_saugt, A3)
 tw(f'tl.fromTo("#a3-fg",{{x:700}},{{x:0,duration:.35,ease:"power3.out"}},{t_gag + 0.05:.3f});')
 tw(f'tl.to("#a3-fg",{{x:-24,duration:.12,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_gag + 0.5:.3f});')
@@ -173,15 +173,11 @@ H = (f'<rect x="140" y="560" width="800" height="560" rx="90" fill="#3A3A44" str
      f'<rect x="380" y="900" width="320" height="90" rx="45" fill="#15151a" stroke="{INK}" stroke-width="6"/>'
      + "".join(f'<circle cx="{x}" cy="945" r="9" fill="#15151a"/>' for x in (240, 270, 300, 780, 810, 840))
      + crumbs + pill("h-p", 540, 1200, "verstopft", "red", 52) + pill("h-l", 540, 470, "Ladeanschluss", "white", 46).replace('<g id="h-l" opacity="0">','<g id="h-l" opacity="0">'))
-scene("h", t_dazu, t_genie_du, H)
+scene("h", t_dazu, t_das_wurde, H)
 for k in range(6):
     tw(f'tl.fromTo("#h-c{k}",{{opacity:1,x:0,y:0}},{{x:{540-[300,420,660,780,520,600][k]},y:{945-[420,360,380,450,300,470][k]},scale:.6,duration:.6,ease:"power2.in"}},{t_kruemeln + k*0.18:.3f});')
     hide(f"#h-c{k}", t_kruemeln + k * 0.18 + 0.6)
 pop("#h-l", t_lade - 0.1); pop("#h-p", t_lade + 0.5)
-
-# I Du Elender. (gleiche Beleidigung wie Referenz)
-I_ = ground(1290) + stick("i", 540, 1290, 1.3, "sad", "hold", stubble=True) + phone(680, 960, 80, 150, extra="".join(grain(x, y, r, .9) for x, y, r in ((655, 920, 20), (700, 990, 120), (670, 1010, 60))))
-scene("i", t_genie_du, t_das_wurde, I_)
 
 # J 2014 getestet – sieben Trockenmittel
 fills = ("#ffffff", "#9fc6ff", "#d9c2a0", "#e8e0d0", "#c8a77a", "#f0f0f0", "#b8d8b0")

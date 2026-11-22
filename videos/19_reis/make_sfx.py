@@ -20,7 +20,7 @@ def splash(t0):
     for k in range(5): tone(t0+.05+k*.05, 1400-k*150, 900, .06, .06, .03)
 def tap(t0): noise(t0, .05, .01, 2, .35); tone(t0, 220, 160, .08, .2, .03)
 splash(C["t_klo"]+.05)
-whoosh(4.1, .35, .22)
+whoosh(C["t_gag"], .35, .22)
 for k in ("t_saugt", "t_im", "t_zwischen", "t_handtuch", "t_drunter", "t_rosten", "t_lade", "t_sieben", "t_schlecht", "t_besser", "t_bitte", "t_funkt", "t_wdicht", "t_nicht_w", "t_aus", "t_nlad", "t_anschl", "t_luft", "t_sushi"):
     pop(C[k], 880 if k != "t_schlecht" else 520)
 for k in range(3): tap(C["t_klopf"]+k*.18)
