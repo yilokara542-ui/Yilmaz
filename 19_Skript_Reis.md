@@ -14,7 +14,7 @@ Themen-Liste Nr. 20 · Stimme „Mark“, trocken-sarkastisch · VO 55,8 s + ein
 | 15–18,5 s | Reis ist wie ein Handtuch auf deiner Jacke, wenn du drunter nass bist. | Reisschüssel = Figur mit Jacke + Handtuch, Labels „Handtuch“, „drunter nass“ |
 | 18,5–21,7 s | Und während du wartest, rosten drinnen die Kontakte weiter. | Goldkontakte bekommen Rostflecken, Label „Rost“ |
 | 21,7–24,8 s | Dazu krümeln kleine Reisstücke in den Ladeanschluss. | Handy-Unterseite, Reiskrümel fliegen in den Anschluss, „Ladeanschluss“, „verstopft“ |
-| 24,8–26 s | Du Genie. | Figur mit dummem Gesicht, Reis klebt am Handy |
+| 24,8–26 s | Du Elender. | Traurige Figur mit Bartstoppeln, Reis klebt am Handy |
 | 26–30,6 s | Das wurde übrigens schon 2014 getestet. Sieben Trockenmittel im Vergleich. | Polaroid „2014“ mit 7 Bechern, Label „7 Trockenmittel“ |
 | 30,6–35,4 s | Ergebnis? Reis war am schlechtesten. Sogar einfach offen liegen lassen war besser. | Lila „?“ → Balkendiagramm „Holt Wasser raus:“, Reis kleinster Balken, Luft besser |
 | 35,4–39 s | Und sogar Apple sagt inzwischen: Bitte keinen Reis. | Hersteller-Tipp-Karte (ohne Logo), Reisschüssel ✕, „Bitte keinen Reis.“ |

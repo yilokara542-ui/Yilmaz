@@ -179,8 +179,8 @@ for k in range(6):
     hide(f"#h-c{k}", t_kruemeln + k * 0.18 + 0.6)
 pop("#h-l", t_lade - 0.1); pop("#h-p", t_lade + 0.5)
 
-# I Du Genie.
-I_ = ground(1290) + stick("i", 540, 1290, 1.3, "dumb", "hold") + phone(680, 960, 80, 150, extra="".join(grain(x, y, r, .9) for x, y, r in ((655, 920, 20), (700, 990, 120), (670, 1010, 60))))
+# I Du Elender. (gleiche Beleidigung wie Referenz)
+I_ = ground(1290) + stick("i", 540, 1290, 1.3, "sad", "hold", stubble=True) + phone(680, 960, 80, 150, extra="".join(grain(x, y, r, .9) for x, y, r in ((655, 920, 20), (700, 990, 120), (670, 1010, 60))))
 scene("i", t_genie_du, t_das_wurde, I_)
 
 # J 2014 getestet – sieben Trockenmittel

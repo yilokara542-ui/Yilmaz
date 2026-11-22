@@ -246,6 +246,8 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 8. Die echte Ursache | 51–56 s | „Und warum wird dein Bart dann wirklich dicker? Weil du älter wirst. Hormone. Nicht dein Rasierer.“ → drei Figuren nebeneinander (jung → Bart → Vollbart), lila Zeitpfeil „Alter“, Label „Hormone“, durchgestrichener Rasierer. |
 | 9. Schluss-Punchline | 57–64 s | „Also hör auf, jeden Morgen deine fünf Haare zu rasieren, in der Hoffnung, dass ein Bart draus wird.“ → Kalender-Montage Mo/Di/Do/Sa/So (jeden Tag rasieren), rotes Label „5 Haare“, traurige Figur, Gedankenblase mit Vollbart. **Endet hart** nach dem letzten Wort (keine Abschlusskarte, kein „Folg mir“). |
 
+**Pflicht-Beleidigung (aus Feedback 22.11.):** In jedem Format-D-Video kommt **wörtlich „Du Elender.“** vor – als eigener Satz direkt nach der Erklärung, warum der Mythos entsteht. Bild: traurige Figur allein mit Bartstoppeln, Untertitel nur „Du Elender.“. Keine Ersatz-Beleidigung („Du Genie.“ o. Ä.). Weitere Roasts („Genau wie du.“) zusätzlich.
+
 **Skript-Regeln:** ca. 140–160 Wörter, kurze Hauptsätze, Du-Ansprache, ein Fakt pro Satz, **2–3 Roast-Einzeiler** über den Zuschauer, **1 Alltagsvergleich** (X = Gegenstand), **1 Beweis** (Studie/Jahreszahl/Zahl), Wiederholung der Kernaussage („gar nichts“), Schluss = Callback auf den Hook mit Pointe. Keine Fachwörter-Lawine, kein „Hallo Leute“, keine Frage-an-die-Community am Ende.
 
 ### Look (exakt so)
@@ -276,6 +278,7 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 - [ ] Ein Bild-Gedanke pro Satz, harte Schnitte alle 1–3 s, Creme-Hintergrund #F3ECE5, Strichmännchen mit dicken Linien
 - [ ] 1 Alltagsvergleich (X = Gegenstand), 1 Beweis mit Zahl/Jahr, Liste mit ✕, Wiederholung „gar nichts“
 - [ ] 2–3 Roasts am Zuschauer, genau 1 dunkler Roast-Cutaway
+- [ ] „Du Elender.“ wörtlich drin (traurige Figur allein)
 - [ ] Ganzer-Satz-Untertitel Nunito, schwarz, ohne Box/Kontur, unteres Drittel
 - [ ] Ruhige, trockene Stimme ohne Musik, 60–65 s, Ende hart nach der Pointe (Callback auf den Hook)
 - [ ] Fakten stimmen (Abschnitt 9), eigene Zeichnungen, keine Marken
@@ -312,3 +315,4 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 2026-11-22 | Video 18: „Überarbeite die Animation – die Kinder halten sich den Mund falsch zu (Animationsfehler). Ändere die Frisur von unserem Charakter“ | Hände + Ärmel kommen von unten vor den Mund, Fensterladen schließt erst danach; Block-Hauptfigur bekommt Frisur `fringe`; Checkliste: Gesten anatomisch per Snapshot prüfen |
 | 2026-11-22 | Video 18: „Mache das Monster gruseliger, sowohl die Augen als auch das Erscheinungsbild, und mache ihn mysteriöser“ | Abschnitt 11b: „Grusel-Wesen“ – Schattengestalt nur angedeutet, asymmetrische Glut-Schlitzaugen, Zahn-Grinsen, Kopfneigen, Knurren/Atmen |
 | 2026-11-22 | Neues Referenzvideo (Strichmännchen „Bart rasieren“, 63,7 s): „Analysiere dieses Video und mache es eins zu eins in deinen Skill, sodass du die nächsten Videos genau so gestaltest“ | Neues Format D „Strichmännchen-Mythos“ (Abschnitt 11c) als STANDARD: Skript-Aufbau, Look/Farben, Ganzer-Satz-Untertitel, harte Schnitte, trockene Stimme ohne Musik, Checkliste; Referenzbilder in `referenz/` |
+| 2026-11-22 | Video 19: „Die Beleidigung fehlt. Benutze die gleiche Beleidigung“ | Abschnitt 11c: „Du Elender.“ ist Pflicht-Satz in jedem Format-D-Video (statt „Du Genie.“), Szene traurige Figur mit Stoppeln; Checkliste ergänzt |
