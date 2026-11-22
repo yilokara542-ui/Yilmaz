@@ -1,12 +1,14 @@
 ---
 name: tiktok-video-regeln
-description: Verbindliche Regeln für die faceless TikTok-Videos des Users (Alltagstechnik einfach und animiert erklärt). Nutzen, sobald ein Video-Skript, Hook, Storyboard, Bild-/Animations-Prompt, Untertitel, Caption oder eine Video-Idee für den Account geschrieben, geprüft oder überarbeitet wird. Ebenfalls nutzen, wenn der User Feedback zu einem Video/Skript gibt: dann dieses Regelwerk erweitern. Enthält zwei Formate: A „Erklär-Story“ (Standard) und B „Regel-Serie“ (Notfall-/Nacht-Szenario mit 3 Regeln, mehrteilig).
+description: Verbindliche Regeln für die faceless TikTok-Videos des Users (Alltagstechnik einfach und animiert erklärt). Nutzen, sobald ein Video-Skript, Hook, Storyboard, Bild-/Animations-Prompt, Untertitel, Caption oder eine Video-Idee für den Account geschrieben, geprüft oder überarbeitet wird. Ebenfalls nutzen, wenn der User Feedback zu einem Video/Skript gibt: dann dieses Regelwerk erweitern. Enthält die Formate D „Strichmännchen-Mythos“ (STANDARD für neue Videos seit 22.11.), A „Erklär-Story“, B „Regel-Serie“ (Nacht-Szenario, mehrteilig) und C „Block-Stadt“.
 ---
 
 # TikTok-Video-Regeln – „Alltagstechnik einfach erklärt“
 
 Faceless-Account, Sprache Deutsch (DACH), animierte Videos, die erklären, wie Alltagstechnik funktioniert (Handy, Aufzug, Mikrowelle, Kühlschrank, Ampel, WLAN, Kartenzahlung …).
 Grundlage: Analyse von 3 Referenz-Videos, siehe `06_Referenz-Analyse.md` im Repo-Root.
+
+> **STANDARD ab 22.11.: Neue Videos werden 1:1 im Format D „Strichmännchen-Mythos“ gestaltet (Abschnitt 11c)** – außer der User verlangt ausdrücklich Format A, B oder C. Wo Format D von den allgemeinen Abschnitten 1–11 abweicht (Look, Untertitel, Ton, Tempo), gilt Format D.
 
 **Prinzip:** Wir übernehmen die Spannungs-Mechanik der Referenzen (POV-Szenario, Countdown, Twist, Frage am Ende) und füllen sie mit echter, korrekter Technik-Erklärung.
 
@@ -225,6 +227,59 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 - [ ] Figuren neben Häusern höchstens türhoch – Nähe über Kamera-Zoom, nicht über Figurengröße
 - [ ] Gesten anatomisch prüfen (Snapshot!): Hand/Arm kommt von unten an die richtige Stelle (Mund zuhalten = Hand vor dem Mund, nicht auf dem Kopf)
 
+## 11c. Format D – „Strichmännchen-Mythos“ (Referenz: Video „Bart rasieren“, 63,7 s, hochgeladen 22.11.) – STANDARD
+
+User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten Videos genau so gestaltest“. Referenz-Ablauf als Bild: `referenz/format_d_ablauf_0-31s.png`, `referenz/format_d_ablauf_32-63s.png`, Standbild `referenz/format_d_standbild.png`.
+
+**Kern-Idee:** Ein verbreiteter Alltags-Mythos wird in 60–65 s **trocken-sarkastisch zerlegt**. Minimalistischer Strichmännchen-Look auf cremefarbenem Hintergrund, **ein Bild-Gedanke pro Satz**, der komplette gesprochene Satz steht als ruhiger Untertitel darunter. Humor entsteht durch kleine **Roasts am Zuschauer** („Du Elender.“, „Genau wie du.“, „deine drei Flaumhaare“).
+
+### Skript-Aufbau (Zeitanteile wie im Original)
+| Phase | Zeit | Inhalt (Original-Beispiel) |
+|---|---|---|
+| 1. Hook = Mythos als Frage | 0–4 s | „Du rasierst deinen Bart und denkst, er kommt dicker zurück?“ → Strichmännchen tut die Sache, Gedankenblase zeigt den Wunsch. Dann rotes **„HA“** (Auslachen). |
+| 2. Gag-Reaktion | 4–6 s | Riesiger Zeigefinger kommt von der Seite und zeigt auf die Figur, Figur schaut erschrocken (kein Text). |
+| 3. Wie es wirklich funktioniert | 6–23 s | Querschnitt-/Schema-Bild, Schritt für Schritt, je Satz ein neues Detail: „Dein Rasierer schneidet nur das ab, was aus der Haut rausguckt.“ – „Die Wurzel drunter kriegt davon gar nichts mit.“ (Wurzel schläft, „z z“) |
+| 4. Einfacher Vergleich | 12–16 s | „Ein Haar ist wie ein **Bleistift**. Oben spitz, unten dick.“ → Objekt `=` Alltagsgegenstand, Beschriftungs-Pillen „spitz“/„dick“. |
+| 5. Warum der Mythos entsteht | 16–30 s | „Du schneidest es in der Mitte durch. Jetzt hat es eine stumpfe Kante. Deshalb fühlen sich die Stoppeln hart an.“ (Finger tippt, rotes „AUA“) → **Roast:** „Du Elender.“ (traurige Figur allein). „Und dunkler sieht's aus, weil das neue Stück noch nie Sonne gesehen hat.“ → **Roast-Cutaway dunkel:** „Genau wie du.“ (Figur am PC, Vorhänge zu, Label „Tag 47 drinnen“). |
+| 6. Beweis aus der Geschichte | 31–45 s | „Das wurde übrigens schon **1928** getestet. Vier Männer. Fast 100 Jahre her. Ergebnis? Rasieren ändert **gar nichts**. Nicht die Dicke, nicht die Farbe, nicht wie schnell es wächst. Die wussten das schon vor 100 Jahren.“ → Sepia-Polaroid mit Jahreszahl, Label „4 Männer“, großes lila **?**, Liste mit ✕-Kreisen, rotes „gar nichts“, am Ende lachen die Männer auf dem Foto. |
+| 7. Zurück zum Zuschauer (Roast) | 46–50 s | „Und du rasierst dir immer noch jeden Tag deine drei Flaumhaare.“ → Spiegel-Nahaufnahme: glattes Gesicht, nur 3 Härchen. |
+| 8. Die echte Ursache | 51–56 s | „Und warum wird dein Bart dann wirklich dicker? Weil du älter wirst. Hormone. Nicht dein Rasierer.“ → drei Figuren nebeneinander (jung → Bart → Vollbart), lila Zeitpfeil „Alter“, Label „Hormone“, durchgestrichener Rasierer. |
+| 9. Schluss-Punchline | 57–64 s | „Also hör auf, jeden Morgen deine fünf Haare zu rasieren, in der Hoffnung, dass ein Bart draus wird.“ → Kalender-Montage Mo/Di/Do/Sa/So (jeden Tag rasieren), rotes Label „5 Haare“, traurige Figur, Gedankenblase mit Vollbart. **Endet hart** nach dem letzten Wort (keine Abschlusskarte, kein „Folg mir“). |
+
+**Skript-Regeln:** ca. 140–160 Wörter, kurze Hauptsätze, Du-Ansprache, ein Fakt pro Satz, **2–3 Roast-Einzeiler** über den Zuschauer, **1 Alltagsvergleich** (X = Gegenstand), **1 Beweis** (Studie/Jahreszahl/Zahl), Wiederholung der Kernaussage („gar nichts“), Schluss = Callback auf den Hook mit Pointe. Keine Fachwörter-Lawine, kein „Hallo Leute“, keine Frage-an-die-Community am Ende.
+
+### Look (exakt so)
+- **Hintergrund:** einfarbig Creme **#F3ECE5**, keine Texturen, kein Verlauf, keine Vignette/Körnung. Viel Leerraum, Motiv mittig im oberen/mittleren Drittel.
+- **Ausnahme Roast-Cutaway:** genau **eine** dunkle Szene (#22212A) mit weißer Figur, lila Vorhänge #5C396F, blau leuchtender Bildschirm (Lichtkegel), weißer Text.
+- **Strichmännchen:** runder weißer Kopf mit dicker schwarzer Kontur, Punkt-Augen + einfacher Mund (Lächeln/neutral/traurig/schockiert „o“), Bartstoppeln als Punkte; Körper/Arme/Beine = dicke schwarze Linien (≈ 10–12 px bei 1080 px Breite) mit runden Enden und kleinen runden Gelenk-Punkten. Steht auf einer dünnen beigen Bodenlinie (#D8CFC2). Keine Füllung am Körper, kein Outfit. Requisiten flächig mit schwarzer Kontur (Rasierer blau #3B82F6 / grau).
+- **Farbpalette:** Text/Kontur fast schwarz **#140F0C**, Haut **#F4D5B6**, Unterhaut **#F2C8C9**, Haar **#3D2922**, Gelb **#F4C23E**, Rosa **#F1A1A4**, Rot (Akzent, Pointen) **#E3454C**, Lila (Info-Labels, Fragezeichen, Zeitpfeil) **#6A4BD0** auf **#ECE6FF**, Sonne gelb mit Gesicht, Sepia-Foto **#E6D9C2**.
+- **Elemente-Baukasten:** Spiegel (hellblau mit Holzrahmen + Glanzstrich), Gedankenblase (Wolke mit 2 Kreisen), Querschnitt (Haut-Schicht + rosa Unterhaut, beschriftet „Haut“), Objekt `=` Vergleichsobjekt, Beschriftungs-Pillen (weiß, schwarze Kontur, fett klein; rot umrandet für Probleme „stumpfe Kante“, „5 Haare“; lila für Infos „4 Männer“, „Hormone“), Verbindungslinie vom Label zum Objekt, Polaroid/Foto leicht schräg mit Jahreszahl, Listen-Zeilen (weißer Kasten, schwarze Kontur, rotes ✕ im rosa Kreis), Kalenderblatt (roter Kopf, Wochentag), großes lila „?“, rote Wörter „HA“, „AUA“ mit Schmerz-Strichen, „z z z“.
+- Alles flach (Flat-Design), weiche runde Formen, keine Schatten außer ganz leicht.
+
+### Untertitel Format D (Abweichung von Abschnitt 7 und 11b)
+- **Ganzer Satz** als Block (1–3 Zeilen), zentriert, unteres Drittel (Mitte bei y ≈ 1500–1560 von 1920), Schrift **Nunito ExtraBold/Black** (abgerundet), ≈ 56–60 px bei 1080 px Breite, Farbe #140F0C, **keine Box, keine Kontur, kein Schatten**, normale Groß-/Kleinschreibung mit Satzzeichen.
+- Erscheint mit Beginn des Satzes, bleibt bis zum nächsten Satz stehen (kein Wort-für-Wort). Während kurzer Gag-Momente (Finger, „HA“) darf der Untertitel fehlen.
+- Zusätzliche **Bild-Wörter** (rot groß „gar nichts“, Überschrift „Rasieren ändert:“) stehen im Bild, nicht im Untertitel.
+
+### Animation & Schnitt
+- **Harte Schnitte**, neues Bild bzw. neues Detail alle **1–3 s** (bei jedem Satz/Halbsatz). Kein Kamera-Drift, keine Überblendungen.
+- Bewegungen kurz und einfach: Pop-in (Skalieren 0,8→1 in ~0,15 s), Elemente fallen/kippen (abgeschnittene Haare fallen schräg weg), rote Schnittlinie wischt durch, Finger stupst, Liste baut sich Zeile für Zeile auf, Fotos/Figuren wechseln Gesichtsausdruck, Kalender blättert pro Tag.
+- Figuren-Mimik wechselt passend zum Satz (lachend → schockiert → traurig).
+
+### Ton Format D (Abweichung von Abschnitt 8)
+- Sprecher **ruhig, trocken, sarkastisch** (nicht hyperenergetisch), deutliches normales Tempo ≈ **2,4 Wörter/s**, kurze Pausen 0,25–0,5 s zwischen Sätzen; Roast-Zeilen mit leicht abfälligem Unterton.
+- **Keine Hintergrundmusik** (Pausen fast still), höchstens sehr dezente Effekte (Pop, Wisch, „Ha“). Lautheit ≈ −16 bis −14 LUFS.
+- ElevenLabs-Tags z. B. `[dry, sarcastic, calm]`, bei Pointen `[deadpan]`.
+
+### Checkliste Format D
+- [ ] Mythos-Frage als Hook, rotes „HA“/Gag in den ersten 5 s
+- [ ] Ein Bild-Gedanke pro Satz, harte Schnitte alle 1–3 s, Creme-Hintergrund #F3ECE5, Strichmännchen mit dicken Linien
+- [ ] 1 Alltagsvergleich (X = Gegenstand), 1 Beweis mit Zahl/Jahr, Liste mit ✕, Wiederholung „gar nichts“
+- [ ] 2–3 Roasts am Zuschauer, genau 1 dunkler Roast-Cutaway
+- [ ] Ganzer-Satz-Untertitel Nunito, schwarz, ohne Box/Kontur, unteres Drittel
+- [ ] Ruhige, trockene Stimme ohne Musik, 60–65 s, Ende hart nach der Pointe (Callback auf den Hook)
+- [ ] Fakten stimmen (Abschnitt 9), eigene Zeichnungen, keine Marken
+
 ## 12. Feedback-Log (wird laufend erweitert)
 
 **Pflege-Anweisung für Claude:** Wenn der User Feedback zu einem Video, Skript, Hook oder Stil gibt:
@@ -256,3 +311,4 @@ Länge 61–70 s, ca. 150–180 Wörter, sehr schnell geschnitten (alle ~1 s neu
 | 2026-11-22 | Video 18: „Mache die Charaktere etwas kleiner, sodass es nicht so aussieht, als wären sie genauso groß wie die Häuser“ | Abschnitt 11b: Maßstab Figuren ↔ Häuser – Figuren höchstens türhoch, auf dem Gehweg, Nähe per Kamera-Zoom; Checkliste ergänzt |
 | 2026-11-22 | Video 18: „Überarbeite die Animation – die Kinder halten sich den Mund falsch zu (Animationsfehler). Ändere die Frisur von unserem Charakter“ | Hände + Ärmel kommen von unten vor den Mund, Fensterladen schließt erst danach; Block-Hauptfigur bekommt Frisur `fringe`; Checkliste: Gesten anatomisch per Snapshot prüfen |
 | 2026-11-22 | Video 18: „Mache das Monster gruseliger, sowohl die Augen als auch das Erscheinungsbild, und mache ihn mysteriöser“ | Abschnitt 11b: „Grusel-Wesen“ – Schattengestalt nur angedeutet, asymmetrische Glut-Schlitzaugen, Zahn-Grinsen, Kopfneigen, Knurren/Atmen |
+| 2026-11-22 | Neues Referenzvideo (Strichmännchen „Bart rasieren“, 63,7 s): „Analysiere dieses Video und mache es eins zu eins in deinen Skill, sodass du die nächsten Videos genau so gestaltest“ | Neues Format D „Strichmännchen-Mythos“ (Abschnitt 11c) als STANDARD: Skript-Aufbau, Look/Farben, Ganzer-Satz-Untertitel, harte Schnitte, trockene Stimme ohne Musik, Checkliste; Referenzbilder in `referenz/` |
