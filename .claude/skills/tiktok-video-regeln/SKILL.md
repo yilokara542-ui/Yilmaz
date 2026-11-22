@@ -246,7 +246,7 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 8. Die echte Ursache | 51–56 s | „Und warum wird dein Bart dann wirklich dicker? Weil du älter wirst. Hormone. Nicht dein Rasierer.“ → drei Figuren nebeneinander (jung → Bart → Vollbart), lila Zeitpfeil „Alter“, Label „Hormone“, durchgestrichener Rasierer. |
 | 9. Schluss-Punchline | 57–64 s | „Also hör auf, jeden Morgen deine fünf Haare zu rasieren, in der Hoffnung, dass ein Bart draus wird.“ → Kalender-Montage Mo/Di/Do/Sa/So (jeden Tag rasieren), rotes Label „5 Haare“, traurige Figur, Gedankenblase mit Vollbart. **Endet hart** nach dem letzten Wort (keine Abschlusskarte, kein „Folg mir“). |
 
-**Pflicht-Beleidigung (aus Feedback 22.11., 2. Korrektur):** Direkt **nach dem Lacher im Hook** kommt wörtlich **„Du fetter Bastard.“** (wie im Referenzvideo) – Bild: Zeigefinger-Gag, schockierte Figur mit Stoppeln, Untertitel „Du fetter Bastard.“. **Kein „Du Elender.“ / „Du Genie.“** als Extra-Satz. Weitere Roasts („Genau wie du …“) bleiben.
+**Pflicht-Beleidigung (aus Feedback 22.11., 2. Korrektur):** Direkt **nach dem Lacher im Hook** kommt wörtlich **„Du fetter Bastard.“** (wie im Referenzvideo) – Bild: Zeigefinger-Gag, schockierte Figur mit Stoppeln. **Die Beleidigung bekommt KEINEN Untertitel** – nur hörbar, nicht lesbar (aus Feedback 22.11.). **Kein „Du Elender.“ / „Du Genie.“** als Extra-Satz. Weitere Roasts („Genau wie du …“) bleiben.
 
 **Länge über 1 Minute (aus Feedback 22.11.):** Das fertige Video muss **länger als 60 s** sein (Ziel 61–65 s). Ist das Voiceover kürzer, läuft die **Schluss-Szene ohne Ton weiter** (3–5 s kleine Animation: Figur wird traurig, ✕ pulsiert, Objekt bewegt sich leicht), Untertitel des letzten Satzes bleibt stehen. Keine Stille mitten im Voiceover einfügen.
 
@@ -264,7 +264,7 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 
 ### Untertitel Format D (Abweichung von Abschnitt 7 und 11b)
 - **Ganzer Satz** als Block (1–3 Zeilen), zentriert, unteres Drittel (Mitte bei y ≈ 1500–1560 von 1920), Schrift **Nunito ExtraBold/Black** (abgerundet), ≈ 56–60 px bei 1080 px Breite, Farbe #140F0C, **keine Box, keine Kontur, kein Schatten**, normale Groß-/Kleinschreibung mit Satzzeichen.
-- Erscheint mit Beginn des Satzes, bleibt bis zum nächsten Satz stehen (kein Wort-für-Wort). Während kurzer Gag-Momente (Finger, „HA“) darf der Untertitel fehlen.
+- Erscheint mit Beginn des Satzes, bleibt bis zum nächsten Satz stehen (kein Wort-für-Wort). Während kurzer Gag-Momente (Finger, „HA“) darf der Untertitel fehlen. **Beleidigungen („Du fetter Bastard.“) werden nie untertitelt.**
 - Zusätzliche **Bild-Wörter** (rot groß „gar nichts“, Überschrift „Rasieren ändert:“) stehen im Bild, nicht im Untertitel.
 
 ### Animation & Schnitt
@@ -282,7 +282,7 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 - [ ] Ein Bild-Gedanke pro Satz, harte Schnitte alle 1–3 s, Creme-Hintergrund #F3ECE5, Strichmännchen mit dicken Linien
 - [ ] 1 Alltagsvergleich (X = Gegenstand), 1 Beweis mit Zahl/Jahr, Liste mit ✕, Wiederholung „gar nichts“
 - [ ] 2–3 Roasts am Zuschauer, genau 1 dunkler Roast-Cutaway
-- [ ] „Du fetter Bastard.“ direkt nach dem Lacher (Finger-Gag), kein „Du Elender.“
+- [ ] „Du fetter Bastard.“ direkt nach dem Lacher (Finger-Gag), kein „Du Elender.“ – **ohne Untertitel**
 - [ ] Voiceover = eine durchgehende Aufnahme, keine Flicken/Stille-Einschübe
 - [ ] Gesamtlänge > 60 s (sonst Schluss-Szene nachlaufen lassen)
 - [ ] Ganzer-Satz-Untertitel Nunito, schwarz, ohne Box/Kontur, unteres Drittel
@@ -324,3 +324,4 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 2026-11-22 | Video 19: „Die Beleidigung fehlt. Benutze die gleiche Beleidigung“ | Abschnitt 11c: „Du Elender.“ ist Pflicht-Satz in jedem Format-D-Video (statt „Du Genie.“), Szene traurige Figur mit Stoppeln; Checkliste ergänzt |
 | 2026-11-22 | Video 19: „An der Stelle, wo er lacht, danach den Satz ‚Du fetter Bastard‘ hinzufügen wie im Video oben. Voiceover besser zusammenschneiden. Satz mit ‚Du Elender‘ weg.“ | Abschnitt 11c: Pflicht-Satz jetzt „Du fetter Bastard.“ nach dem Lacher (Finger-Gag), „Du Elender.“ gestrichen; Voiceover immer in einer durchgehenden Aufnahme ohne Flicken/Stille-Einschübe |
 | 2026-11-22 | Video 19: „Lasse das Video noch etwas laufen, damit es über eine Minute kommt“ | Abschnitt 11c: Videos immer > 60 s; fehlende Zeit über stummen Nachlauf der Schluss-Szene mit kleiner Animation, nie über Stille im Voiceover |
+| 2026-11-22 | Video 19: „Entferne beim Satz, in dem beleidigt wird, den Untertitel, sodass man die Beleidigung nur hört, aber nicht lesen kann“ | Abschnitt 11c: Beleidigungen werden nie untertitelt (nur hörbar); Checkliste ergänzt |

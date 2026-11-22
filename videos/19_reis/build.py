@@ -281,6 +281,8 @@ for s_ in sents:
         blocks.append({"txt": txt, "s": s_[0]["s"], "e": s_[-1]["e"]})
 subs = []
 for k, b in enumerate(blocks):
+    if "Bastard" in b["txt"]:
+        continue   # Beleidigung nur hörbar, nicht als Untertitel (Feedback 22.11.)
     nxt = blocks[k + 1]["s"] if k + 1 < len(blocks) else TOTAL
     end = nxt if (nxt - b["e"] < 0.8 or k + 1 == len(blocks)) else b["e"] + 0.25
     dark = any(a <= b["s"] < z for a, z in DARK_SCENES)
