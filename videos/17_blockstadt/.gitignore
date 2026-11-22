@@ -1,0 +1,7 @@
+.hyperframes/
+render.mp4
+assets/sfx_bed.wav
+work-*/
+.render.hf-transaction-*/
+.*.hf-transaction-*/
+render_preview.mp4
