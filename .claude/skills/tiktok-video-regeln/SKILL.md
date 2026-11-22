@@ -248,6 +248,8 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 
 **Pflicht-Beleidigung (aus Feedback 22.11., 2. Korrektur):** Direkt **nach dem Lacher im Hook** kommt wörtlich **„Du fetter Bastard.“** (wie im Referenzvideo) – Bild: Zeigefinger-Gag, schockierte Figur mit Stoppeln, Untertitel „Du fetter Bastard.“. **Kein „Du Elender.“ / „Du Genie.“** als Extra-Satz. Weitere Roasts („Genau wie du …“) bleiben.
 
+**Länge über 1 Minute (aus Feedback 22.11.):** Das fertige Video muss **länger als 60 s** sein (Ziel 61–65 s). Ist das Voiceover kürzer, läuft die **Schluss-Szene ohne Ton weiter** (3–5 s kleine Animation: Figur wird traurig, ✕ pulsiert, Objekt bewegt sich leicht), Untertitel des letzten Satzes bleibt stehen. Keine Stille mitten im Voiceover einfügen.
+
 **Voiceover in einem Stück (aus Feedback 22.11.):** Das Voiceover wird **komplett in einer Aufnahme** erzeugt – keine nachträglich eingefügten Stille-Pausen und keine zusammengeflickten Einzelsätze. Pausen nur über den Text (`...`) im ElevenLabs-Prompt. Ändert sich ein Satz, wird die ganze Aufnahme neu erzeugt (Credits vorher prüfen).
 
 **Skript-Regeln:** ca. 140–160 Wörter, kurze Hauptsätze, Du-Ansprache, ein Fakt pro Satz, **2–3 Roast-Einzeiler** über den Zuschauer, **1 Alltagsvergleich** (X = Gegenstand), **1 Beweis** (Studie/Jahreszahl/Zahl), Wiederholung der Kernaussage („gar nichts“), Schluss = Callback auf den Hook mit Pointe. Keine Fachwörter-Lawine, kein „Hallo Leute“, keine Frage-an-die-Community am Ende.
@@ -282,6 +284,7 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 - [ ] 2–3 Roasts am Zuschauer, genau 1 dunkler Roast-Cutaway
 - [ ] „Du fetter Bastard.“ direkt nach dem Lacher (Finger-Gag), kein „Du Elender.“
 - [ ] Voiceover = eine durchgehende Aufnahme, keine Flicken/Stille-Einschübe
+- [ ] Gesamtlänge > 60 s (sonst Schluss-Szene nachlaufen lassen)
 - [ ] Ganzer-Satz-Untertitel Nunito, schwarz, ohne Box/Kontur, unteres Drittel
 - [ ] Ruhige, trockene Stimme ohne Musik, 60–65 s, Ende hart nach der Pointe (Callback auf den Hook)
 - [ ] Fakten stimmen (Abschnitt 9), eigene Zeichnungen, keine Marken
@@ -320,3 +323,4 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 2026-11-22 | Neues Referenzvideo (Strichmännchen „Bart rasieren“, 63,7 s): „Analysiere dieses Video und mache es eins zu eins in deinen Skill, sodass du die nächsten Videos genau so gestaltest“ | Neues Format D „Strichmännchen-Mythos“ (Abschnitt 11c) als STANDARD: Skript-Aufbau, Look/Farben, Ganzer-Satz-Untertitel, harte Schnitte, trockene Stimme ohne Musik, Checkliste; Referenzbilder in `referenz/` |
 | 2026-11-22 | Video 19: „Die Beleidigung fehlt. Benutze die gleiche Beleidigung“ | Abschnitt 11c: „Du Elender.“ ist Pflicht-Satz in jedem Format-D-Video (statt „Du Genie.“), Szene traurige Figur mit Stoppeln; Checkliste ergänzt |
 | 2026-11-22 | Video 19: „An der Stelle, wo er lacht, danach den Satz ‚Du fetter Bastard‘ hinzufügen wie im Video oben. Voiceover besser zusammenschneiden. Satz mit ‚Du Elender‘ weg.“ | Abschnitt 11c: Pflicht-Satz jetzt „Du fetter Bastard.“ nach dem Lacher (Finger-Gag), „Du Elender.“ gestrichen; Voiceover immer in einer durchgehenden Aufnahme ohne Flicken/Stille-Einschübe |
+| 2026-11-22 | Video 19: „Lasse das Video noch etwas laufen, damit es über eine Minute kommt“ | Abschnitt 11c: Videos immer > 60 s; fehlende Zeit über stummen Nachlauf der Schluss-Szene mit kleiner Animation, nie über Stille im Voiceover |

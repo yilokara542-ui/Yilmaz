@@ -1,6 +1,6 @@
 # 19 – Skript: „Handy in Reis?“ (Format D · Strichmännchen-Mythos)
 
-Themen-Liste Nr. 20 · Stimme „Mark“, trocken-sarkastisch · VO 56,8 s in einer durchgehenden Aufnahme (keine Flicken) = 57,2 s · keine Musik · Ganzer-Satz-Untertitel Nunito.
+Themen-Liste Nr. 20 · Stimme „Mark“, trocken-sarkastisch · VO 56,8 s in einer durchgehenden Aufnahme (keine Flicken) + 4,7 s stummer Nachlauf der Schluss-Szene = 61,3 s · keine Musik · Ganzer-Satz-Untertitel Nunito.
 
 | Zeit | Voiceover | Bild |
 |---|---|---|

@@ -11,7 +11,7 @@ from strich import *  # noqa
 
 W = json.load(open(os.path.join(HERE, "assets/words.json"), encoding="utf-8"))
 VO_END = W[-1]["e"]
-TOTAL = round(VO_END + 0.6, 2)
+TOTAL = round(VO_END + 4.7, 2)   # Schluss-Szene läuft noch nach (Video > 60 s)
 T = []
 SCENES = []
 
@@ -254,10 +254,14 @@ sushi = (f'<ellipse cx="730" cy="1050" rx="270" ry="50" fill="#ffffff" stroke="{
          f'<circle cx="730" cy="900" r="150" fill="#2F3B2F" stroke="{INK}" stroke-width="6"/><circle cx="730" cy="900" r="122" fill="#ffffff" stroke="{INK}" stroke-width="3"/>'
          + "".join(grain(730 + dx, 900 + dy, r, 1.2) for dx, dy, r in ((-80, -40, 20), (-60, 50, 100), (70, -60, 60), (80, 40, 140), (0, -95, 0), (0, 95, 90), (-95, 0, 90), (95, 0, 90)))
          + f'<rect x="680" y="830" width="100" height="140" rx="16" fill="#3A3A44" stroke="{INK}" stroke-width="5"/><rect x="690" y="842" width="80" height="116" rx="10" fill="#BFE3F5"/>'
-         f'<line x1="900" y1="620" x2="760" y2="830" stroke="#C89A5E" stroke-width="12" stroke-linecap="round"/><line x1="940" y1="640" x2="790" y2="840" stroke="#C89A5E" stroke-width="12" stroke-linecap="round"/>')
-P = ground(1290) + stick("p", 260, 1290, 1.2, "smile", "both", moods=("neutral",)) + sushi + g("p-x", xcircle(940, 760, 50), 0)
+         f'<g id="p-chop"><line x1="900" y1="620" x2="760" y2="830" stroke="#C89A5E" stroke-width="12" stroke-linecap="round"/><line x1="940" y1="640" x2="790" y2="840" stroke="#C89A5E" stroke-width="12" stroke-linecap="round"/></g>')
+P = ground(1290) + stick("p", 260, 1290, 1.2, "smile", "both", moods=("neutral", "sad")) + sushi + g("p-x", xcircle(940, 760, 50), 0)
 scene("p", t_hoer, TOTAL, P)
 mood("p", t_es, "smile", "neutral"); pop("#p-x", t_sushi, .5)
+# Nachlauf: Stäbchen heben das Handy-Maki an, Figur wird traurig, ✕ pulsiert
+tw(f'tl.to("#p-chop",{{y:-70,duration:.6,ease:"sine.inOut",yoyo:true,repeat:1}},{VO_END + 0.6:.3f});')
+tw(f'tl.to("#p-x",{{scale:1.15,transformOrigin:"50% 50%",duration:.35,yoyo:true,repeat:5,ease:"sine.inOut"}},{VO_END + 0.4:.3f});')
+mood("p", VO_END + 2.0, "neutral", "sad")
 
 # ================= UNTERTITEL: ganzer Satz (Format D) =================
 DISPLAY = {"zweitausendvierzehn": "2014"}
@@ -278,7 +282,7 @@ for s_ in sents:
 subs = []
 for k, b in enumerate(blocks):
     nxt = blocks[k + 1]["s"] if k + 1 < len(blocks) else TOTAL
-    end = nxt if nxt - b["e"] < 0.8 else b["e"] + 0.25
+    end = nxt if (nxt - b["e"] < 0.8 or k + 1 == len(blocks)) else b["e"] + 0.25
     dark = any(a <= b["s"] < z for a, z in DARK_SCENES)
     subs.append(f'<div id="sub{k}" class="clip sub" data-start="{b["s"]:.3f}" data-duration="{end-b["s"]:.3f}" data-track-index="9" style="color:{"#ffffff" if dark else INK}">{html.escape(b["txt"])}</div>')
 
