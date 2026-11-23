@@ -49,6 +49,7 @@ ARMS = {
     "ear": ((-56, -170), (-36, -262), (70, -300), (52, -404)),        # rechte Hand am Ohr/Gesicht
     "both": ((-104, -258), (-62, -292), (62, -292), (104, -258)),     # beide Hände vorne
     "shrug": ((-110, -330), (-70, -280), (70, -280), (110, -330)),
+    "up": ((-56, -170), (-36, -262), (52, -440), (40, -560)),          # rechte Hand hoch über den Kopf
 }
 
 
@@ -188,3 +189,35 @@ def finger(x, y, s=1.0, flip=False):
             f'<rect x="200" y="-56" width="420" height="112" rx="40" fill="{SKIN}" stroke="{INK}" stroke-width="5"/>'
             f'<path d="M 20 -18 Q 8 0 20 18" stroke="{INK}" stroke-width="3" fill="none"/>'
             + "".join(f'<line x1="{xx}" y1="-50" x2="{xx}" y2="50" stroke="#d8b494" stroke-width="3"/>' for xx in (260, 290)) + '</g>')
+
+
+def wifi(x, y, s=1.0, bars=3, col=INK, off="#CFC7BC"):
+    """WLAN-Symbol (Punkt + 3 Bögen), (x,y) = Punkt unten. bars = wie viele Bögen „voll“."""
+    out = f'<circle cx="{x}" cy="{y}" r="{14*s}" fill="{col}"/>'
+    for k, r in enumerate((55, 100, 145)):
+        c = col if k < bars else off
+        out += (f'<path d="M {x - r*s*0.72:.0f} {y - r*s*0.72:.0f} A {r*s} {r*s} 0 0 1 {x + r*s*0.72:.0f} {y - r*s*0.72:.0f}" '
+                f'stroke="{c}" stroke-width="{22*s:.0f}" fill="none" stroke-linecap="round"/>')
+    return out
+
+
+def router(x, y, s=1.0, lights=("#7BD88F", "#7BD88F", "#F4C23E")):
+    """WLAN-Router, (x,y) = Mitte unten."""
+    return (f'<g transform="translate({x},{y}) scale({s})">'
+            f'<rect x="-46" y="-190" width="14" height="110" rx="7" fill="#3A3A44" stroke="{INK}" stroke-width="4" transform="rotate(-12 -39 -80)"/>'
+            f'<rect x="32" y="-190" width="14" height="110" rx="7" fill="#3A3A44" stroke="{INK}" stroke-width="4" transform="rotate(12 39 -80)"/>'
+            f'<rect x="-120" y="-90" width="240" height="90" rx="18" fill="#ffffff" stroke="{INK}" stroke-width="6"/>'
+            + "".join(f'<circle cx="{-70 + i*35}" cy="-45" r="9" fill="{c}" stroke="{INK}" stroke-width="2"/>' for i, c in enumerate(lights))
+            + '</g>')
+
+
+def spinner(x, y, r=60, col=INK, gid=None):
+    g = f'<g id="{gid}">' if gid else '<g>'
+    return (g + f'<circle cx="{x}" cy="{y}" r="{r}" fill="none" stroke="#CFC7BC" stroke-width="{r*0.22:.0f}"/>'
+            f'<path d="M {x} {y-r} A {r} {r} 0 0 1 {x+r} {y}" stroke="{col}" stroke-width="{r*0.22:.0f}" fill="none" stroke-linecap="round"/></g>')
+
+
+def car(x, y, col="#E3454C", s=1.0):
+    return (f'<g transform="translate({x},{y}) scale({s})"><rect x="-55" y="-34" width="110" height="44" rx="14" fill="{col}" stroke="{INK}" stroke-width="4"/>'
+            f'<rect x="-30" y="-58" width="60" height="30" rx="10" fill="#BFE3F5" stroke="{INK}" stroke-width="4"/>'
+            f'<circle cx="-30" cy="12" r="12" fill="{INK}"/><circle cx="30" cy="12" r="12" fill="{INK}"/></g>')
