@@ -1,6 +1,6 @@
 # 20 – Skript: „Volle WLAN-Balken = schnelles Internet?“ (Format D · Strichmännchen-Mythos)
 
-Themen-Liste Nr. 8 · Stimme „Mark“, trocken-sarkastisch · eine durchgehende Aufnahme (51,2 s), auf 88 % Tempo verlangsamt (≈ 2,4 Wörter/s wie Referenz) = 58,3 s + 4,7 s stummer Nachlauf = 63 s · keine Musik · Ganzer-Satz-Untertitel Nunito, Beleidigung ohne Untertitel.
+Themen-Liste Nr. 8 · Stimme „Mark“, trocken-sarkastisch · eine durchgehende Aufnahme in Originaltempo (51,3 s) + 2,8 s stummer Nachlauf = 54 s · keine Musik · Ganzer-Satz-Untertitel Nunito, Beleidigung ohne Untertitel.
 
 | Zeit | Voiceover | Bild |
 |---|---|---|

@@ -11,7 +11,7 @@ from strich import *  # noqa
 
 W = json.load(open(os.path.join(HERE, "assets/words.json"), encoding="utf-8"))
 VO_END = W[-1]["e"]
-TOTAL = round(VO_END + 4.7, 2)   # Schluss-Szene läuft noch nach (Video > 60 s)
+TOTAL = round(VO_END + 2.8, 2)   # kurzer stummer Nachlauf der Schluss-Szene
 T = []
 SCENES = []
 
@@ -196,9 +196,9 @@ N = (ground(1290) + stick("n", 480, 1290, 1.25, "smile", "up", moods=("neutral",
      + g("n-x", xcircle(820, 420, 56), 0))
 scene("n", t_hoer, TOTAL, N)
 mood("n", t_du_fang, "smile", "neutral"); pop("#n-x", t_internet_end, .5)
-tw(f'tl.to("#n",{{y:-40,duration:.25,yoyo:true,repeat:5,ease:"power1.out"}},{VO_END + 0.4:.3f});')
-tw(f'tl.to("#n-x",{{scale:1.15,transformOrigin:"50% 50%",duration:.35,yoyo:true,repeat:5,ease:"sine.inOut"}},{VO_END + 0.4:.3f});')
-mood("n", VO_END + 2.4, "neutral", "sad")
+tw(f'tl.to("#n",{{y:-40,duration:.25,yoyo:true,repeat:3,ease:"power1.out"}},{VO_END + 0.4:.3f});')
+tw(f'tl.to("#n-x",{{scale:1.15,transformOrigin:"50% 50%",duration:.35,yoyo:true,repeat:3,ease:"sine.inOut"}},{VO_END + 0.4:.3f});')
+mood("n", VO_END + 1.4, "neutral", "sad")
 
 # ================= UNTERTITEL: ganzer Satz (Format D) =================
 DISPLAY = {"neunzehnhundertsiebenundneunzig": "1997"}

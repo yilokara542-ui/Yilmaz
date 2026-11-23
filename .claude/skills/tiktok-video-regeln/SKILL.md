@@ -248,7 +248,7 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 
 **Pflicht-Beleidigung (aus Feedback 22.11., 2. Korrektur):** Direkt **nach dem Lacher im Hook** kommt wörtlich **„Du fetter Bastard.“** (wie im Referenzvideo) – Bild: Zeigefinger-Gag, schockierte Figur mit Stoppeln. **Die Beleidigung bekommt KEINEN Untertitel** – nur hörbar, nicht lesbar (aus Feedback 22.11.). **Kein „Du Elender.“ / „Du Genie.“** als Extra-Satz. Weitere Roasts („Genau wie du …“) bleiben.
 
-**Länge über 1 Minute (aus Feedback 22.11.):** Das fertige Video muss **länger als 60 s** sein (Ziel 61–65 s). Ist das Voiceover kürzer, läuft die **Schluss-Szene ohne Ton weiter** (3–5 s kleine Animation: Figur wird traurig, ✕ pulsiert, Objekt bewegt sich leicht), Untertitel des letzten Satzes bleibt stehen. Keine Stille mitten im Voiceover einfügen.
+**Länge & Tempo (aus Feedback 23.11., ersetzt die 60-s-Regel):** Das Voiceover läuft **immer in originaler Geschwindigkeit** – niemals verlangsamen oder beschleunigen (kein atempo). Ein Video **unter 1 Minute ist in Ordnung**. Am Ende darf die Schluss-Szene 2–3 s stumm nachlaufen (kleine Animation), mehr nicht.
 
 **Voiceover in einem Stück (aus Feedback 22.11.):** Das Voiceover wird **komplett in einer Aufnahme** erzeugt – keine nachträglich eingefügten Stille-Pausen und keine zusammengeflickten Einzelsätze. Pausen nur über den Text (`...`) im ElevenLabs-Prompt. Ändert sich ein Satz, wird die ganze Aufnahme neu erzeugt (Credits vorher prüfen).
 
@@ -284,9 +284,9 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 - [ ] 2–3 Roasts am Zuschauer, genau 1 dunkler Roast-Cutaway
 - [ ] „Du fetter Bastard.“ direkt nach dem Lacher (Finger-Gag), kein „Du Elender.“ – **ohne Untertitel**
 - [ ] Voiceover = eine durchgehende Aufnahme, keine Flicken/Stille-Einschübe
-- [ ] Gesamtlänge > 60 s (sonst Schluss-Szene nachlaufen lassen)
+- [ ] Voiceover in Originaltempo (nie verlangsamt), unter 60 s ist ok
 - [ ] Ganzer-Satz-Untertitel Nunito, schwarz, ohne Box/Kontur, unteres Drittel
-- [ ] Ruhige, trockene Stimme ohne Musik, 60–65 s, Ende hart nach der Pointe (Callback auf den Hook)
+- [ ] Ruhige, trockene Stimme ohne Musik, ca. 50–65 s, Ende nach der Pointe (Callback auf den Hook) + 2–3 s Nachlauf
 - [ ] Fakten stimmen (Abschnitt 9), eigene Zeichnungen, keine Marken
 
 ## 12. Feedback-Log (wird laufend erweitert)
@@ -325,3 +325,4 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 2026-11-22 | Video 19: „An der Stelle, wo er lacht, danach den Satz ‚Du fetter Bastard‘ hinzufügen wie im Video oben. Voiceover besser zusammenschneiden. Satz mit ‚Du Elender‘ weg.“ | Abschnitt 11c: Pflicht-Satz jetzt „Du fetter Bastard.“ nach dem Lacher (Finger-Gag), „Du Elender.“ gestrichen; Voiceover immer in einer durchgehenden Aufnahme ohne Flicken/Stille-Einschübe |
 | 2026-11-22 | Video 19: „Lasse das Video noch etwas laufen, damit es über eine Minute kommt“ | Abschnitt 11c: Videos immer > 60 s; fehlende Zeit über stummen Nachlauf der Schluss-Szene mit kleiner Animation, nie über Stille im Voiceover |
 | 2026-11-22 | Video 19: „Entferne beim Satz, in dem beleidigt wird, den Untertitel, sodass man die Beleidigung nur hört, aber nicht lesen kann“ | Abschnitt 11c: Beleidigungen werden nie untertitelt (nur hörbar); Checkliste ergänzt |
+| 2026-11-23 | Video 20: „Mache das Voiceover in originaler Schnelligkeit. Es ist nicht schlimm, wenn das Video unter 1 Minute ist“ | Abschnitt 11c: Voiceover nie im Tempo verändern; Videos dürfen unter 60 s sein (60-s-Regel aufgehoben), nur 2–3 s stummer Nachlauf |
