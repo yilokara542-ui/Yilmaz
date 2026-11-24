@@ -221,3 +221,40 @@ def car(x, y, col="#E3454C", s=1.0):
     return (f'<g transform="translate({x},{y}) scale({s})"><rect x="-55" y="-34" width="110" height="44" rx="14" fill="{col}" stroke="{INK}" stroke-width="4"/>'
             f'<rect x="-30" y="-58" width="60" height="30" rx="10" fill="#BFE3F5" stroke="{INK}" stroke-width="4"/>'
             f'<circle cx="-30" cy="12" r="12" fill="{INK}"/><circle cx="30" cy="12" r="12" fill="{INK}"/></g>')
+
+
+def sixpack(cx, cy, s=1.0, col="#E8A0A0", gid=None):
+    """Bauchmuskel-Sixpack (2×3 abgerundete Blöcke), (cx,cy) = Mitte."""
+    out = f'<g id="{gid}">' if gid else '<g>'
+    for r in range(3):
+        for c in (-1, 1):
+            out += f'<rect x="{cx - 84*s + (0 if c < 0 else 88*s):.0f}" y="{cy + (r-1.5)*80*s:.0f}" width="{80*s:.0f}" height="{70*s:.0f}" rx="{22*s:.0f}" fill="{col}" stroke="{INK}" stroke-width="4"/>'
+    return out + '</g>'
+
+
+def cookie(x, y, r=70):
+    dots = "".join(f'<circle cx="{x+dx*r/70:.0f}" cy="{y+dy*r/70:.0f}" r="{7*r/70:.0f}" fill="#5A3A22"/>' for dx, dy in ((-25, -20), (20, -28), (5, 10), (-30, 25), (30, 22)))
+    return f'<circle cx="{x}" cy="{y}" r="{r}" fill="#D9A55B" stroke="{INK}" stroke-width="5"/>' + dots
+
+
+def player(x, y, w=520, h=300, label="3:00"):
+    """Video-Player ohne Logo (Laptop-Bildschirm), (x,y) = Mitte."""
+    return (f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="20" fill="#3A3A44" stroke="{INK}" stroke-width="6"/>'
+            f'<rect x="{x-w/2+18}" y="{y-h/2+18}" width="{w-36}" height="{h-36}" rx="10" fill="#ffffff"/>'
+            f'<polygon points="{x-30},{y-40} {x-30},{y+40} {x+40},{y}" fill="{RED}"/>'
+            f'<rect x="{x-w/2+40}" y="{y+h/2-50}" width="{w-80}" height="8" rx="4" fill="#CFC7BC"/>'
+            f'<rect x="{x-w/2+40}" y="{y+h/2-50}" width="{(w-80)*0.15}" height="8" rx="4" fill="{RED}"/>'
+            + text(x + w/2 - 60, y - h/2 + 60, label, 34, INK, 900)
+            + f'<rect x="{x-w/2-30}" y="{y+h/2}" width="{w+60}" height="26" rx="8" fill="#C9CED6" stroke="{INK}" stroke-width="5"/>')
+
+
+def mirror(x, y, w=260, h=420, inner=""):
+    """Spiegel (hellblau, Holzrahmen), (x,y) = Mitte."""
+    return (f'<rect x="{x-w/2-14}" y="{y-h/2-14}" width="{w+28}" height="{h+28}" rx="22" fill="#C89A5E" stroke="{INK}" stroke-width="5"/>'
+            f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="12" fill="#D7EEF8"/>{inner}'
+            f'<line x1="{x-w/2+30}" y1="{y-h/2+40}" x2="{x-w/2+80}" y2="{y-h/2+90}" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>')
+
+
+def belly(x, y, s=1.0):
+    """Bauch-Kreis (für dicke Figuren / Spiegelbild), (x,y) = Mitte."""
+    return f'<ellipse cx="{x}" cy="{y}" rx="{70*s}" ry="{80*s}" fill="#ffffff" stroke="{INK}" stroke-width="{7*s:.0f}"/>'
