@@ -4,7 +4,7 @@ Themen-Liste Nr. 17 · Stimme „Mark“, trocken-sarkastisch · eine durchgehen
 
 | Zeit | Voiceover | Bild |
 |---|---|---|
-| 0–3,7 s | Du kriegst Nasenbluten und legst den Kopf in den Nacken? *(lacht)* | Kopf im Profil nach hinten gekippt, Blutstropfen, „HA HA“ |
+| 0–3,7 s | Du kriegst Nasenbluten und legst den Kopf in den Nacken? *(lacht)* | Normales Strichmännchen frontal, Blut läuft aus der Nase und tropft, „HA HA“ |
 | 3,7–6,8 s | Du dummer eingeschränkter Bastard. *(kein Untertitel)* | Zeigefinger-Gag |
 | 6,8–11 s | Das Blut hört dadurch nicht auf. Es läuft nur nach hinten. In deinen Hals. | Rote Linie läuft von der Nase nach hinten in den Hals, „nach hinten“, „in den Hals“ |
 | 11–12,9 s | Und dann schluckst du es runter. | Magen füllt sich rot, „runtergeschluckt“ |

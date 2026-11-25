@@ -98,11 +98,16 @@ def stomach(x, y, s=1.0, fill_id=None):
 
 # ================= SZENEN =================
 # A1 Hook: Nasenbluten – Kopf in den Nacken – HA
-A1 = (ground(1290) + f'<line x1="430" y1="1290" x2="470" y2="1010" stroke="{INK}" stroke-width="12" stroke-linecap="round"/>'
-      + profile("a1h", 470, 1000, .8, -35, blood(110, -150, .6) + blood(130, -95, .45))
+bleed = (f'<path d="M -6 -404 Q -10 -385 -8 -366" stroke="{RED}" stroke-width="7" fill="none" stroke-linecap="round"/>'
+         f'<path d="M 6 -404 Q 9 -388 7 -372" stroke="{RED}" stroke-width="6" fill="none" stroke-linecap="round"/>'
+         f'<circle cx="-6" cy="-404" r="4" fill="{RED}"/><circle cx="6" cy="-404" r="4" fill="{RED}"/>')
+A1 = (ground(1290) + stick("a1", 400, 1290, 1.3, "shock", "down", extra=bleed)
+      + "".join(g(f"a1-d{k}", blood(392 + (k % 2) * 16, 830, .45), 0) for k in range(4))
       + g("a1-ha", text(780, 560, "HA", 120, RED, 900) + text(900, 470, "HA", 80, RED, 900)))
 scene("a1", 0, t_gag, A1)
 pop("#a1-ha", t_ha, .5, .2)
+for k in range(4):
+    tw(f'tl.fromTo("#a1-d{k}",{{opacity:1,y:0}},{{y:420,opacity:.0,duration:.9,ease:"power1.in"}},{0.3 + k*0.8:.3f});')
 
 # A2 Gag (ohne Untertitel)
 A2 = ground(1290) + stick("a2", 330, 1290, 1.25, "shock", "down", stubble=True) + g("a2-fg", finger(470, 760, 1.0), 1)
