@@ -177,8 +177,8 @@ scene("i2", t_das_m, t_hohl, I2)
 pop("#i-c", t_blau2 - 0.2); pop("#i-p", t_blau2)
 
 # J Gag „Du dummes Kind.“ – Figur als Kleinkind mit Schnuller
-kid = (stick("jk", 700, 1290, .6, "neutral", "down")
-       + f'<circle cx="700" cy="1035" r="22" fill="{PINK}" stroke="{INK}" stroke-width="4"/><rect x="688" y="1012" width="24" height="14" rx="5" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>'
+kid = (stick("jk", 720, 1290, .75, "neutral", "down")
+       + f'<rect x="706" y="988" width="28" height="12" rx="5" fill="{BLUE}" stroke="{INK}" stroke-width="3"/><circle cx="720" cy="1004" r="13" fill="{PINK}" stroke="{INK}" stroke-width="3"/>'
        + text(560, 1100, "=", 90, INK, 900))
 insult_gag("j", t_hohl, t_und_d, kid)
 

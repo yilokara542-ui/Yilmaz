@@ -250,6 +250,8 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 
 **Länge & Tempo (aus Feedback 23.11., ersetzt die 60-s-Regel):** Das Voiceover läuft **immer in originaler Geschwindigkeit** – niemals verlangsamen oder beschleunigen (kein atempo). Ein Video **unter 1 Minute ist in Ordnung**. Am Ende darf die Schluss-Szene 2–3 s stumm nachlaufen (kleine Animation), mehr nicht.
 
+**„Digga“ (aus Feedback 26.11.):** 3–4 Sätze beginnen mit „Digga,“ (z. B. „Digga, Wasser ist selbst ein bisschen blau.“, „Digga, hör auf, …“). „Digga“ ist keine Beleidigung und steht im Untertitel mit.
+
 **Voiceover in einem Stück (aus Feedback 22.11.):** Das Voiceover wird **komplett in einer Aufnahme** erzeugt – keine nachträglich eingefügten Stille-Pausen und keine zusammengeflickten Einzelsätze. Pausen nur über den Text (`...`) im ElevenLabs-Prompt. Ändert sich ein Satz, wird die ganze Aufnahme neu erzeugt (Credits vorher prüfen).
 
 **Skript-Regeln:** ca. 140–160 Wörter, kurze Hauptsätze, Du-Ansprache, ein Fakt pro Satz, **2–3 Roast-Einzeiler** über den Zuschauer, **1 Alltagsvergleich** (X = Gegenstand), **1 Beweis** (Studie/Jahreszahl/Zahl), Wiederholung der Kernaussage („gar nichts“), Schluss = Callback auf den Hook mit Pointe. Keine Fachwörter-Lawine, kein „Hallo Leute“, keine Frage-an-die-Community am Ende.
@@ -331,3 +333,4 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 2026-11-25 | Video 24: Hook „Du Opfer kaust jeden Tag Kaugummi …“ – „In diesem einen Fall kannst du die Beleidigung ‚Opfer‘ mit reinschreiben“ | Einmalige Ausnahme: Beleidigung im Hook-Untertitel erlaubt, wenn der User es für das Video ausdrücklich sagt; Standardregel (Beleidigungen nie untertiteln) bleibt |
 | 2026-11-25 | Video 25: „Mache den Charakter am Anfang wie immer und lasse nur Blut aus der Nase laufen, ohne dass er den Nacken nach hinten macht“ | Abschnitt 11c: Hook-Figur immer das Standard-Strichmännchen frontal, Problem nur daran zeigen, keine Profil-/Sonderköpfe |
 | 2026-11-26 | Video 26: „Füge diesmal mehr Beleidigungen in das Video ein“ | Für dieses Video: zusätzlich 3 kurze Beleidigungen („Du Vollpfosten.“, „Du Hohlbrot.“, „Du Lauch.“) als eigene Sätze, jeweils mit eigenem Bild-Gag (Pfosten, hohles Brot, Lauch) und ohne Untertitel; Untertitel-Code überspringt alle Beleidigungs-Sätze und verschmilzt sie nie mit Nachbarsätzen |
+| 2026-11-26 | Video 26: „Benutze statt ‚Hohlbrot‘ den Satz ‚Du dummes Kind‘ und füge bei ein paar Sätzen am Anfang ein ‚Digga‘ ein“ | „Du dummes Kind.“ statt „Du Hohlbrot.“ (Bild-Gag: Kleinkind mit Schnuller, ohne Untertitel); Abschnitt 11c: 3–4 Sätze mit „Digga,“ beginnen (mit Untertitel); Voiceover komplett neu in einem Stück |
