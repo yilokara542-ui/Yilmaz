@@ -59,20 +59,20 @@ def scene(sid, t0, t1, inner, dark=False):
 # ================= CUES =================
 t_spiegelt0 = ws("spiegelt"); t_du_f = ws("Du", t_spiegelt0)
 t_ha = [w for w in W if w["s"] == t_spiegelt0][0]["e"] + 0.15; t_gag = t_du_f - 0.3
-t_wasser = ws("Wasser", t_du_f + 0.5); t_blau1 = ws("blau", t_wasser)
+t_wasser = ws("Digga", t_du_f + 0.5); t_blau1 = ws("blau", t_wasser)
 t_es = ws("Es", t_blau1); t_rotes = ws("rotes"); t_tiefer = ws("tiefer"); t_uebrig = ws("Übrig")
 t_vollpf = ws("Vollpfosten") - 0.25
-t_in = ws("In", t_vollpf + 0.3); t_glas = ws("Glas"); t_wenig = ws("wenig")
+t_in = ws("Digga", t_vollpf + 0.3); t_glas = ws("Glas"); t_wenig = ws("wenig")
 t_wie = ws("Wie", t_wenig); t_sonnen = ws("Sonnenbrillen"); t_zehn = ws("Zehn", t_sonnen); t_dunkel = ws("dunkel")
 t_genau = ws("Genau"); t_witze = ws("Witze")
 t_1921 = ws("Neunzehnhundert"); t_filter = ws("Filter")
-t_ergebnis = ws("Ergebnis", t_1921); t_das_m = ws("Das", t_ergebnis); t_blau2 = ws("blau", t_das_m)
-t_hohl = ws("Hohlbrot") - 0.25
+t_ergebnis = ws("Ergebnis", t_1921); t_das_m = ws("Digga", t_ergebnis); t_blau2 = ws("blau", t_das_m)
+t_hohl = ws("Kind", t_blau2) - 0.45
 t_und_d = ws("Und", t_hohl + 0.3); t_algen = ws("Algen"); t_schlamm = ws("Schlamm"); t_sand = ws("Sand")
 t_also = ws("Also"); t_obendrauf = ws("obendrauf"); t_farbe = ws("Farbe", t_obendrauf); t_selbst = ws("selbst", t_farbe)
-t_hoer = ws("Und", t_selbst); t_urlaub = ws("Urlaub"); t_lauch = ws("Lauch") - 0.25
+t_hoer = ws("Digga", t_selbst); t_urlaub = ws("Urlaub"); t_lauch = ws("Lauch") - 0.25
 
-INSULTS = ("Bastard", "Vollpfosten", "Hohlbrot", "Lauch")   # werden nie untertitelt
+INSULTS = ("Bastard", "Vollpfosten", "dummes Kind", "Lauch")   # werden nie untertitelt
 
 # ================= BAUSTEINE =================
 SEA = "#3B82C4"; SEA2 = "#1F5F99"; SKY = "#BFE3F5"
@@ -176,10 +176,11 @@ I2 += g("i-c", checkcircle(540, 840, 90), 0) + g("i-p", pill("i-p0", 540, 1230, 
 scene("i2", t_das_m, t_hohl, I2)
 pop("#i-c", t_blau2 - 0.2); pop("#i-p", t_blau2)
 
-# J Gag „Du Hohlbrot.“ – hohles Brot
-bread = (f'<path d="M 560 1100 Q 540 860 700 840 Q 860 860 840 1100 Z" fill="#D9A55B" stroke="{INK}" stroke-width="6"/>'
-         f'<path d="M 610 1080 Q 600 920 700 905 Q 800 920 790 1080 Z" fill="#F3ECE5" stroke="{INK}" stroke-width="4"/>' + text(520, 990, "=", 90, INK, 900))
-insult_gag("j", t_hohl, t_und_d, bread)
+# J Gag „Du dummes Kind.“ – Figur als Kleinkind mit Schnuller
+kid = (stick("jk", 700, 1290, .6, "neutral", "down")
+       + f'<circle cx="700" cy="1035" r="22" fill="{PINK}" stroke="{INK}" stroke-width="4"/><rect x="688" y="1012" width="24" height="14" rx="5" fill="{BLUE}" stroke="{INK}" stroke-width="3"/>'
+       + text(560, 1100, "=", 90, INK, 900))
+insult_gag("j", t_hohl, t_und_d, kid)
 
 # K Algen grün – Schlamm braun – Sand türkis
 sw = [("k-s0", "#3E8E5A", "Algen", t_algen), ("k-s1", "#7A5A3A", "Schlamm", t_schlamm), ("k-s2", "#3FC9C0", "heller Sand", t_sand)]
