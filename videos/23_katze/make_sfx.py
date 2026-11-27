@@ -28,6 +28,10 @@ def purr_snd(t0, dur=1.6, g=.12):
 purr_snd(0.4, 2.6, .12); purr_snd(C["t_tierarzt"] - .3, 1.6, .1); purr_snd(C["t_selbst"] - .3, 1.6, .1)
 tone(C["t_ton"], 900, 1300, .7, .05, .4)
 for k in range(3): tap(C["t_napf"] + k*.12)
+def sting(t0, g=.35):
+    L = int(1.2*SR); x = np.arange(L)/SR
+    add(t0, g*(np.sin(2*np.pi*55*x) + .5*np.sin(2*np.pi*82*x))*np.exp(-x*2.5)); noise(t0, .2, .05, 4, g*.6)
+sting(C["t_dummer"]); sting(C["t_bastard"], .45)
 out = out/max(1e-6, np.max(np.abs(out)))*.5
 with wave.open(os.path.join(HERE, "assets/sfx_bed.wav"), "wb") as w:
     w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR); w.writeframes((out*32767).astype(np.int16).tobytes())

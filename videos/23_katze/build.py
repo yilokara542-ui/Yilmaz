@@ -125,8 +125,17 @@ pop("#a1-c", t_katze); pop("#a1-ha", t_ha, .5, .2)
 tw(f'tl.to("#a1-p",{{opacity:.3,duration:.25,yoyo:true,repeat:9,ease:"sine.inOut"}},0.3);')
 
 # A2 Gag (ohne Untertitel)
-A2 = ground(1290) + stick("a2", 330, 1290, 1.25, "shock", "down", stubble=True) + g("a2-fg", finger(470, 760, 1.0), 1)
+# spannender (Feedback 27.11.): Ruck-Zoom auf das Gesicht, Wackeln, roter Rand, Figur schrumpft bei „Bastard“
+t_dummer = ws("dummer"); t_bastard = ws("Bastard")
+A2 = (f'<g id="a2-cam">' + ground(1290) + stick("a2", 330, 1290, 1.25, "shock", "down", stubble=True) + g("a2-fg", finger(470, 760, 1.0), 1) + '</g>'
+      + f'<rect id="a2-red" x="0" y="0" width="1080" height="1920" fill="none" stroke="{RED}" stroke-width="60" opacity="0"/>')
 scene("a2", t_gag, t_katzen1, A2)
+tw(f'tl.fromTo("#a2-cam",{{scale:1,svgOrigin:"330 760"}},{{scale:1.45,svgOrigin:"330 760",duration:.25,ease:"power4.out"}},{t_dummer - 0.05:.3f});')
+for k in range(6):
+    tw(f'tl.to("#a2-cam",{{x:{(-1)**k * 10},duration:.05}},{t_dummer + 0.25 + k*0.05:.3f});')
+tw(f'tl.to("#a2-cam",{{x:0,duration:.05}},{t_dummer + 0.55:.3f});')
+tw(f'tl.fromTo("#a2-red",{{opacity:0}},{{opacity:.8,duration:.15,yoyo:true,repeat:1}},{t_bastard:.3f});')
+tw(f'tl.to("#a2-cam",{{scale:1.75,svgOrigin:"330 760",duration:.35,ease:"power2.in"}},{t_bastard:.3f});')
 tw(f'tl.fromTo("#a2-fg",{{x:700}},{{x:0,duration:.35,ease:"power3.out"}},{t_gag + 0.05:.3f});')
 tw(f'tl.to("#a2-fg",{{x:-24,duration:.12,yoyo:true,repeat:3,ease:"sine.inOut"}},{t_gag + 0.5:.3f});')
 

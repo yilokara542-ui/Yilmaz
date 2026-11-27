@@ -121,6 +121,7 @@ Danach: geschätzte Länge in Sekunden, Wortzahl, Caption (max. 150 Zeichen + 3�
 - [ ] Figur angezogen, Untertitel Poppins ≤ 64 px, 60 fps mit weichen Überblendungen
 - [ ] Räume dekoriert (mind. 5 Deko-Objekte pro Innenraum), kein Erklär-Block > 2 Sätze, Story bleibt durchgehend spannend
 - [ ] Neuer Ort → erst Überblick von oben, dann Details · Bedrohungen wirken unheimlich (nicht niedlich)
+- [ ] Beleidigung ernst/langsam/herablassend (Seufzer, Pausen) + Zoom/Wackeln/roter Blitz/Sting
 - [ ] Alle Regeln aus dem Feedback-Log unten erfüllt
 
 ---
@@ -250,6 +251,8 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 
 **Länge & Tempo (aus Feedback 23.11., ersetzt die 60-s-Regel):** Das Voiceover läuft **immer in originaler Geschwindigkeit** – niemals verlangsamen oder beschleunigen (kein atempo). Ein Video **unter 1 Minute ist in Ordnung**. Am Ende darf die Schluss-Szene 2–3 s stumm nachlaufen (kleine Animation), mehr nicht.
 
+**Beleidigung ernst & herablassend vortragen (aus Feedback 27.11.):** Nach dem Lacher erst ein Seufzer, dann die Beleidigung langsam, kalt und von oben herab – Prompt: `[laughs] ... [sighs] ... [serious, slow, condescending, cold] Du ... dummer ... eingeschränkter ... Bastard. ...` (danach mit `[dry, calm]` normal weiter; alles in EINEM Take, nichts schneiden). Bild dazu spannend: Ruck-Zoom aufs Gesicht bei „dummer“ (≈1,45×, 0,25 s, power4.out) + kurzes Wackeln, bei „Bastard“ roter Rand-Blitz (opacity .8, yoyo) + zweiter Zoom (≈1,75×); dazu je ein tiefer Sting-Sound (55/82 Hz, ~1,2 s Ausklang) auf „dummer“ und „Bastard“.
+
 **„Digga“ (aus Feedback 26.11.):** 3–4 Sätze beginnen mit „Digga,“ (z. B. „Digga, Wasser ist selbst ein bisschen blau.“, „Digga, hör auf, …“). „Digga“ ist keine Beleidigung und steht im Untertitel mit.
 
 **Voiceover in einem Stück (aus Feedback 22.11.):** Das Voiceover wird **komplett in einer Aufnahme** erzeugt – keine nachträglich eingefügten Stille-Pausen und keine zusammengeflickten Einzelsätze. Pausen nur über den Text (`...`) im ElevenLabs-Prompt. Ändert sich ein Satz, wird die ganze Aufnahme neu erzeugt (Credits vorher prüfen).
@@ -334,3 +337,4 @@ User-Wunsch: „mache es eins zu eins in deinen Skill, sodass du die nächsten V
 | 2026-11-25 | Video 25: „Mache den Charakter am Anfang wie immer und lasse nur Blut aus der Nase laufen, ohne dass er den Nacken nach hinten macht“ | Abschnitt 11c: Hook-Figur immer das Standard-Strichmännchen frontal, Problem nur daran zeigen, keine Profil-/Sonderköpfe |
 | 2026-11-26 | Video 26: „Füge diesmal mehr Beleidigungen in das Video ein“ | Für dieses Video: zusätzlich 3 kurze Beleidigungen („Du Vollpfosten.“, „Du Hohlbrot.“, „Du Lauch.“) als eigene Sätze, jeweils mit eigenem Bild-Gag (Pfosten, hohles Brot, Lauch) und ohne Untertitel; Untertitel-Code überspringt alle Beleidigungs-Sätze und verschmilzt sie nie mit Nachbarsätzen |
 | 2026-11-26 | Video 26: „Benutze statt ‚Hohlbrot‘ den Satz ‚Du dummes Kind‘ und füge bei ein paar Sätzen am Anfang ein ‚Digga‘ ein“ | „Du dummes Kind.“ statt „Du Hohlbrot.“ (Bild-Gag: Kleinkind mit Schnuller, ohne Untertitel); Abschnitt 11c: 3–4 Sätze mit „Digga,“ beginnen (mit Untertitel); Voiceover komplett neu in einem Stück |
+| 2026-11-27 | Video 23: „Mache die Beleidigung aufregender und sage sie ernster und herablassender“ | Abschnitt 11c: Beleidigung mit [sighs] + [serious, slow, condescending, cold] und „…“-Pausen zwischen den Wörtern; Ruck-Zoom, Wackeln, roter Rand-Blitz und Sting-Sounds im Finger-Gag; Checkliste ergänzt |

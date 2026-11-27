@@ -1,11 +1,11 @@
 # 23 – Skript: „Katze schnurrt = glücklich?“ (Format D · Strichmännchen-Mythos)
 
-Themen-Liste Nr. 29 · Stimme „Mark“, trocken-sarkastisch · eine durchgehende Aufnahme in Originaltempo (53,1 s) + 2,8 s stummer Nachlauf = 56 s · keine Musik · Ganzer-Satz-Untertitel Nunito, Beleidigung ohne Untertitel.
+Themen-Liste Nr. 29 · Stimme „Mark“, trocken-sarkastisch · eine durchgehende Aufnahme in Originaltempo (55,2 s, v2 27.11.) + 2,8 s stummer Nachlauf = 58 s · keine Musik · Ganzer-Satz-Untertitel Nunito, Beleidigung ohne Untertitel.
 
 | Zeit | Voiceover | Bild |
 |---|---|---|
 | 0–4,4 s | Du denkst, deine Katze schnurrt, weil sie glücklich ist, dass du sie streichelst? *(lacht)* | Figur streichelt Katze, „rrrr“, Gedankenblase mit Herz, rotes „HA HA“ |
-| 4,4–7,4 s | Du dummer eingeschränkter Bastard. *(kein Untertitel)* | Zeigefinger-Gag |
+| 4,9–11,2 s | *(Seufzer)* Du … dummer … eingeschränkter … Bastard. *(ernst, langsam, herablassend; kein Untertitel)* | Zeigefinger-Gag mit Ruck-Zoom, Wackeln, rotem Blitz + Sting (v2, 27.11.) |
 | 7,4–12,7 s | Katzen schnurren auch, wenn sie Angst haben. Beim Tierarzt. Oder wenn sie Schmerzen haben. | Ängstliche Katze auf dem Behandlungstisch, Spritze, Pflaster, „Tierarzt“, „Schmerzen“ |
 | 12,7–15,1 s | Schnurren ist oft eher Selbstberuhigung. | Katze mit geschlossenen Augen, „Selbstberuhigung“ |
 | 15,1–19 s | Wie wenn du vor einer Prüfung pfeifst, damit keiner merkt, dass du Panik hast. | Schwitzende Figur am Tisch mit „Prüfung“, Noten, „Panik“ |
