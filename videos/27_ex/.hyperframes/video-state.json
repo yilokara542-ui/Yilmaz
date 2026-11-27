@@ -502,5 +502,16 @@
         "attribution": "unversioned"
       }
     ]
-  }
+  },
+  "renders": {
+    "latest": {
+      "id": "b56846a8-c437-4a76-9152-d304a8fbac92",
+      "completedAt": 1795800706830,
+      "output": "/home/user/Yilmaz/videos/27_ex/render.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
 }
